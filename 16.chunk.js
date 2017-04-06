@@ -32,11 +32,12 @@ var ProductDetail = (function () {
                 _this.oldprice = _this.product.ProductPrice.OldPrice;
                 _this.mainimage = _this.productimages[0].FullSizeImageUrl;
                 _this.ProductAttributes = _this.product.ProductAttributes;
-                console.log(_this.mainimage);
-                if (_this.oldprice == 0 || _this.oldprice == null) {
+                console.log(_this.product.ProductPrice.OldPrice);
+                if (_this.product.ProductPrice.OldPrice == 0 || _this.product.ProductPrice.OldPrice == null || _this.product.ProductPrice.Price > _this.product.ProductPrice.OldPrice) {
                     _this.discountpercentage = 0;
                 }
                 else {
+                    _this.discountpercentage = (_this.product.ProductPrice.Price / _this.product.ProductPrice.OldPrice) * 100;
                 }
                 console.log(_this.product.ProductPrice);
             });
