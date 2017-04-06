@@ -12794,7 +12794,7 @@ var routes = [
     { path: '', component: weblayout_component_1.WebLayout, children: [
             { path: '', redirectTo: 'index', pathMatch: 'full' },
             { path: 'index', loadChildren: function () { return __webpack_require__.e/* System.import */(15).then(__webpack_require__.bind(null, "./src/app/home/home.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(17).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
+            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(16).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }
 ];
 exports.ROUTES = router_1.RouterModule.forChild(routes);
