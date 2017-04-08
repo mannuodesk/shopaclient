@@ -398,11 +398,11 @@ var error_component_1 = __webpack_require__("./src/app/error/error.component.ts"
 exports.ROUTES = [{
         path: '', redirectTo: 'app', pathMatch: 'full'
     }, {
-        path: 'app', loadChildren: function () { return __webpack_require__.e/* System.import */(1).then(__webpack_require__.bind(null, "./src/app/weblayout/weblayout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); }
+        path: 'app', loadChildren: function () { return __webpack_require__.e/* System.import */(0).then(__webpack_require__.bind(null, "./src/app/weblayout/weblayout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); }
     }, {
         path: 'login', loadChildren: function () { return __webpack_require__.e/* System.import */(2).then(__webpack_require__.bind(null, "./src/app/login/login.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); }
     }, {
-        path: 'admin', loadChildren: function () { return __webpack_require__.e/* System.import */(0).then(__webpack_require__.bind(null, "./src/app/layout/layout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); }
+        path: 'admin', loadChildren: function () { return __webpack_require__.e/* System.import */(1).then(__webpack_require__.bind(null, "./src/app/layout/layout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); }
     }, {
         path: 'error', component: error_component_1.ErrorComponent
     }, {

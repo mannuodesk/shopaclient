@@ -3740,3 +3740,66 @@ Responsive
     }
    
 }   
+
+/*
+Modal
+*/
+.modal-content{
+    width: 60%;
+    margin-left: 23%;
+    background-color:transparent !important;
+    border:none !important;
+    box-shadow:none !important;
+}
+.modal-body{
+    padding:0px !important;
+    background-color:white;
+}
+.modal-header{
+    padding: 0px !important;
+    border-bottom: none !important; 
+}
+.modal-logo{
+    background: url(../img/logo.png) no-repeat center center;
+    height: 70px;
+    display:block;
+}
+.socialBtn{
+    color: white;
+    margin-bottom:10px;
+    border-radius: 0px !important;
+    height: 40px;
+    line-height: 25px !important;
+}
+.fb{
+    background-color: #3b5998;
+}
+.modal-div{
+    padding: 15%;
+}
+.google{
+    background-color: #D50F25;
+}
+.email{
+    border:1px solid #34bac5 !important;
+    color:#34bac5 !important;
+}
+.login{
+    background-color: #34bac5;
+}
+.or-text {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+} 
+
+.or-text span { 
+    background:#fff; 
+    padding:0 10px; 
+}
+.signup-title{
+    text-align: center;
+    margin-bottom:20px;
+}
