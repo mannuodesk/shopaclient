@@ -1196,10 +1196,23 @@ Main
     border-top: 1px solid #f0f1f4;
 }
 .cat-dropdown li{
-    display: block ;
+    display: block;
+    color:#34bac5;
 }
 .cat-dropdown li a{
-    padding: 10px 20px;
+    padding: 15px 20px;
+    border:none;
+    width:auto;
+    border-radius: 0px;
+}
+.cat-dropdown li.active a{
+    background-color: rgba(52, 186, 197, 0.5) !important;
+    color:white !important; 
+}
+.cat-dropdown li:hover, .cat-dropdown li.active, .cat-dropdown li:focus {
+    background-color: rgba(52, 186, 197, 0.5);
+    border-radius: 0px; 
+    color:white;
 }
 .products-main,
 .section-main{
