@@ -2290,8 +2290,6 @@ Order history
 .order-history-page,
 .checkout-page{
     background: #fff;
-    border-left: 1px solid #eef0f4;
-    border-right: 1px solid #eef0f4;
     min-height: 250px;
 }
 .user-profile-page{
@@ -2302,8 +2300,6 @@ Order history
 }
 .page-head{
     padding: 10px 25px;
-    border-top: 1px solid #eef0f4;
-    border-bottom: 1px solid #eef0f4;
 }
 .page-head h3{
     margin: 0;
@@ -2323,26 +2319,21 @@ Order history
     position: relative;
     padding-right: 55px;
     border: none;
-    border-top: 1px solid #d9dbe2;
-    margin-bottom: 0px;
 }
 .cart-unit:last-child{
     border-bottom: 1px solid #d9dbe2;
 }
 .history-unit a.remove-order{
-    background: #fafafa;
-    color: #c3c4c9;
-    width: 55px;
+    background: #bebebe;
+    color: white;
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
     position: absolute;
     right: 0;
     top: 0;
-    height: 100%;
+    border-radius:30px;
     text-align: center;
-    line-height: 200px;
-    font-size: 24px;
-}
-.cart-unit a.remove-order {
-    line-height: 170px;
 }
 .history-unit a.remove-order:hover{
     background: #f2f2f2;
@@ -2369,7 +2360,7 @@ Order history
     width: 38%;
 }
 .cart-unit .cart-visual{
-        min-height: 170px;
+        min-height: 200px;
 }
 .cart-unit .cart-detail cart-inner{
      padding-top: 30px; 
@@ -2418,8 +2409,8 @@ Order history
     padding-top: 30px;
 }
 .history-unit figure.visual{
-    height: 90px;
-    width: 90px;
+    height: 165px;
+    width: 165px;
     background-size: cover !important;
     background-position: center center !important;
     position: absolute;
@@ -2429,7 +2420,7 @@ Order history
 }
 .history-unit .visual-inner{
     position: relative;
-    padding-left: 110px;
+    padding-left: 190px;
     padding-right: 20px;
     position: absolute;
     left: 0;

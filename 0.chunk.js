@@ -14265,6 +14265,40 @@ var Header = (function () {
         console.log(initParams);
         fb.init(initParams);
     }
+    Header.prototype.googleInit = function () {
+        var that = this;
+        gapi.load('auth2', function () {
+            that.auth2 = gapi.auth2.init({
+                client_id: '938943519107-bdgo847g32dffc64odja94apsfsjaktt.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin',
+                scope: 'rizvisyed12@gmail.com'
+            });
+            that.attachSignin(document.getElementById('googleBtn'));
+        });
+    };
+    Header.prototype.attachSignin = function (element) {
+        var that = this;
+        this.auth2.attachClickHandler(element, {}, function (googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('Token || ' + googleUser.getAuthResponse().id_token);
+            console.log('ID: ' + profile.getId());
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+            //YOUR CODE HERE
+        }, function (error) {
+            //alert(JSON.stringify(error, undefined, 2));
+        });
+    };
+    Header.prototype.ngAfterViewInit = function () {
+        this.googleInit();
+    };
+    Header.prototype.loginWithGmail = function () {
+        this.googleInit();
+    };
+    /**
+    End
+     */
     Header.prototype.loginWithFacebook = function () {
         this.fb.login()
             .then(function (response) {
@@ -14276,6 +14310,7 @@ var Header = (function () {
     };
     Header.prototype.openSignUPModal = function () {
         this.signUPModalComponent.open();
+        this.googleInit();
     };
     __decorate([
         core_1.ViewChild('signUPModal'), 
@@ -14300,7 +14335,7 @@ exports.Header = Header;
 /***/ "./src/app/weblayout/header/header.template.html":
 /***/ function(module, exports) {
 
-module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul>\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, Guest</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">18</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">John</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a href=\"#\">My Profile</a></li>\r\n            <li><a href=\"#\">Shopping cart</a></li>\r\n            <li><a href=\"#\">Wishlist</a></li>\r\n\r\n            <li><a href=\"#\">Order History</a></li>\r\n            <li><a href=\"#\">Customer Support</a></li>\r\n\r\n            <li><a href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"false\" [closeOnEscape]=\"false\" [hideCloseButton]=\"true\">\r\n  <modal-header>\r\n    <div class=\"modal-logo\">\r\n    </div>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div class=\"modal-div\">\r\n        <div class=\"row bold signup-title\">\r\n            <h3>Sign Up to browse Products!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n    </div>\r\n  </modal-content>\r\n</modal>\r\n"
+module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul>\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, Guest</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">18</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">John</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a href=\"#\">My Profile</a></li>\r\n            <li><a href=\"#\">Shopping cart</a></li>\r\n            <li><a href=\"#\">Wishlist</a></li>\r\n\r\n            <li><a href=\"#\">Order History</a></li>\r\n            <li><a href=\"#\">Customer Support</a></li>\r\n\r\n            <li><a href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"false\" [closeOnEscape]=\"false\" [hideCloseButton]=\"true\">\r\n  <modal-header>\r\n    <div class=\"modal-logo\">\r\n    </div>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div class=\"modal-div\">\r\n        <div class=\"row bold signup-title\">\r\n            <h3>Sign Up to browse Products!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a id=\"googleBtn\" (click)=\"loginWithGmail()\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n    </div>\r\n    <div class=\"registration-modal\">\r\n      \r\n        <div class=\"row bold signup-title\">\r\n            <h3>Almost Done!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n      \r\n    </div></div>\r\n    \r\n  </modal-content>\r\n</modal>\r\n"
 
 /***/ },
 
@@ -14426,7 +14461,9 @@ var routes = [
     { path: '', component: weblayout_component_1.WebLayout, children: [
             { path: '', redirectTo: 'index', pathMatch: 'full' },
             { path: 'index', loadChildren: function () { return __webpack_require__.e/* System.import */(15).then(__webpack_require__.bind(null, "./src/app/home/home.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(16).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
+            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(16).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(19).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'checkout', loadChildren: function () { return __webpack_require__.e/* System.import */(18).then(__webpack_require__.bind(null, "./src/app/checkout/checkout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }
 ];
 exports.ROUTES = router_1.RouterModule.forChild(routes);
