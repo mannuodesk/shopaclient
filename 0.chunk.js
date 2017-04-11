@@ -14269,9 +14269,9 @@ var Header = (function () {
         var that = this;
         gapi.load('auth2', function () {
             that.auth2 = gapi.auth2.init({
-                client_id: '938943519107-bdgo847g32dffc64odja94apsfsjaktt.apps.googleusercontent.com',
-                cookiepolicy: 'single_host_origin',
-                scope: 'rizvisyed12@gmail.com'
+                apiKey: 'AIzaSyByj1Pvhu2eiNvwaopJKr5HmeGUlJLbIBc',
+                client_id: '938943519107-75d11452rmllj101e9vvvc73m1l6jvsk.apps.googleusercontent.com',
+                scope: 'profile'
             });
             that.attachSignin(document.getElementById('googleBtn'));
         });
