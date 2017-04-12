@@ -1,5 +1,49 @@
 webpackJsonpac__name_([0],{
 
+/***/ "./node_modules/angular2-uuid/index.js":
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+var UUID = (function () {
+    function UUID() {
+        // no-op
+    }
+    UUID.UUID = function () {
+        if (typeof (window) !== "undefined" && typeof (window.crypto) !== "undefined" && typeof (window.crypto.getRandomValues) !== "undefined") {
+            // If we have a cryptographically secure PRNG, use that
+            // http://stackoverflow.com/questions/6906916/collisions-when-generating-uuids-in-javascript
+            var buf = new Uint16Array(8);
+            window.crypto.getRandomValues(buf);
+            return (this.pad4(buf[0]) + this.pad4(buf[1]) + "-" + this.pad4(buf[2]) + "-" + this.pad4(buf[3]) + "-" + this.pad4(buf[4]) + "-" + this.pad4(buf[5]) + this.pad4(buf[6]) + this.pad4(buf[7]));
+        }
+        else {
+            // Otherwise, just use Math.random
+            // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+            // https://stackoverflow.com/questions/11605068/why-does-jshint-argue-against-bitwise-operators-how-should-i-express-this-code
+            return this.random4() + this.random4() + "-" + this.random4() + "-" + this.random4() + "-" +
+                this.random4() + "-" + this.random4() + this.random4() + this.random4();
+        }
+    };
+    UUID.pad4 = function (num) {
+        var ret = num.toString(16);
+        while (ret.length < 4) {
+            ret = "0" + ret;
+        }
+        return ret;
+    };
+    UUID.random4 = function () {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    };
+    return UUID;
+}());
+exports.UUID = UUID;
+//# sourceMappingURL=index.js.map
+
+/***/ },
+
 /***/ "./node_modules/jquery-slimscroll/jquery.slimscroll.js":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -14210,6 +14254,21 @@ module.exports = function(module) {
 
 /***/ },
 
+/***/ "./src/app/models/User.ts":
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+var User = (function () {
+    function User() {
+    }
+    return User;
+}());
+exports.User = User;
+
+
+/***/ },
+
 /***/ "./src/app/weblayout/footer/footer.component.ts":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -14253,17 +14312,37 @@ module.exports = "<footer class=\"doc-footer\">\r\n    <div class=\"container-fl
  * Home Component typescript file
  */
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
-var ng2_modal_1 = __webpack_require__("./node_modules/ng2-modal/index.js");
+var angular2_uuid_1 = __webpack_require__("./node_modules/angular2-uuid/index.js");
 var ng2_facebook_sdk_1 = __webpack_require__("./node_modules/ng2-facebook-sdk/dist/esm/index.js");
+var User_1 = __webpack_require__("./src/app/models/User.ts");
 var Header = (function () {
     function Header(fb) {
         this.fb = fb;
+        /**
+         * For Guest User
+         */
+        this.user = JSON.parse(localStorage.getItem('user'));
+        if (this.user != null) {
+            console.log(this.user);
+        }
+        else {
+            this.user = new User_1.User();
+            this.user.GUID = angular2_uuid_1.UUID.UUID();
+        }
+        /**
+         * End
+         */
+        /**
+         * FB Init Params
+         */
         var initParams = {
             appId: '1840973749489711',
             version: 'v2.8'
         };
-        console.log(initParams);
         fb.init(initParams);
+        /**
+         * End
+         */
     }
     Header.prototype.googleInit = function () {
         var that = this;
@@ -14285,37 +14364,57 @@ var Header = (function () {
             console.log('Name: ' + profile.getName());
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail());
+            var googleCustomer = new User_1.User();
+            googleCustomer.Email = profile.getEmail();
             //YOUR CODE HERE
         }, function (error) {
             //alert(JSON.stringify(error, undefined, 2));
         });
     };
-    Header.prototype.ngAfterViewInit = function () {
-        this.googleInit();
-    };
     Header.prototype.loginWithGmail = function () {
-        this.googleInit();
+        this.attachSignin(document.getElementById('googleBtn'));
     };
     /**
     End
      */
+    /**
+      Facebook Sign UP
+     */
     Header.prototype.loginWithFacebook = function () {
-        this.fb.login()
+        var _this = this;
+        var options = {
+            scope: 'public_profile,user_friends,email,pages_show_list',
+            return_scopes: true,
+            enable_profile_selector: true
+        };
+        this.fb.login(options)
             .then(function (response) {
-            return console.log(response);
+            console.log(response);
+            _this.fb.api('/me?fields=id,email,name')
+                .then(function (res) { return console.log(res); })
+                .catch(function (e) { return console.log(e); });
+            _this.fb.api('/' + response.authResponse.userID + '/picture')
+                .then(function (res) { return console.log(res); })
+                .catch(function (e) { return console.log(e); });
+            _this.fb.api('/email')
+                .then(function (res) { return console.log(res); })
+                .catch(function (e) { return console.log(e); });
         })
             .catch(function (error) {
             return console.error(error);
         });
     };
+    /**
+     * End
+     */
     Header.prototype.openSignUPModal = function () {
         this.signUPModalComponent.open();
         this.googleInit();
     };
     __decorate([
         core_1.ViewChild('signUPModal'), 
-        __metadata('design:type', (typeof (_a = typeof ng2_modal_1.Modal !== 'undefined' && ng2_modal_1.Modal) === 'function' && _a) || Object)
-    ], Header.prototype, "signUPModalComponent", void 0);
+        __metadata('design:type', (typeof (_a = typeof User_1.User !== 'undefined' && User_1.User) === 'function' && _a) || Object)
+    ], Header.prototype, "user", void 0);
     Header = __decorate([
         core_1.Component({
             selector: 'headers',
@@ -14335,7 +14434,7 @@ exports.Header = Header;
 /***/ "./src/app/weblayout/header/header.template.html":
 /***/ function(module, exports) {
 
-module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul>\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, Guest</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">18</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">John</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a href=\"#\">My Profile</a></li>\r\n            <li><a href=\"#\">Shopping cart</a></li>\r\n            <li><a href=\"#\">Wishlist</a></li>\r\n\r\n            <li><a href=\"#\">Order History</a></li>\r\n            <li><a href=\"#\">Customer Support</a></li>\r\n\r\n            <li><a href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"false\" [closeOnEscape]=\"false\" [hideCloseButton]=\"true\">\r\n  <modal-header>\r\n    <div class=\"modal-logo\">\r\n    </div>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div class=\"modal-div\">\r\n        <div class=\"row bold signup-title\">\r\n            <h3>Sign Up to browse Products!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a id=\"googleBtn\" (click)=\"loginWithGmail()\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n    </div>\r\n    <div class=\"registration-modal\">\r\n      \r\n        <div class=\"row bold signup-title\">\r\n            <h3>Almost Done!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n      \r\n    </div></div>\r\n    \r\n  </modal-content>\r\n</modal>\r\n"
+module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul>\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, Guest</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">18</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">John</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a href=\"#\">My Profile</a></li>\r\n            <li><a href=\"#\">Shopping cart</a></li>\r\n            <li><a href=\"#\">Wishlist</a></li>\r\n\r\n            <li><a href=\"#\">Order History</a></li>\r\n            <li><a href=\"#\">Customer Support</a></li>\r\n\r\n            <li><a href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"false\" [closeOnEscape]=\"false\" [hideCloseButton]=\"true\">\r\n  <modal-header>\r\n    <div class=\"modal-logo\">\r\n    </div>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div class=\"modal-div\">\r\n        <div class=\"row bold signup-title\">\r\n            <h3>Sign Up to browse Products!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a id=\"googleBtn\" (click)=\"loginWithGmail()\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n    </div>\r\n    <div class=\"registration-modal\">\r\n      \r\n        <div class=\"row bold signup-title\">\r\n            <h3>Almost Done!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n      \r\n    </div></div>\r\n    \r\n  </modal-content>\r\n</modal>\r\n"
 
 /***/ },
 
