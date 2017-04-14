@@ -14411,6 +14411,7 @@ var Header = (function () {
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail());
             var googleCustomer = new User_1.User();
+            console.log(this.user);
             googleCustomer.Id = this.user.Id;
             googleCustomer.Email = profile.getEmail();
             googleCustomer.imageUrl = profile.getImageUrl();
