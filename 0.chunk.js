@@ -1,49 +1,5 @@
 webpackJsonpac__name_([0],{
 
-/***/ "./node_modules/angular2-uuid/index.js":
-/***/ function(module, exports) {
-
-"use strict";
-"use strict";
-var UUID = (function () {
-    function UUID() {
-        // no-op
-    }
-    UUID.UUID = function () {
-        if (typeof (window) !== "undefined" && typeof (window.crypto) !== "undefined" && typeof (window.crypto.getRandomValues) !== "undefined") {
-            // If we have a cryptographically secure PRNG, use that
-            // http://stackoverflow.com/questions/6906916/collisions-when-generating-uuids-in-javascript
-            var buf = new Uint16Array(8);
-            window.crypto.getRandomValues(buf);
-            return (this.pad4(buf[0]) + this.pad4(buf[1]) + "-" + this.pad4(buf[2]) + "-" + this.pad4(buf[3]) + "-" + this.pad4(buf[4]) + "-" + this.pad4(buf[5]) + this.pad4(buf[6]) + this.pad4(buf[7]));
-        }
-        else {
-            // Otherwise, just use Math.random
-            // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-            // https://stackoverflow.com/questions/11605068/why-does-jshint-argue-against-bitwise-operators-how-should-i-express-this-code
-            return this.random4() + this.random4() + "-" + this.random4() + "-" + this.random4() + "-" +
-                this.random4() + "-" + this.random4() + this.random4() + this.random4();
-        }
-    };
-    UUID.pad4 = function (num) {
-        var ret = num.toString(16);
-        while (ret.length < 4) {
-            ret = "0" + ret;
-        }
-        return ret;
-    };
-    UUID.random4 = function () {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    };
-    return UUID;
-}());
-exports.UUID = UUID;
-//# sourceMappingURL=index.js.map
-
-/***/ },
-
 /***/ "./node_modules/jquery-slimscroll/jquery.slimscroll.js":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -14254,6 +14210,21 @@ module.exports = function(module) {
 
 /***/ },
 
+/***/ "./src/app/enums/UserChannelsEnum.ts":
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+(function (UserChannelsEnum) {
+    UserChannelsEnum[UserChannelsEnum["EMAIL"] = 1] = "EMAIL";
+    UserChannelsEnum[UserChannelsEnum["FACEBOOK"] = 2] = "FACEBOOK";
+    UserChannelsEnum[UserChannelsEnum["GOOGLE"] = 3] = "GOOGLE";
+})(exports.UserChannelsEnum || (exports.UserChannelsEnum = {}));
+var UserChannelsEnum = exports.UserChannelsEnum;
+
+
+/***/ },
+
 /***/ "./src/app/models/User.ts":
 /***/ function(module, exports) {
 
@@ -14265,6 +14236,66 @@ var User = (function () {
     return User;
 }());
 exports.User = User;
+
+
+/***/ },
+
+/***/ "./src/app/services/SigninSignupService.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var http_1 = __webpack_require__("./node_modules/@angular/http/index.js");
+__webpack_require__("./node_modules/rxjs/add/operator/map.js");
+var UrlService_1 = __webpack_require__("./src/app/services/UrlService.ts");
+var SigninSignupService = (function () {
+    function SigninSignupService(http) {
+        this.http = http;
+        this.urlService = new UrlService_1.UrlService();
+    }
+    SigninSignupService.prototype.userSignup = function (model) {
+        var body = JSON.stringify(model);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ method: 'post', headers: headers });
+        return this.http.post(this.urlService.baseUrl + "api/default/postregister", body, options)
+            .map(function (res) { return res.json(); });
+    };
+    SigninSignupService.prototype.userLogin = function (model) {
+        var body = JSON.stringify(model);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ method: 'post', headers: headers });
+        return this.http.post(this.urlService.baseUrl + "api/default/Login", body, options)
+            .map(function (res) { return res.json(); });
+    };
+    SigninSignupService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+    ], SigninSignupService);
+    return SigninSignupService;
+    var _a;
+}());
+exports.SigninSignupService = SigninSignupService;
+
+
+/***/ },
+
+/***/ "./src/app/services/UrlService.ts":
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+var UrlService = (function () {
+    //public baseUrl:string = "http://localhost:13377/";
+    function UrlService() {
+        this.baseUrl = "http://shopabackend.azurewebsites.net/";
+    }
+    UrlService.prototype.getUrl = function () {
+        return this.baseUrl;
+    };
+    return UrlService;
+}());
+exports.UrlService = UrlService;
 
 
 /***/ },
@@ -14307,27 +14338,41 @@ module.exports = "<footer class=\"doc-footer\">\r\n    <div class=\"container-fl
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {"use strict";
 /**
  * Home Component typescript file
  */
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
-var angular2_uuid_1 = __webpack_require__("./node_modules/angular2-uuid/index.js");
+var ng2_modal_1 = __webpack_require__("./node_modules/ng2-modal/index.js");
 var ng2_facebook_sdk_1 = __webpack_require__("./node_modules/ng2-facebook-sdk/dist/esm/index.js");
 var User_1 = __webpack_require__("./src/app/models/User.ts");
+var SigninSignupService_1 = __webpack_require__("./src/app/services/SigninSignupService.ts");
+var UserChannelsEnum_1 = __webpack_require__("./src/app/enums/UserChannelsEnum.ts");
 var Header = (function () {
-    function Header(fb) {
+    function Header(fb, _signinsignup) {
+        var _this = this;
         this.fb = fb;
+        this._signinsignup = _signinsignup;
         /**
          * For Guest User
          */
         this.user = JSON.parse(localStorage.getItem('user'));
+        console.log(this.user);
+        if (this.user == null) {
+            this.user = new User_1.User();
+            this._signinsignup.userSignup(this.user).subscribe(function (a) {
+                _this.user = new User_1.User();
+                _this.user.GUID = a.data.GUID;
+                _this.user.Id = a.data.Id;
+                _this.user.firstName = "Guest";
+                localStorage.setItem('user', JSON.stringify(_this.user));
+                console.log(JSON.parse(localStorage.getItem('user')));
+            });
+        }
         if (this.user != null) {
-            console.log(this.user);
         }
         else {
             this.user = new User_1.User();
-            this.user.GUID = angular2_uuid_1.UUID.UUID();
         }
         /**
          * End
@@ -14358,6 +14403,7 @@ var Header = (function () {
     Header.prototype.attachSignin = function (element) {
         var that = this;
         this.auth2.attachClickHandler(element, {}, function (googleUser) {
+            var _this = this;
             var profile = googleUser.getBasicProfile();
             console.log('Token || ' + googleUser.getAuthResponse().id_token);
             console.log('ID: ' + profile.getId());
@@ -14365,8 +14411,20 @@ var Header = (function () {
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail());
             var googleCustomer = new User_1.User();
+            googleCustomer.Id = this.user.Id;
             googleCustomer.Email = profile.getEmail();
-            //YOUR CODE HERE
+            googleCustomer.imageUrl = profile.getImageUrl();
+            googleCustomer.firstName = profile.getName();
+            googleCustomer.password = profile.getEmail();
+            googleCustomer.channel = UserChannelsEnum_1.UserChannelsEnum.GOOGLE;
+            this._signinsignup.userSignup(googleCustomer).subscribe(function (a) {
+                console.log(a);
+                _this.user = new User_1.User();
+                _this.user = a.data;
+                localStorage.setItem('user', JSON.stringify(_this.user));
+                console.log(JSON.parse(localStorage.getItem('user')));
+                _this.signUPModalComponent.close();
+            });
         }, function (error) {
             //alert(JSON.stringify(error, undefined, 2));
         });
@@ -14382,59 +14440,242 @@ var Header = (function () {
      */
     Header.prototype.loginWithFacebook = function () {
         var _this = this;
+        var fbCustomer = new User_1.User();
         var options = {
-            scope: 'public_profile,user_friends,email,pages_show_list',
+            scope: 'public_profile,email',
             return_scopes: true,
             enable_profile_selector: true
         };
         this.fb.login(options)
             .then(function (response) {
-            console.log(response);
-            _this.fb.api('/me?fields=id,email,name')
-                .then(function (res) { return console.log(res); })
-                .catch(function (e) { return console.log(e); });
-            _this.fb.api('/' + response.authResponse.userID + '/picture')
-                .then(function (res) { return console.log(res); })
-                .catch(function (e) { return console.log(e); });
-            _this.fb.api('/email')
-                .then(function (res) { return console.log(res); })
-                .catch(function (e) { return console.log(e); });
-        })
-            .catch(function (error) {
-            return console.error(error);
+            _this.fb.api('/me?fields=id,email,first_name,last_name,picture')
+                .then(function (profileData) {
+                console.log(profileData);
+                fbCustomer.Id = _this.user.Id;
+                fbCustomer.Email = profileData.email;
+                fbCustomer.firstName = profileData.first_name;
+                fbCustomer.lastName = profileData.last_name;
+                fbCustomer.imageUrl = profileData.picture.data.url;
+                fbCustomer.password = profileData.email;
+                fbCustomer.channel = UserChannelsEnum_1.UserChannelsEnum.FACEBOOK;
+                _this._signinsignup.userSignup(fbCustomer).subscribe(function (a) {
+                    console.log(a);
+                    _this.user = new User_1.User();
+                    _this.user = a.data;
+                    localStorage.setItem('user', JSON.stringify(_this.user));
+                    console.log(JSON.parse(localStorage.getItem('user')));
+                    _this.signUPModalComponent.close();
+                });
+            });
         });
     };
     /**
      * End
      */
+    /**
+     * Email Sign UP and Login and Forgot Password
+     */
+    Header.prototype.forgotPassword = function () {
+        var checkErrors = 0;
+        jQuery('.error').hide();
+        if (this.Email === undefined || this.Email == "" || this.Email == null || this.Email.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#emailRequiredError').show();
+            return;
+        }
+        if (this.validateEmail(this.Email) == false) {
+            checkErrors = checkErrors + 1;
+            jQuery('#emailNotValidError').show();
+            return;
+        }
+        if (checkErrors == 0) {
+        }
+    };
+    Header.prototype.signInWithEmail = function () {
+        var _this = this;
+        var checkErrors = 0;
+        jQuery('.error').hide();
+        if (this.LoginEmail === undefined || this.LoginEmail == "" || this.LoginEmail == null || this.LoginEmail.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#emailLoginRequiredError').show();
+            return;
+        }
+        if (this.validateEmail(this.LoginEmail) == false) {
+            checkErrors = checkErrors + 1;
+            jQuery('#emailLoginNotValidError').show();
+            return;
+        }
+        if (this.LoginPassword === undefined || this.LoginPassword == "" || this.LoginPassword == null || this.LoginPassword.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#passwordLoginRequiredError').show();
+            return;
+        }
+        if (checkErrors == 0) {
+            /**
+             * Service Call for Sign In
+             */
+            var loginUser = new User_1.User();
+            loginUser.Email = this.LoginEmail;
+            loginUser.password = this.LoginPassword;
+            loginUser.channel = UserChannelsEnum_1.UserChannelsEnum.EMAIL;
+            this._signinsignup.userLogin(loginUser).subscribe(function (a) {
+                console.log(a);
+                if (a.code == 200) {
+                    _this.user = new User_1.User();
+                    _this.user = a.data;
+                    localStorage.setItem('user', JSON.stringify(_this.user));
+                    console.log(JSON.parse(localStorage.getItem('user')));
+                    _this.signUPModalComponent.close();
+                }
+                else if (a.code == 400) {
+                    _this.loginError = a.message;
+                    jQuery('#invalidLogin').show();
+                }
+            });
+        }
+    };
+    Header.prototype.signUpWithEmail = function () {
+        var _this = this;
+        var checkErrors = 0;
+        jQuery('.error').hide();
+        if (this.FirstName === undefined || this.FirstName == "" || this.FirstName == null || this.FirstName.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#firstNameRequiredError').show();
+            return;
+        }
+        if (this.checkStringComplexity(this.FirstName) == true) {
+            checkErrors = checkErrors + 1;
+            jQuery('#firstNameSeverityError').show();
+            return;
+        }
+        if (this.LastName === undefined || this.LastName == "" || this.LastName == null || this.LastName.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#lastNameRequiredError').show();
+            return;
+        }
+        if (this.checkStringComplexity(this.LastName) == true) {
+            checkErrors = checkErrors + 1;
+            jQuery('#lastNameSeverityError').show();
+            return;
+        }
+        if (this.Email === undefined || this.Email == "" || this.Email == null || this.Email.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#emailRequiredError').show();
+            return;
+        }
+        if (this.validateEmail(this.Email) == false) {
+            checkErrors = checkErrors + 1;
+            jQuery('#emailNotValidError').show();
+            return;
+        }
+        if (this.Password === undefined || this.Password == "" || this.Password == null || this.Password.trim().length == 0) {
+            checkErrors = checkErrors + 1;
+            jQuery('#passwordRequiredError').show();
+            return;
+        }
+        if (this.checkStringComplexity(this.Password) == false) {
+            checkErrors = checkErrors + 1;
+            jQuery('#passwordSeverityError').show();
+            return;
+        }
+        if (checkErrors == 0) {
+            /**
+             * Service Call for Sign Up
+             */
+            var emailCustomer = new User_1.User();
+            emailCustomer.Id = this.user.Id;
+            emailCustomer.GUID = this.user.GUID;
+            emailCustomer.Email = this.Email;
+            emailCustomer.firstName = this.FirstName;
+            emailCustomer.lastName = this.LastName;
+            emailCustomer.password = this.Password;
+            emailCustomer.channel = UserChannelsEnum_1.UserChannelsEnum.EMAIL;
+            this._signinsignup.userSignup(emailCustomer).subscribe(function (a) {
+                _this.user = new User_1.User();
+                _this.user = a.data;
+                localStorage.setItem('user', JSON.stringify(_this.user));
+                console.log(JSON.parse(localStorage.getItem('user')));
+                _this.signUPModalComponent.close();
+            });
+        }
+    };
+    Header.prototype.validateEmail = function (email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    };
+    /**
+     * For Password Purposes but will also be checked for First Name and Last Name
+     */
+    Header.prototype.checkStringComplexity = function (pwd) {
+        var letter = /[a-zA-Z]/;
+        var number = /[0-9]/;
+        var valid = number.test(pwd) && letter.test(pwd); //match a letter _and_ a number
+        return valid;
+    };
+    /**
+     * End
+     */
     Header.prototype.openSignUPModal = function () {
+        this.reset_Values();
         this.signUPModalComponent.open();
         this.googleInit();
     };
+    Header.prototype.openSignUpModalDiv = function () {
+        this.reset_Values();
+        jQuery('.modal-div').hide();
+        jQuery('#registration-modal').show();
+    };
+    Header.prototype.back_modal = function () {
+        this.reset_Values();
+        jQuery('.modal-div').hide();
+        jQuery('#welcomeRegistrationDiv').show();
+    };
+    Header.prototype.openLoginModalDiv = function () {
+        this.reset_Values();
+        jQuery('.modal-div').hide();
+        jQuery('#login-modal').show();
+    };
+    Header.prototype.forgot_password_modal = function () {
+        this.reset_Values();
+        jQuery('.modal-div').hide();
+        jQuery('#forgot-password-modal').show();
+    };
+    Header.prototype.reset_Values = function () {
+        this.Email = undefined;
+        this.Password = undefined;
+        this.FirstName = undefined;
+        this.LastName = undefined;
+    };
+    Header.prototype.openCart = function () {
+        localStorage.clear();
+        window.location.reload();
+    };
     __decorate([
         core_1.ViewChild('signUPModal'), 
-        __metadata('design:type', (typeof (_a = typeof User_1.User !== 'undefined' && User_1.User) === 'function' && _a) || Object)
-    ], Header.prototype, "user", void 0);
+        __metadata('design:type', (typeof (_a = typeof ng2_modal_1.Modal !== 'undefined' && ng2_modal_1.Modal) === 'function' && _a) || Object)
+    ], Header.prototype, "signUPModalComponent", void 0);
     Header = __decorate([
         core_1.Component({
             selector: 'headers',
             template: __webpack_require__("./src/app/weblayout/header/header.template.html"),
-            encapsulation: core_1.ViewEncapsulation.None
+            encapsulation: core_1.ViewEncapsulation.None,
+            providers: [SigninSignupService_1.SigninSignupService]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ng2_facebook_sdk_1.FacebookService !== 'undefined' && ng2_facebook_sdk_1.FacebookService) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof ng2_facebook_sdk_1.FacebookService !== 'undefined' && ng2_facebook_sdk_1.FacebookService) === 'function' && _b) || Object, (typeof (_c = typeof SigninSignupService_1.SigninSignupService !== 'undefined' && SigninSignupService_1.SigninSignupService) === 'function' && _c) || Object])
     ], Header);
     return Header;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 exports.Header = Header;
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
 /***/ },
 
 /***/ "./src/app/weblayout/header/header.template.html":
 /***/ function(module, exports) {
 
-module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul>\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, Guest</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">18</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">John</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a href=\"#\">My Profile</a></li>\r\n            <li><a href=\"#\">Shopping cart</a></li>\r\n            <li><a href=\"#\">Wishlist</a></li>\r\n\r\n            <li><a href=\"#\">Order History</a></li>\r\n            <li><a href=\"#\">Customer Support</a></li>\r\n\r\n            <li><a href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"false\" [closeOnEscape]=\"false\" [hideCloseButton]=\"true\">\r\n  <modal-header>\r\n    <div class=\"modal-logo\">\r\n    </div>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div class=\"modal-div\">\r\n        <div class=\"row bold signup-title\">\r\n            <h3>Sign Up to browse Products!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a id=\"googleBtn\" (click)=\"loginWithGmail()\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n    </div>\r\n    <div class=\"registration-modal\">\r\n      \r\n        <div class=\"row bold signup-title\">\r\n            <h3>Almost Done!</h3>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" (click)=\"loginWithFacebook()\" class=\"btn btn-block socialBtn fb\">\r\n                <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Facebook\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn google\">\r\n                <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                | Sign Up with Google\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn email\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row thin\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a href=\"\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n      \r\n    </div></div>\r\n    \r\n  </modal-content>\r\n</modal>\r\n"
+module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul>\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, {{user.firstName}}</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" *ngIf=\"user.imageUrl == null\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                            <a class=\"head_btn\" *ngIf=\"user.imageUrl != null\" (click)=\"openSignUPModal()\" href=\"#\">\r\n                                <img class=\"header-icons header-image-circle\" src=\"{{user.imageUrl}}\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                        </li>\r\n                        <li class=\"bold\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" (click)=\"openCart()\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">18</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">John</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a href=\"#\">My Profile</a></li>\r\n            <li><a href=\"#\">Shopping cart</a></li>\r\n            <li><a href=\"#\">Wishlist</a></li>\r\n\r\n            <li><a href=\"#\">Order History</a></li>\r\n            <li><a href=\"#\">Customer Support</a></li>\r\n\r\n            <li><a href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"true\" [closeOnEscape]=\"true\" [hideCloseButton]=\"true\">\r\n  <modal-header>\r\n    <div class=\"modal-logo\">\r\n    </div>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div id=\"welcomeRegistrationDiv\" class=\"modal-div\">\r\n        <div class=\"row signup-title\">\r\n            <h3 class=\"semibold modal-heading\">Sign Up to browse Products!</h3>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn fb\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                    <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign Up with Facebook\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn google\">\r\n                <div class=\"btnLogo\" (click)=\"loginWithGmail()\">\r\n                    <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign Up with Google\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <a class=\"btn btn-block socialBtn email\" (click)=\"openSignUpModalDiv()\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n        <div class=\"row ultralight\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row semibold\">\r\n            <a (click)=\"openLoginModalDiv()\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n    </div>\r\n    <div id=\"registration-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n        <div class=\"row signup-title almost-done\">\r\n            <h3 class=\"semibold modal-heading\">Almost done!</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>First Name</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"FirstName\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"firstNameRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">First Name is Required</label>\r\n            </div>\r\n            <div id=\"firstNameSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">First Name cannot contain numbers</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>Last Name</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"LastName\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"lastNameRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Last Name is Required</label>\r\n            </div>\r\n            <div id=\"lastNameSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Last Name cannot contain numbers</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>Email</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"Email\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"emailRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>Password</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"Password\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"passwordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n            <div id=\"passwordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Password must contains alpha numeric characters</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"signUpWithEmail()\" class=\"btn btn-block socialBtn login\">\r\n                Sign Up\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold already-an-account signUp-btn-div\">\r\n            <a class=\"\">\r\n                Already have an Account?\r\n            </a>\r\n        </div>\r\n    </div>\r\n    <div id=\"login-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Login</h3>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn fb\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                    <i class=\"fa fa-facebook\" aria-hidden=\"true\"></i>\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign Up with Facebook\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn google\">\r\n                <div class=\"btnLogo\" (click)=\"loginWithGmail()\">\r\n                    <i class=\"fa fa-google\" aria-hidden=\"true\"></i>\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign Up with Google\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row ultralight\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>Email</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"LoginEmail\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"emailLoginRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailLoginNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>Password</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"LoginPassword\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"passwordLoginRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"signInWithEmail()\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold already-an-account signUp-btn-div\">\r\n            <a (click)=\"forgot_password_modal()\">\r\n                Forgot password?\r\n            </a>\r\n        </div>\r\n        <div id=\"invalidLogin\" class=\"error\">\r\n            <label class=\"texxt\">{{loginError}}</label>\r\n        </div>\r\n    </div>\r\n    <div id=\"forgot-password-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Forgot Password</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"label-login texxt\">\r\n                <label>Email</label>\r\n            </div>\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"Email\" class=\"form-control\"/>\r\n            </div>\r\n            <div id=\"emailRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a class=\"btn btn-block socialBtn login\">\r\n                Submit\r\n            </a>\r\n        </div>\r\n    </div>\r\n  </modal-content>\r\n</modal>\r\n"
 
 /***/ },
 
@@ -14560,7 +14801,7 @@ var routes = [
     { path: '', component: weblayout_component_1.WebLayout, children: [
             { path: '', redirectTo: 'index', pathMatch: 'full' },
             { path: 'index', loadChildren: function () { return __webpack_require__.e/* System.import */(15).then(__webpack_require__.bind(null, "./src/app/home/home.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(16).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(17).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(19).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'checkout', loadChildren: function () { return __webpack_require__.e/* System.import */(18).then(__webpack_require__.bind(null, "./src/app/checkout/checkout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }

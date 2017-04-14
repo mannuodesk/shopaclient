@@ -4365,10 +4365,7 @@ input[type="text"]:focus{
 #forgot-password-modal{
     display:none;
 }
-.main-row{
-   margin-left: 75px ;
-    margin-right: 75px ;
-}
+<<<<<<< working copy
 .error label{
     color: red;
     font-size: 12px;
@@ -4385,4 +4382,9 @@ input[type="text"]:focus{
 }
 #invalidLogin{
     margin-top: 5px;
+=======
+.main-row{
+   margin-left: 75px ;
+    margin-right: 75px ;
+>>>>>>> merge rev
 }

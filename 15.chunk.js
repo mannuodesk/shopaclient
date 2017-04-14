@@ -104,9 +104,9 @@ var Home = (function () {
         else {
             console.log(productId);
             this._productdetail.getProductDetails(productId).subscribe(function (a) {
-                _this.product = a;
+                _this.product = a.data;
                 _this.productdescription = _this.product.FullDescription;
-                _this.productprice = _this.product.ProductPrice.Price;
+                _this.productprice = _this.product.ProductPrice.PriceValue;
                 _this.producttitle = _this.product.Name;
                 _this.productimages = _this.product.PictureModels;
                 _this.oldprice = _this.product.ProductPrice.OldPrice;
@@ -289,26 +289,6 @@ var ProductService = (function () {
     var _a;
 }());
 exports.ProductService = ProductService;
-
-
-/***/ },
-
-/***/ "./src/app/services/UrlService.ts":
-/***/ function(module, exports) {
-
-"use strict";
-"use strict";
-var UrlService = (function () {
-    //public baseUrl:string = "http://localhost:15536/";
-    function UrlService() {
-        this.baseUrl = "http://shopabackend.azurewebsites.net/";
-    }
-    UrlService.prototype.getUrl = function () {
-        return this.baseUrl;
-    };
-    return UrlService;
-}());
-exports.UrlService = UrlService;
 
 
 /***/ }
