@@ -14371,9 +14371,6 @@ var Header = (function () {
         }
         if (this.user != null) {
         }
-        else {
-            this.user = new User_1.User();
-        }
         /**
          * End
          */
@@ -14411,6 +14408,7 @@ var Header = (function () {
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail());
             var googleCustomer = new User_1.User();
+            this.user = JSON.parse(localStorage.getItem('user'));
             console.log(this.user);
             googleCustomer.Id = this.user.Id;
             googleCustomer.Email = profile.getEmail();
