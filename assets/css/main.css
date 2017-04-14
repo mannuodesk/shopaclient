@@ -1070,15 +1070,18 @@ header-icons path {fill: #bebebe !important;}
     border: 1px solid #d8dbe2;
     margin-top: 6px;
     display: none;
+    padding-left: 0px;
 }
 .admin-options li{
      border-bottom: 1px solid #d8dbe2;
     color: #adadad;
     display: block;
+    padding-left:20px;
 }
 .admin-options li a{
     display: block;
     padding: 10px 15px;
+    color: #34bac5;
 }
 .admin-options li:hover{
     background: #f4f4f4 none repeat scroll 0 0;
@@ -4384,5 +4387,8 @@ input[type="text"]:focus{
     border-radius: 30px;
 }
 #invalidLogin{
+    margin-top: 5px;
+}
+#invalidRegistration{
     margin-top: 5px;
 }
