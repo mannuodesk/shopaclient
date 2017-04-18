@@ -2169,6 +2169,7 @@ Search page
     width: 25%;
     border-right: 1px solid #e5e5e5;
     padding: 0 20px 100px 20px;
+    background:none;
 }
 .search-page .view-wrapper{
     float: left;
@@ -3568,7 +3569,9 @@ Responsive
 
 /*========*/
 @media (max-width: 560px) {
-
+    .products-wrapper.grid-3 .product{
+        width:100% !important;
+    }
         .checkout-tabs li.active{
         padding: 11px 11px 0px 25px !important;
     }
@@ -3878,6 +3881,115 @@ Modal
 }
 
 /*============================
+Shopa search
+===========================*/
+
+.side-title{
+    color:#8a8c90;
+    font-size:26px;
+    margin-top: 42px;
+    font-family:myriad_medium;
+}
+.side-content-2{
+    margin-top:10px;
+}
+.side-content-2 h4{
+    font-size:20px;
+    color:black;
+    font-family: myriad_semibold;
+}
+.side-content-2.first{
+    margin-top:25px;
+}
+.side-content-2 h4{
+    margin-bottom:20px;
+}
+.min-price,.max-price,.dash{
+    position:relative;
+    float:left;
+}
+.dash{
+    padding:0px 15px 0 15px;
+    float: left;
+}
+.min-price,.max-price{
+    width:40%;
+}
+.search-fields{
+    border:1px solid #e4e6ed;
+    color:#8a8c90;
+    padding-left:10px;
+    background:white !important;
+}
+ .search-page .sidebar{
+     border-right:none !important;
+     position:relative !important;
+}
+.searched-products{
+    position: relative;
+    float:left;
+    width:75%;
+}
+
+.grid-3{
+ margin-left: 270px !important;
+}
+.products-wrapper.grid-3 .product{
+     float: left;
+    width: 18%;
+    padding: 12px;
+}
+.products-wrapper.grid-3 .product .product-inner{
+height:150px !important;
+}
+
+.grid-3 .product .discounted-tag{
+   background: #34bac5 none repeat scroll 0 0;
+    border-radius: 25px;
+    bottom: auto;
+    color: #fff;
+    display: block;
+    font-size: 18px;
+    left: auto;
+    padding: 14px 7px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 50px;
+    height: 50px;
+    right: -15px;
+    top: -15px;
+}
+.grid-3 .side-title{
+        color:#8a8c90;
+        font-size:26px;
+        font-family:myriad_medium;
+        text-align:center;
+        margin-top:30px;
+        margin-bottom:32px;
+}
+
+@media (max-width:992px) and (min-width:768px) {
+    
+  
+    .products-wrapper.grid-3 .product{
+        width: 32%;
+    }
+  
+}
+
+@media (min-width:1300px) {
+    
+  
+    .products-wrapper.grid-3 .product{
+      width: 25%;
+    }
+  
+}
+/*============================
+Shopa search
+===========================*/
+
+/*============================
 Shopa Cart
 ===========================*/
 
@@ -4065,6 +4177,7 @@ margin-top:40px;
     font-weight:bold;
     padding-left: 8px;
     border-radius:50%;
+    cursor: pointer;
 }
 
 @media only screen 
@@ -4123,7 +4236,7 @@ and (orientation : landscape) {
     .main-row{
    margin-left: 0px !important;
     margin-right: 0px !important;
-}
+     }
     .preview-unit{
       padding-left:0 !important;
     }
@@ -4157,6 +4270,8 @@ and (orientation : landscape) {
         padding-left:0;
         padding-right:0;
     }
+    .grid-3{margin-left: 0 !important;
+	}
     .main-row{
    margin-left: 0px !important;
     margin-right: 0px !important;
@@ -4165,15 +4280,35 @@ and (orientation : landscape) {
     
   
 }
+
+@media (min-width:1600px){
+    .main-row{
+            margin-left:75px  !important;
+            margin-right:75px !important;
+        }
+        .order-image{
+        width: 100% !important;
+        height: 400px !important;
+        }
+}
+
 @media (min-width:1200px){
-.main-row{
-        margin-left:75px  !important;
-        margin-right:75px !important;
+    .main-row{
+            margin-left:75px  !important;
+            margin-right:75px !important;
+        }
+    .order-image{
+        width:270px;
+        height:230px;
     }
 }
 @media (min-width:992px) and (max-width:1200px){
     .order-image{
         height:238px;
+        width:100%;
+    }
+    .order-heading{
+        margin-bottom:30px;
     }
     .main-row{
         margin-left:75px  !important;
@@ -4183,7 +4318,7 @@ and (orientation : landscape) {
 
 @media (min-width:768px) and (max-width:992px){
     .order-image{
-
+        width:100%;
         height:238px;
     }
     .header-items .header-search{
@@ -4202,8 +4337,12 @@ and (orientation : landscape) {
 }
 
 @media (min-width:640px) and (max-width:768px){
-    .order-image{
 
+    .order-heading{
+        margin-bottom:30px;
+    }
+    .order-image{
+        width:100%;
         height:238px;
     }
     .text-data{
@@ -4253,7 +4392,7 @@ and (orientation : landscape) {
     }
 
     .left-page-heading{
-        width:73%;
+       width: 72% !important;
     }
   
     #review-list{
@@ -4262,9 +4401,10 @@ and (orientation : landscape) {
     .text-data{
         width:auto;
         margin-top:15px; 
-    
+        margin-left: 17px;
     }
     .order-image{
+        width:100%;
         height:238px;
     }
     .page-heading{
@@ -4391,4 +4531,10 @@ input[type="text"]:focus{
 }
 #invalidRegistration{
     margin-top: 5px;
+}
+#addToCartErrors{
+    display:none;
+}
+.error-width{
+    width:100%;
 }

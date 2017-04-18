@@ -85,44 +85,7 @@ jQuery(function($) {
 	
 	
     /*=====Checkout====*/
-    $("body").on("click",".checkout-form .step1-next",function(e){
-        var $this = $(this);
-        e.preventDefault();
-        $(".checkout-form .step1").hide();
-        $(".checkout-form .step3").hide();
-        $(".checkout-form .step2").show();
-        $(".checkout-tabs li").removeClass("active");
-        $(".checkout-tabs li:nth-child(2)").addClass("active")
-    });
     
-    $("body").on("click",".checkout-form .step2-next",function(e){
-        var $this = $(this);
-        e.preventDefault();
-        $(".checkout-form .step1").hide();
-        $(".checkout-form .step2").hide();
-        $(".checkout-form .step3").show();
-        $(".checkout-tabs li").removeClass("active");
-        $(".checkout-tabs li:nth-child(3)").addClass("active")
-    });
-    
-    $("body").on("click",".checkout-form .edit-step1",function(e){
-        var $this = $(this);
-        e.preventDefault();
-        $(".checkout-form .step2").hide();
-        $(".checkout-form .step3").hide();
-        $(".checkout-form .step1").show();
-        $(".checkout-tabs li").removeClass("active");
-        $(".checkout-tabs li:nth-child(1)").addClass("active")
-    });
-    $("body").on("click",".checkout-form .edit-step2",function(e){
-        var $this = $(this);
-        e.preventDefault();
-        $(".checkout-form .step1").hide();
-        $(".checkout-form .step3").hide();
-        $(".checkout-form .step2").show();
-        $(".checkout-tabs li").removeClass("active");
-        $(".checkout-tabs li:nth-child(2)").addClass("active")
-    });
     /*=====counter====*/
     if ($('.countdown').length) {
             $('.countdown').each(function(num, ele) {

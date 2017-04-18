@@ -1,37 +1,208 @@
 webpackJsonpac__name_([19],{
 
-/***/ "./src/app/cart/cart.component.ts":
+/***/ "./src/app/checkout/checkout.component.ts":
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery, $) {"use strict";
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/index.js");
-var CartComponent = (function () {
-    function CartComponent(router) {
+var ShippingAddressModel_1 = __webpack_require__("./src/app/models/ShippingAddressModel.ts");
+var CheckoutService_1 = __webpack_require__("./src/app/services/CheckoutService.ts");
+var ShoppingCartService_1 = __webpack_require__("./src/app/services/ShoppingCartService.ts");
+var CheckoutComponent = (function () {
+    function CheckoutComponent(_shoppingCartService, _checkoutService, router) {
+        var _this = this;
+        this._shoppingCartService = _shoppingCartService;
+        this._checkoutService = _checkoutService;
+        this.CountryId = -1;
+        this.states = [];
+        // public _shippingAddress: ShippingAddress[]=[];
+        this.countries = [];
         this.router = router;
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this.shippingAddress = new ShippingAddressModel_1.ShippingAddress();
+        this.populateAllCountries();
+        this.populateShippingInfo();
+        this.shippingAddress = new ShippingAddressModel_1.ShippingAddress();
+        this._shoppingCartService.getAllShoppingCartItems(this.user.Id).subscribe(function (a) {
+            _this.TotalPrice = a.TotalPrice;
+            _this.TotalShippingPrice = a.TotalShippingPrice;
+            _this.LastTotalPrice = _this.TotalPrice + _this.TotalShippingPrice;
+            _this.shoppingCartArray = a.shoppingCartItemDTOList;
+        });
     }
-    CartComponent.prototype.searchResult = function () {
-        this.router.navigate(['/app', 'extra', 'search']);
+    CheckoutComponent.prototype.onCountryChange = function () {
+        this.CountryId = jQuery('#countryId').val();
+        this.Country = jQuery("#countryId option[value=" + this.CountryId + "]").text().trim();
+        this.getStatesByCountry(this.CountryId);
     };
-    CartComponent = __decorate([
+    CheckoutComponent.prototype.onStateChange = function () {
+        this.StateProvinceId = jQuery('#stateId').val();
+        this.StateProvinceText = jQuery('#stateId').text();
+        this.getStatesByCountry(this.CountryId);
+    };
+    CheckoutComponent.prototype.populateAllCountries = function () {
+        var _this = this;
+        this._checkoutService.getAllCountries().subscribe(function (a) {
+            _this.countries = a.data;
+            console.log(_this.countries);
+        });
+    };
+    CheckoutComponent.prototype.getStatesByCountry = function (countryId) {
+        var _this = this;
+        this._checkoutService.getAllStatesOfConutry(countryId).subscribe(function (a) {
+            console.log(a);
+            _this.states = a.data;
+        });
+    };
+    CheckoutComponent.prototype.populateShippingInfo = function () {
+        var _this = this;
+        this._checkoutService.getShippingAddress(this.user.Id).subscribe(function (a) {
+            if (a.data.shippingAddress != null) {
+                _this.shippingAddress = a.data.shippingAddress;
+                _this.FirstName = _this.shippingAddress.FirstName;
+                _this.Address1 = _this.shippingAddress.Address1;
+                _this.Address2 = _this.shippingAddress.Address2;
+                _this.City = _this.shippingAddress.City;
+                _this.Country = _this.shippingAddress.Country;
+                _this.CountryId = _this.shippingAddress.CountryId;
+                _this.FaxNumber = _this.shippingAddress.FaxNumber;
+                _this.CreatedOnUtc = _this.shippingAddress.CreatedOnUtc;
+                _this.PhoneNumber = _this.shippingAddress.PhoneNumber;
+                _this.ZipPostalCode = _this.shippingAddress.ZipPostalCode;
+                _this.StateProvinceText = _this.shippingAddress.StateProvinceText;
+            }
+        });
+    };
+    CheckoutComponent.prototype.populateShippingModel = function () {
+        {
+            var checkErrorCount = 0;
+            if (this.FirstName !== undefined && this.FirstName != "" && this.FirstName.trim().length != 0) {
+                this.shippingAddress.FirstName = this.FirstName;
+            }
+            else {
+                jQuery('#firstNameRequiredError').show();
+                checkErrorCount = checkErrorCount + 1;
+            }
+            if (this.Address1 !== undefined && this.Address1 != "") {
+                this.shippingAddress.Address1 = this.Address1;
+            }
+            else {
+                jQuery('#addressLineOneRequiredError').show();
+                checkErrorCount = checkErrorCount + 1;
+            }
+            if (this.City !== undefined && this.City != "") {
+                this.shippingAddress.City = this.City;
+            }
+            else {
+                jQuery('#cityRequiredError').show();
+                checkErrorCount = checkErrorCount + 1;
+            }
+            if (jQuery('#countryId').val() !== undefined) {
+                this.shippingAddress.CountryId = jQuery('#countryId').val();
+            }
+            else {
+                jQuery('#countryRequiredError').show();
+                checkErrorCount = checkErrorCount + 1;
+            }
+            if (this.ZipPostalCode !== undefined && this.ZipPostalCode != "") {
+                this.shippingAddress.ZipPostalCode = this.ZipPostalCode;
+            }
+            else {
+                jQuery('#zipPostalCodeRequiredError').show();
+                checkErrorCount = checkErrorCount + 1;
+            }
+            if (this.StateProvinceText !== undefined && this.StateProvinceText != "") {
+                this.shippingAddress.StateProvinceText = this.StateProvinceText;
+            }
+            else {
+                jQuery('#stateProvinceRequiredError').show();
+                checkErrorCount = checkErrorCount + 1;
+            }
+            if (checkErrorCount == 0) {
+                this.shippingAddress.Address2 = this.Address2;
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    };
+    CheckoutComponent.prototype.addShippingInfo = function () {
+        jQuery('.error').hide();
+        var flag = this.populateShippingModel();
+        this.shippingAddress.customerId = this.user.Id;
+        this.shippingAddress.orderId = 0;
+        if (flag == true) {
+            this._checkoutService.addShippingInformation(this.shippingAddress).subscribe(function (a) {
+                if (a.code == 200) {
+                    console.log(a);
+                    jQuery(".checkout-form .step1").hide();
+                    jQuery(".checkout-form .step3").hide();
+                    jQuery(".checkout-form .step2").show();
+                    jQuery(".checkout-tabs li").removeClass("active");
+                    jQuery(".checkout-tabs li:nth-child(2)").addClass("active");
+                }
+            });
+        }
+    };
+    CheckoutComponent.prototype.ngOnInit = function () {
+        $("body").on("click", ".checkout-form .step2-next", function (e) {
+            var $this = $(this);
+            e.preventDefault();
+            $(".checkout-form .step1").hide();
+            $(".checkout-form .step2").hide();
+            $(".checkout-form .step3").show();
+            $(".checkout-tabs li").removeClass("active");
+            $(".checkout-tabs li:nth-child(3)").addClass("active");
+        });
+        $("body").on("click", ".checkout-form .edit-step1", function (e) {
+            var $this = $(this);
+            e.preventDefault();
+            $(".checkout-form .step2").hide();
+            $(".checkout-form .step3").hide();
+            $(".checkout-form .step1").show();
+            $(".checkout-tabs li").removeClass("active");
+            $(".checkout-tabs li:nth-child(1)").addClass("active");
+        });
+        $("body").on("click", ".checkout-form .edit-step2", function (e) {
+            var $this = $(this);
+            e.preventDefault();
+            $(".checkout-form .step1").hide();
+            $(".checkout-form .step3").hide();
+            $(".checkout-form .step2").show();
+            $(".checkout-tabs li").removeClass("active");
+            $(".checkout-tabs li:nth-child(2)").addClass("active");
+        });
+    };
+    CheckoutComponent.prototype.onPlaceOrder = function () {
+        var _this = this;
+        this._checkoutService.placeOrder(this.user.Id).subscribe(function (a) {
+            if (a.code == 200) {
+                _this.router.navigate(['/app/index']);
+            }
+        });
+    };
+    CheckoutComponent = __decorate([
         core_1.Component({
-            selector: 'cart',
-            styles: [__webpack_require__("./src/app/cart/cart.style.scss")],
-            template: __webpack_require__("./src/app/cart/cart.template.html"),
-            encapsulation: core_1.ViewEncapsulation.None,
+            selector: 'checkout',
+            styles: [__webpack_require__("./src/app/checkout/checkout.style.scss")],
+            template: __webpack_require__("./src/app/checkout/checkout.template.html"),
+            providers: [CheckoutService_1.CheckoutService, ShoppingCartService_1.ShoppingCartService]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
-    ], CartComponent);
-    return CartComponent;
-    var _a;
+        __metadata('design:paramtypes', [(typeof (_a = typeof ShoppingCartService_1.ShoppingCartService !== 'undefined' && ShoppingCartService_1.ShoppingCartService) === 'function' && _a) || Object, (typeof (_b = typeof CheckoutService_1.CheckoutService !== 'undefined' && CheckoutService_1.CheckoutService) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object])
+    ], CheckoutComponent);
+    return CheckoutComponent;
+    var _a, _b, _c;
 }());
-exports.CartComponent = CartComponent;
+exports.CheckoutComponent = CheckoutComponent;
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js"), __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
 /***/ },
 
-/***/ "./src/app/cart/cart.module.ts":
+/***/ "./src/app/checkout/checkout.module.ts":
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40,18 +211,18 @@ var common_1 = __webpack_require__("./node_modules/@angular/common/index.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/index.js");
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/index.js");
-var cart_component_ts_1 = __webpack_require__("./src/app/cart/cart.component.ts");
+var checkout_component_ts_1 = __webpack_require__("./src/app/checkout/checkout.component.ts");
 exports.routes = [
-    { path: '', component: cart_component_ts_1.CartComponent, pathMatch: 'full' }
+    { path: '', component: checkout_component_ts_1.CheckoutComponent, pathMatch: 'full' }
 ];
-var CartModule = (function () {
-    function CartModule() {
+var CheckoutModule = (function () {
+    function CheckoutModule() {
     }
-    CartModule.routes = exports.routes;
-    CartModule = __decorate([
+    CheckoutModule.routes = exports.routes;
+    CheckoutModule = __decorate([
         core_1.NgModule({
             declarations: [
-                cart_component_ts_1.CartComponent
+                checkout_component_ts_1.CheckoutComponent
             ],
             imports: [
                 common_1.CommonModule,
@@ -60,26 +231,96 @@ var CartModule = (function () {
             ]
         }), 
         __metadata('design:paramtypes', [])
-    ], CartModule);
-    return CartModule;
+    ], CheckoutModule);
+    return CheckoutModule;
 }());
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = CartModule;
+exports.default = CheckoutModule;
 
 
 /***/ },
 
-/***/ "./src/app/cart/cart.style.scss":
+/***/ "./src/app/checkout/checkout.style.scss":
 /***/ function(module, exports) {
 
-module.exports = ""
+module.exports = "/* Osama khawar's Code for checkout */\n.nav-pills.nav-wizard > li {\n  position: relative;\n  overflow: visible;\n  border-right: 15px solid transparent;\n  border-left: 15px solid transparent; }\n\n.nav-pills.nav-wizard > li + li {\n  margin-left: 0; }\n\n.nav-pills.nav-wizard > li:first-child {\n  border-left: 0; }\n\n.nav-pills.nav-wizard > li:first-child a {\n  border-radius: 5px 0 0 5px; }\n\n.nav-pills.nav-wizard > li:last-child {\n  border-right: 0; }\n\n.nav-pills.nav-wizard > li:last-child a {\n  border-radius: 0 5px 5px 0; }\n\n.nav-pills.nav-wizard > li a {\n  border-radius: 0;\n  background-color: #eee; }\n\n.nav-pills.nav-wizard > li:not(:last-child) a:after {\n  position: absolute;\n  content: \"\";\n  top: 0px;\n  right: -20px;\n  width: 0px;\n  height: 0px;\n  border-style: solid;\n  border-width: 20px 0 20px 20px;\n  border-color: transparent transparent transparent #eee;\n  z-index: 150; }\n\n.nav-pills.nav-wizard > li:not(:first-child) a:before {\n  position: absolute;\n  content: \"\";\n  top: 0px;\n  left: -20px;\n  width: 0px;\n  height: 0px;\n  border-style: solid;\n  border-width: 20px 0 20px 20px;\n  border-color: #eee #eee #eee transparent;\n  z-index: 150; }\n\n.nav-pills.nav-wizard > li:hover:not(:last-child) a:after {\n  border-color: transparent transparent transparent #aaa; }\n\n.nav-pills.nav-wizard > li:hover:not(:first-child) a:before {\n  border-color: #aaa #aaa #aaa transparent; }\n\n.nav-pills.nav-wizard > li:hover a {\n  background-color: #aaa;\n  color: #fff; }\n\n.nav-pills.nav-wizard > li.active:not(:last-child) a:after {\n  border-color: transparent transparent transparent #428bca; }\n\n.nav-pills.nav-wizard > li.active:not(:first-child) a:before {\n  border-color: #428bca #428bca #428bca transparent; }\n\n.nav-pills.nav-wizard > li.active a {\n  background-color: #428bca; }\n\n#telephoneNumberRequiredError {\n  display: none; }\n\n#zipPostalCodeRequiredError {\n  display: none; }\n\n#stateProvinceRequiredError {\n  display: none; }\n\n#cityRequiredError {\n  display: none; }\n\n#countryRequiredError {\n  display: none; }\n\n#addressLineOneRequiredError {\n  display: none; }\n\n#firstNameSeverityError {\n  display: none; }\n\n#firstNameRequiredError {\n  display: none; }\n\n.error label {\n  margin-top: 0px;\n  color: red !important; }\n\n.error {\n  margin-top: 0px; }\n"
 
 /***/ },
 
-/***/ "./src/app/cart/cart.template.html":
+/***/ "./src/app/checkout/checkout.template.html":
 /***/ function(module, exports) {
 
-module.exports = "<div class=\"container-fluid cart-page\">\n\n    <h1 class=\"page-heading\">Shopping Cart</h1>\n\n\n\n    <div class=\"row main-row\">\n\n    <div class=\"col-md-8 col-sm-12 col-xs-12 col-lg-7\">  \n        \n         <div class=\"row order-row\">   <!-- order row starts -->\n                  \n\n             <div class=\"col-md-5 col-sm-5 col-xs-12 col-lg-5\">\n\n                <div class=\"order-image\" style=\"background:url(assets/img/block-img.jpg)\">\n                </div>\n\n             </div>\n\n             <div class=\"col-md-6 col-sm-6 col-lg-6 text-data\">\n\n                <div class=\"row\">\n\n                 <p class=\"order-heading\">Luxury Men's Date Watch Stainless Steel Leather Analog Quartz Military Watches</p>\n\n                 <div class=\"order-size\">\n\n                        <div class=\"size-heading\">\n                            <p>Size:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>L</p>\n                        </div>\n\n                 </div>\n                 \n                <div class=\"order-color\">\n\n                        <div class=\"size-heading\">\n                            <p>Color:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>Brown</p>\n                        </div>\n\n                 </div>\n\n                </div>\n\n\n                <div class=\"row\">\n\n                                    <div class=\"order-quantity\">\n\n                        <div class=\"size-heading\">\n                            <p>Quantity:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <div class=\"selections\">\n                                    <div class=\"fancy_select select-category\">\n                                        <div class=\"select_triger\">\n                                            <span class=\"text\">1</span>\n                                            <i class=\"fa fa-angle-down\"></i>\n                                        </div>\n                                        <div class=\"select_options\">\n                                            <span class=\"selected\">1</span>\n                                            <span>2</span>\n                                            <span>3</span>\n                                            <span>4</span>\n                                            <span>5</span>\n                                        </div>\n                                    </div> \n                            </div>\n                        </div>\n\n                 </div> \n\n                </div>\n\n\n                    <div class=\"row\">\n\n                      <div class=\"order-shipping\">\n\n                        <div class=\"size-heading\">\n                            <p>Shipping:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>$4.01</p>\n                        </div>\n\n                    </div> \n\n                </div>\n\n                <div class=\"row\">\n\n                    <div class=\"order-arrival\">\n\n                        <div class=\"size-heading\">\n                            <p>Estimated Arrival:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>May 24 - Jun 3</p>\n                        </div>\n\n                    </div> \n\n                </div>\n\n                <div class=\"row\">\n\n                    <div class=\"order-price\">\n\n                        <div class=\"oldPrice\">\n                            <p><del>$46.00</del></p>\n                        </div>\n\n                        <div class=\"newPrice\">\n                            <p>$10.82</p>\n                        </div>\n\n                    </div> \n\n                </div>\n\n                \n            </div>\n\n\n                <div class=\"col-md-1 col-sm-1 col-lg-1 col-xs-12 deleter\">\n                    <div class=\"delete-row\">\n                        <span>x</span>\n                   </div>\n                </div>\n\n\n        </div>   <!-- order row ends -->\n          \n\n\n\n        <div class=\"row order-row\">   <!-- order row starts -->\n\n                \n\n             <div class=\"col-md-5 col-sm-5 col-xs-12 col-lg-5\">\n\n                <div class=\"order-image\" style=\"background:url(assets/img/block-img2.jpg)\">\n                </div>\n\n             </div>\n\n             <div class=\"col-md-6 col-sm-6 col-lg-6 text-data\">\n\n                <div class=\"row\">\n\n                 <p class=\"order-heading\">Luxury Men's Date Watch Stainless Steel Leather Analog Quartz Military Watches</p>\n\n                </div>\n            \n                <div class=\"row\">\n\n                 <div class=\"order-size\">\n\n                        <div class=\"size-heading\">\n                            <p>Size:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>L</p>\n                        </div>\n\n                 </div>\n                 \n                <div class=\"order-color\">\n\n                        <div class=\"size-heading\">\n                            <p>Color:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>Brown</p>\n                        </div>\n\n                 </div>\n\n                </div>\n\n\n                <div class=\"row\">\n\n                                    <div class=\"order-quantity\">\n\n                        <div class=\"size-heading\">\n                            <p>Quantity:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <div class=\"selections\">\n                                    <div class=\"fancy_select select-category\">\n                                        <div class=\"select_triger\">\n                                            <span class=\"text\">1</span>\n                                            <i class=\"fa fa-angle-down\"></i>\n                                        </div>\n                                        <div class=\"select_options\">\n                                            <span class=\"selected\">1</span>\n                                            <span>2</span>\n                                            <span>3</span>\n                                            <span>4</span>\n                                            <span>5</span>\n                                        </div>\n                                    </div> \n                            </div>\n                        </div>\n\n                 </div> \n\n                </div>\n\n\n                    <div class=\"row\">\n\n                      <div class=\"order-shipping\">\n\n                        <div class=\"size-heading\">\n                            <p>Shipping:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>$4.01</p>\n                        </div>\n\n                    </div> \n\n                </div>\n\n                <div class=\"row\">\n\n                    <div class=\"order-arrival\">\n\n                        <div class=\"size-heading\">\n                            <p>Estimated Arrival:</p>\n                        </div>\n\n                        <div class=\"size-value\">\n                            <p>May 24 - Jun 3</p>\n                        </div>\n\n                    </div> \n\n                </div>\n\n                <div class=\"row\">\n\n                    <div class=\"order-price\">\n\n                        <div class=\"oldPrice\">\n                            <p><del>$46.00</del></p>\n                        </div>\n\n                        <div class=\"newPrice\">\n                            <p>$10.82</p>\n                        </div>\n\n                    </div> \n\n                </div>\n\n                \n            </div>\n\n                <div class=\"col-md-1 col-sm-1 col-lg-1 col-xs-12 deleter\">\n                    <div class=\"delete-row\">\n                        <span>x</span>\n                   </div>\n                </div>\n\n            \n        </div>   <!-- order row ends -->\n\n\n\n\n    </div>   \n\n\n    <div class=\"col-md-4 col-sm-8 col-xs-12\">   <!-- Order summary column -->\n\n            <div class=\"order-summary\">  <!-- order -summary div-->\n\n                    <h1 class=\"order-summary-heading\">Order Summary</h1>\n\n                <div class=\"row\">\n                    <div class=\"left-item-total\">\n\n                            <div class=\"item-total-heading\">\n                                <p>Item Total:</p>\n                            </div>\n                            <div class=\"item-total-value\">\n                                <p>$22.82</p>\n                            </div>\n\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"left-estimated-shipping\">\n\n                            <div class=\"item-total-heading\">\n                                <p>Estimated Shipping:</p>\n                            </div>\n                            <div class=\"item-total-value\">\n                                <p>$4.01</p>\n                            </div>\n\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"left-order-total\">\n\n                             <div class=\"item-total-heading\">\n                                <p class=\"final-total\">TOTAL</p>\n                            </div>\n                            <div class=\"item-total-value\">\n                                <p class=\"final-total\">$26.82 <small>USD</small></p>\n                            </div>\n\n                    </div>\n                </div>\n\n            </div>   <!-- order -summary div ends-->\n                    \n                    \n                    \n                    <div class=\"checkout-button\">\n\n                        <button class=\"btn btn-checkout\">Checkout</button>\n\n                    </div>\n\n    </div>  <!-- Order summary column ends -->\n\n\n\n</div>"
+module.exports = "<div class=\"main-section\">\n        \n    <div class=\"container\">\n        <div class=\"checkout-page\">\n            \n            <div class=\"my-checkout\">\n                <div class=\"row\">\n                    <div class=\"col-sm-12 col-md-7 col-lg-7 col-xs-12\"> <!-- Left column starts -->\n                        <div class=\"checkout-form clearfix\">\n                            <ul class=\"checkout-tabs clearfix\">\n                                <li class=\"active\">Ship to</li>\n                                <li>Payment</li>\n                                <li>Review</li>\n                            </ul>\n\n                            <div class=\"heading-top\">\n                                <div class=\"left-page-heading\">\n                                    <h1 class=\"ship-to\">SHIP TO</h1>\n                                </div>\n                                <div class=\"right-required\">\n                                    <p><span class=\"required\">*</span>Required</p>\n                            </div>\n                    \n                            <div class=\"step1\">\n                                                   \n                                <div class=\"clearfix\"></div>\n                                <ul class=\"form-details\">\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Full name</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\" [(ngModel)]=\"FirstName\"  placeholder=\"John Doe\" >\n                                        </div>\n                                        <div id=\"firstNameRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">First Name is Required</label>\n                                        </div>\n                                        <div id=\"firstNameSeverityError\" class=\"error\">\n                                            <label class=\"texxt\">First Name cannot contain numbers</label>\n                                        </div>\n                                    </li>\n                                   \n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Address Line 1</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\" placeholder=\"House no 1, Street 8, Park Avenue\"\n                                            [(ngModel)]=\"Address1\"/>\n                                        </div>\n                                        <div id=\"addressLineOneRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">Address Line 1 is Required</label>\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Address Line 2</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\"   [(ngModel)]=\"Address2\"  placeholder=\"Address\">\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Country</label></div>\n                                        <select id=\"countryId\" [(ngModel)]=\"CountryId\" (change)=\"onCountryChange()\" class=\"selection\">\n                                            <option *ngFor=\"let country of countries\" value=\"{{country.countryId}}\">{{country.countryName}}\n                                            </option>\n                                        </select>\n                                        <div id=\"countryRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">Country is Required</label>\n                                        </div>\n                                    </li>\n                                     <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">State/Province</label></div>\n                                        <div class=\"selection\">\n                                            <select id=\"stateId\" [(ngModel)]=\"StateProvinceId\" (change)=\"onStateChange(1)\" class=\"selection\">\n                                            <option *ngFor=\"let state of states\" value=\"{{state.stateId}}\">{{state.stateName}}\n                                            </option>\n                                        </select>\n                                        </div>\n                                        <div id=\"stateProvinceRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">State/Province is Required</label>\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">City</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\"    [(ngModel)]=\"City\" placeholder=\"City of Hope\">\n                                        </div>\n                                        <div id=\"cityRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">City is Required</label>\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Zip/Postal code</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\"  [(ngModel)]=\"ZipPostalCode\" placeholder=\"44000\">\n                                        </div>\n                                        <div id=\"zipPostalCodeRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">Zip/Postal code is Required</label>\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Telephone number</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\"  [(ngModel)]=\"PhoneNumber\" placeholder=\"452 2325 122\">\n                                        </div>\n                                        <div id=\"telephoneNumberRequiredError\" class=\"error\">\n                                            <label class=\"texxt\">Telephone NUmber is Required</label>\n                                        </div>\n                                    </li>\n                                </ul>\n                                <div class=\"control-btns clearfix\">\n                                    <a (click)=\"addShippingInfo()\" class=\"btn btn-blue next-btn step1-next pull-right\">Next</a>\n                                </div>\n                            </div>\n                            <!--===-->\n                            \n                            <div class=\"step2\">\n                                <ul class=\"form-details\">\n                                     <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Credit card number</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\" placeholder=\"**** **** **** 2323\">\n                                        </div>\n                                    </li>\n                                     <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Security code</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\" placeholder=\"3 or 4 digit security code on the back of your card\">\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Expiration date</label></div>\n                                        <div class=\"selection\">\n                                            <div class=\"row\">\n                                                <div class=\"col-md-6\">\n                                                    <div class=\"custome-select clearfix\">\n                                                        <b class=\"fa fa-angle-down\"></b>\n                                                        <span>Select</span>\n                                                        <select>\n                                                            <option selected value=\"\">Select</option>\n                                                            <option value=\"\">Option</option>\n                                                            <option value=\"\">Option</option>               \n                                                        </select>\n                                                    </div>\n                                                </div>\n                                                <div class=\"col-md-6\">\n                                                    <div class=\"custome-select clearfix\">\n                                                        <b class=\"fa fa-angle-down\"></b>\n                                                        <span>Select</span>\n                                                        <select>\n                                                            <option selected value=\"\">Select</option>\n                                                            <option value=\"\">Option</option>\n                                                            <option value=\"\">Option</option>               \n                                                        </select>\n                                                    </div>\n                                                </div>\n                                            </div>\n                                        </div>\n                                    </li>\n                                    <li class=\"clearfix\">\n                                        <div class=\"text\"><label class=\"required\">Billing Zip/Postal code</label></div>\n                                        <div class=\"selection\">\n                                            <input type=\"text\" placeholder=\"Zip/postal code from the address registered\">\n                                        </div>\n                                    </li>\n                                </ul>\n                                <div class=\"control-btns clearfix\">\n                                    <a class=\"btn btn-blue next-btn step2-next pull-right\">Next</a>\n                                </div>\n                            </div>\n                            <!--====-->\n                            \n                            <div class=\"step3\">\n                                <div class=\"review-order\">\n                                    <h5>Order summary</h5>\n                                    <div class=\"price-review\">\n                                        <ul class=\"small\">\n                                            <li>\n                                                <span class=\"tag\">Item total</span>\n                                                <span class=\"price\">$ {{TotalPrice}}</span>\n                                            </li>\n                                            <li>\n                                                <span class=\"tag\">Estimated shipping</span>\n                                                <span class=\"price\">$ {{TotalShippingPrice}}</span>\n                                            </li>\n                                        </ul>\n                                        <hr>\n                                        <ul class=\"big\">\n                                            <li class=\"total\">\n                                                <span class=\"tag\"><b>Order Total</b></span>\n                                                <span class=\"price\"><b>US $ {{LastTotalPrice}}</b></span>\n                                            </li>\n                                            <li class=\"approx\">\n                                                <span class=\"tag\">*Approx</span>\n                                                <span class=\"price\">US $ {{LastTotalPrice}}</span>\n                                            </li>\n                                        </ul>\n                                        <a (click)=\"onPlaceOrder()\" class=\"cart-btn btn \">Place Order</a>\n                                    </div>\n                                    \n                                    <h5>Billing information</h5>\n                                    <div class=\"price-review\">\n                                        <p>Credit card <br>MasterCard ****7234</p>\n                                        <a class=\"edit-btn edit-step2\" href=\"#\">Edit</a>\n                                    </div>\n                                    \n                                    <h5>Shipping information</h5>\n                                    <div class=\"price-review\">\n                                        <p>{{firstName}} {{LastName}}<br>\n                                        {{Address1}}<br>\n                                       {{Country}}, {{ZipPostalCode}}</p>\n                                        <a class=\"edit-btn edit-step1\" href=\"#\">Edit</a>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n\n                    <div class=\"col-md-5 col-sm-12 col-lg-5 col-xs-12\">\n                        <div class=\"cart-preview-outer\">\n                            <div class=\"cart-preview\">\n                            <h3>Shopping Cart</h3>\n                            <div *ngFor=\"let shoppingCartItem of shoppingCartArray\" class=\"preview-unit\">\n                                <figure class=\"visual\" [ngStyle]=\"{'background-image': 'url(' + shoppingCartItem.pictureUrl + ')'}\"></figure>\n                                <span class=\"name\">{{shoppingCartItem.productName}}</span>\n                             <!--   <span class=\"star-rating star-4\"></span>\n                                <span class=\"count\">(78)</span> -->\n\n                                <ul class=\"type\">\n                                    <li>\n                                        <span class=\"tag\">Quantity:</span>\n                                        <span class=\"value\">\t1</span>\n                                    </li>\n                                    <li>\n                                        <span class=\"tag\">Shipping: </span>\n                                        <span class=\"value\">${{shoppingCartItem.shippingCost}}</span>\n                                    </li>\n                                     <li>\n                                        <span class=\"tag\">Estimated Arrival: </span>\n                                        <span class=\"value\">{{shoppingCartItem.estimatedShippingTime}}</span>\n                                    </li>\n                                </ul>\n                                 <del class=\"previous-price\" *ngIf=\"shoppingCartItem.oldPrice != 0\">$ {{shoppingCartItem.oldPrice}}</del>\n                                <span class=\"discounted\">$ {{shoppingCartItem.price}} </span>\n                               \n                            </div>\n                            \n                        </div>\n                        </div>\n                    </div>\n              <!--  </div>    Left column ends -->\n\n            </div>\n        </div>\n    </div>\n </div>\n </div>"
+
+/***/ },
+
+/***/ "./src/app/models/ShippingAddressModel.ts":
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+var ShippingAddress = (function () {
+    function ShippingAddress() {
+    }
+    return ShippingAddress;
+}());
+exports.ShippingAddress = ShippingAddress;
+var UserAddressModel = (function () {
+    function UserAddressModel() {
+    }
+    return UserAddressModel;
+}());
+exports.UserAddressModel = UserAddressModel;
+
+
+/***/ },
+
+/***/ "./src/app/services/CheckoutService.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var http_1 = __webpack_require__("./node_modules/@angular/http/index.js");
+__webpack_require__("./node_modules/rxjs/add/operator/map.js");
+var UrlService_1 = __webpack_require__("./src/app/services/UrlService.ts");
+var CheckoutService = (function () {
+    function CheckoutService(http) {
+        this.http = http;
+        this.urlService = new UrlService_1.UrlService();
+    }
+    CheckoutService.prototype.getAllCountries = function () {
+        return this.http.get(this.urlService.baseUrl + 'api/default/getListOfCountries')
+            .map(function (res) { return res.json(); });
+    };
+    CheckoutService.prototype.getShippingAddress = function (customerId) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/getShippingInfoBillingInfo/?customerId=' + customerId)
+            .map(function (res) { return res.json(); });
+    };
+    CheckoutService.prototype.addShippingInformation = function (model) {
+        var body = JSON.stringify(model);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ method: 'post', headers: headers });
+        return this.http.post(this.urlService.baseUrl + "api/default/AddShippingInfo", body, options)
+            .map(function (res) { return res.json(); });
+    };
+    CheckoutService.prototype.placeOrder = function (customerId) {
+        return this.http.get(this.urlService.baseUrl + "api/default/PlaceOrder/?customerId=" + customerId)
+            .map(function (res) { return res.json(); });
+    };
+    CheckoutService.prototype.getAllStatesOfConutry = function (countryId) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/getListOfStates/?countryId=' + countryId)
+            .map(function (res) { return res.json(); });
+    };
+    CheckoutService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+    ], CheckoutService);
+    return CheckoutService;
+    var _a;
+}());
+exports.CheckoutService = CheckoutService;
+
 
 /***/ }
 

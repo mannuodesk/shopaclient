@@ -14241,6 +14241,63 @@ exports.User = User;
 
 /***/ },
 
+/***/ "./src/app/services/ShoppingCartService.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var http_1 = __webpack_require__("./node_modules/@angular/http/index.js");
+__webpack_require__("./node_modules/rxjs/add/operator/map.js");
+var UrlService_1 = __webpack_require__("./src/app/services/UrlService.ts");
+var ShoppingCartService = (function () {
+    function ShoppingCartService(http) {
+        this.http = http;
+        this.urlService = new UrlService_1.UrlService();
+    }
+    ShoppingCartService.prototype.addToCart = function (addToCartDTO) {
+        var body = JSON.stringify(addToCartDTO);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ method: 'post', headers: headers });
+        return this.http.post(this.urlService.baseUrl + 'api/default/AddProductToCart_Details', body, options)
+            .map(function (res) { return res.json(); });
+    };
+    ShoppingCartService.prototype.getAllShoppingCartItems = function (customerId) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/GetCartCountByCustomerId?customerId=' + customerId)
+            .map(function (res) { return res.json(); });
+    };
+    ShoppingCartService.prototype.getShoppingCartCount = function (customerId) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/GetCustomerCartCount?customerId=' + customerId)
+            .map(function (res) { return res.json(); });
+    };
+    ShoppingCartService.prototype.deleteShoppingCartItem = function (customerId, shoppingCartItemId, shoppingCartTypeId) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/removeShoppingCartItem?customerId=' + customerId +
+            '&shoppingCartItemId=' + shoppingCartItemId + '&shoppingCartTypeId=' + shoppingCartTypeId)
+            .map(function (res) { return res.json(); });
+        /* return this.http.get(this.urlService.baseUrl +'api/default/AddProductToCart/?customerId='+
+     customerId+'&productId='+productId+'&shoppingCartTypeId=1')
+         .map(res => res.json());*/
+    };
+    ShoppingCartService.prototype.TestService = function () {
+        var reqObj = { Name: 'umer', Id: 1 };
+        var body = JSON.stringify(reqObj);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.urlService.baseUrl + 'api/default/TestService', body, options)
+            .map(function (res) { return res.json().data; });
+    };
+    ShoppingCartService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+    ], ShoppingCartService);
+    return ShoppingCartService;
+    var _a;
+}());
+exports.ShoppingCartService = ShoppingCartService;
+
+
+/***/ },
+
 /***/ "./src/app/services/SigninSignupService.ts":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -14348,12 +14405,14 @@ var ng2_modal_1 = __webpack_require__("./node_modules/ng2-modal/index.js");
 var ng2_facebook_sdk_1 = __webpack_require__("./node_modules/ng2-facebook-sdk/dist/esm/index.js");
 var User_1 = __webpack_require__("./src/app/models/User.ts");
 var SigninSignupService_1 = __webpack_require__("./src/app/services/SigninSignupService.ts");
+var ShoppingCartService_1 = __webpack_require__("./src/app/services/ShoppingCartService.ts");
 var UserChannelsEnum_1 = __webpack_require__("./src/app/enums/UserChannelsEnum.ts");
 var Header = (function () {
-    function Header(fb, _signinsignup) {
+    function Header(fb, _signinsignup, shoppingCartService) {
         var _this = this;
         this.fb = fb;
         this._signinsignup = _signinsignup;
+        this.shoppingCartService = shoppingCartService;
         /**
          * For Guest User
          */
@@ -14374,6 +14433,14 @@ var Header = (function () {
             });
         }
         if (this.user != null) {
+            /*
+             Cart Count Service
+             */
+            this.shoppingCartService.getShoppingCartCount(this.user.Id).subscribe(function (a) {
+                if (a.code == 200) {
+                    _this.user.cartCount = a.data;
+                }
+            });
         }
         /**
          * End
@@ -14688,12 +14755,12 @@ var Header = (function () {
             selector: 'headers',
             template: __webpack_require__("./src/app/weblayout/header/header.template.html"),
             encapsulation: core_1.ViewEncapsulation.None,
-            providers: [SigninSignupService_1.SigninSignupService]
+            providers: [SigninSignupService_1.SigninSignupService, ShoppingCartService_1.ShoppingCartService]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ng2_facebook_sdk_1.FacebookService !== 'undefined' && ng2_facebook_sdk_1.FacebookService) === 'function' && _b) || Object, (typeof (_c = typeof SigninSignupService_1.SigninSignupService !== 'undefined' && SigninSignupService_1.SigninSignupService) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof ng2_facebook_sdk_1.FacebookService !== 'undefined' && ng2_facebook_sdk_1.FacebookService) === 'function' && _b) || Object, (typeof (_c = typeof SigninSignupService_1.SigninSignupService !== 'undefined' && SigninSignupService_1.SigninSignupService) === 'function' && _c) || Object, (typeof (_d = typeof ShoppingCartService_1.ShoppingCartService !== 'undefined' && ShoppingCartService_1.ShoppingCartService) === 'function' && _d) || Object])
     ], Header);
     return Header;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 exports.Header = Header;
 
@@ -14829,10 +14896,11 @@ var weblayout_component_1 = __webpack_require__("./src/app/weblayout/weblayout.c
 var routes = [
     { path: '', component: weblayout_component_1.WebLayout, children: [
             { path: '', redirectTo: 'index', pathMatch: 'full' },
-            { path: 'index', loadChildren: function () { return __webpack_require__.e/* System.import */(15).then(__webpack_require__.bind(null, "./src/app/home/home.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(17).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(19).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'checkout', loadChildren: function () { return __webpack_require__.e/* System.import */(18).then(__webpack_require__.bind(null, "./src/app/checkout/checkout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
+            { path: 'index', loadChildren: function () { return __webpack_require__.e/* System.import */(17).then(__webpack_require__.bind(null, "./src/app/home/home.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(18).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(21).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'checkout', loadChildren: function () { return __webpack_require__.e/* System.import */(19).then(__webpack_require__.bind(null, "./src/app/checkout/checkout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(8).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }
 ];
 exports.ROUTES = router_1.RouterModule.forChild(routes);

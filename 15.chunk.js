@@ -1,294 +1,606 @@
 webpackJsonpac__name_([15],{
 
-/***/ "./src/app/enums/StatusCodeEnum.ts":
-/***/ function(module, exports) {
-
-"use strict";
-"use strict";
-(function (StatusCodeEnum) {
-    StatusCodeEnum[StatusCodeEnum["SUCCESS"] = 200] = "SUCCESS";
-    StatusCodeEnum[StatusCodeEnum["FAILURE"] = 400] = "FAILURE";
-})(exports.StatusCodeEnum || (exports.StatusCodeEnum = {}));
-var StatusCodeEnum = exports.StatusCodeEnum;
-
-
-/***/ },
-
-/***/ "./src/app/home/Home.component.ts":
+/***/ "./src/app/inbox/inbox.component.ts":
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(jQuery) {"use strict";
-/**
- * Home Component typescript file
- */
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
-var ProductService_1 = __webpack_require__("./src/app/services/ProductService.ts");
-var ProductDetailsService_1 = __webpack_require__("./src/app/services/ProductDetailsService.ts");
-var StatusCodeEnum_1 = __webpack_require__("./src/app/enums/StatusCodeEnum.ts");
-var ng2_modal_1 = __webpack_require__("./node_modules/ng2-modal/index.js");
-var Home = (function () {
-    /**
-     * end
-     */
-    function Home(_productService, _productdetail) {
-        var _this = this;
-        this._productService = _productService;
-        this._productdetail = _productdetail;
-        this.topCategories = [];
-        this.dropdownCategories = [];
-        this.productId = 0;
-        this.productimages = [];
-        /*
-        end
-        */
-        /*
-        Pagination Attributes
-        * */
-        this.pageNumber = 0;
-        this.pageSize = 25;
-        this.categoryId = -1;
-        this._productService.getAllCategories().subscribe(function (a) {
-            if (a.code == StatusCodeEnum_1.StatusCodeEnum.SUCCESS) {
-                _this.categories = a.data;
-                for (var i = 0; i < _this.categories.length; i++) {
-                    if (i < 7) {
-                        _this.topCategories.push(_this.categories[i]);
-                    }
-                    else {
-                        _this.dropdownCategories.push(_this.categories[i]);
-                    }
-                }
-            }
-        });
-        this.populateProducts(this.categoryId, 0, this.pageSize);
+var Inbox = (function () {
+    function Inbox(el) {
+        this.mailListShow = true;
+        this.mailFormShow = false;
+        this.mailDetailShow = false;
+        this.currentFolderName = 'Inbox';
+        this.$el = jQuery(el.nativeElement);
+        this.initMailboxAppDemo(this.$el);
     }
-    Home.prototype.populateProducts = function (categoryId, pageNumber, pageSize) {
-        var _this = this;
-        this._productService.getAllProducts(categoryId, pageNumber, pageSize).subscribe(function (a) {
-            if (a.code == StatusCodeEnum_1.StatusCodeEnum.SUCCESS) {
-                if (pageNumber == 0) {
-                    if (a.data.length == 0) {
-                        jQuery('.no-products').show();
-                        _this.products = a.data;
-                    }
-                    else {
-                        jQuery('.no-products').hide();
-                        _this.products = a.data;
-                    }
-                }
-                else {
-                    if (a.data.length != 0) {
-                        for (var i = 0; i < a.data.length; i++) {
-                            _this.products.push(a.data[i]);
-                        }
-                    }
-                    else {
-                        jQuery('.loader-products').hide();
-                    }
-                }
-            }
-        });
+    Inbox.prototype.handleComposeBtn = function (event) {
+        this.repliedMessage = event || undefined;
+        this.changeEmailComponents('mailForm');
     };
-    Home.prototype.onCategoryClick = function (categoryId) {
-        this.categoryId = categoryId;
-        this.pageNumber = 0;
-        this.populateProducts(this.categoryId, 0, this.pageSize);
+    Inbox.prototype.onReplyMail = function (mail) {
+        this.currentMail = mail;
+        this.changeEmailComponents('mailDetail');
     };
-    Home.prototype.rightClick = function (event, productId) {
-        var _this = this;
-        console.log(event);
-        if (event.which == 3) {
-            window.open('#/app/product-detail?productId=' + productId, '_newtab'); // To open in new tab
+    Inbox.prototype.changeEmailComponents = function (componentName) {
+        var mailState = {
+            'mailList': function (that) {
+                that.mailFormShow = that.mailDetailShow = false;
+                that.mailListShow = true;
+            },
+            'mailForm': function (that) {
+                that.mailListShow = that.mailDetailShow = false;
+                that.mailFormShow = true;
+            },
+            'mailDetail': function (that) {
+                that.mailListShow = that.mailFormShow = false;
+                that.mailDetailShow = true;
+            },
+        };
+        mailState[componentName](this);
+    };
+    Inbox.prototype.setFolderName = function (folderName) {
+        this.currentFolderName = folderName;
+        if (!this.mailListShow) {
+            this.changeEmailComponents('mailList');
         }
-        else {
-            console.log(productId);
-            this._productdetail.getProductDetails(productId).subscribe(function (a) {
-                _this.product = a.data;
-                _this.productdescription = _this.product.FullDescription;
-                _this.productprice = _this.product.ProductPrice.PriceValue;
-                _this.producttitle = _this.product.Name;
-                _this.productimages = _this.product.PictureModels;
-                _this.oldprice = _this.product.ProductPrice.OldPrice;
-                _this.mainimage = _this.productimages[0].FullSizeImageUrl;
-                _this.ProductAttributes = _this.product.ProductAttributes;
-                console.log(_this.mainimage);
-                if (_this.oldprice == 0 || _this.oldprice == null) {
-                    _this.discountpercentage = 0;
-                }
-                else {
-                }
-                jQuery(".prod-detail-modal").fadeIn();
-                jQuery("body").css('overflow', 'hidden');
+    };
+    /* tslint:disable */
+    Inbox.prototype.initMailboxAppDemo = function ($el) {
+        var showAlert = function () {
+            $el.find('#app-alert')
+                .removeClass('hide')
+                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                jQuery(this).removeClass('animated bounceInLeft');
             });
-        }
+        };
+        setTimeout(function () { return showAlert(); }, 3000);
     };
-    Home.prototype.ngOnInit = function () {
-        jQuery("body").on("click", ".close-modal", function (e) {
-            var $this = jQuery(this);
-            e.preventDefault();
-            jQuery(this).parents(".prod-detail-modal").fadeOut();
-            jQuery("body").css('overflow', 'scroll');
-            jQuery(".zoomContainer").html("");
+    /* tslint:enable */
+    Inbox.prototype.changeActiveItem = function () {
+        this.$el.find('.nav a').on('click', function () {
+            jQuery('.nav').find('.active').removeClass('active');
+            jQuery(this).parent().addClass('active');
         });
     };
-    Home.prototype.onWindowScroll = function () {
-        //In chrome and some browser scroll is given to body tag
-        var pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
-        var max = document.documentElement.scrollHeight;
-        // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
-        if (pos == max) {
-            console.log('Pagination Called');
-            this.pageNumber = this.pageNumber + 1;
-            this.populateProducts(this.categoryId, this.pageNumber, this.pageSize);
-        }
+    Inbox.prototype.ngOnInit = function () {
+        this.changeActiveItem();
     };
-    __decorate([
-        core_1.ViewChild('productModal'), 
-        __metadata('design:type', (typeof (_a = typeof ng2_modal_1.Modal !== 'undefined' && ng2_modal_1.Modal) === 'function' && _a) || Object)
-    ], Home.prototype, "productModal", void 0);
-    __decorate([
-        core_1.HostListener("window:scroll", ["$event"]), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
-        __metadata('design:returntype', void 0)
-    ], Home.prototype, "onWindowScroll", null);
-    Home = __decorate([
+    Inbox = __decorate([
         core_1.Component({
-            selector: 'home',
-            styles: [__webpack_require__("./src/app/home/home.component.scss")],
-            template: __webpack_require__("./src/app/home/home.template.html"),
-            providers: [ProductService_1.ProductService, ProductDetailsService_1.ProductDetailsService],
-            encapsulation: core_1.ViewEncapsulation.None
+            selector: 'inbox',
+            template: __webpack_require__("./src/app/inbox/inbox.template.html"),
+            styles: [__webpack_require__("./src/app/inbox/inbox.style.scss")]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ProductService_1.ProductService !== 'undefined' && ProductService_1.ProductService) === 'function' && _b) || Object, (typeof (_c = typeof ProductDetailsService_1.ProductDetailsService !== 'undefined' && ProductDetailsService_1.ProductDetailsService) === 'function' && _c) || Object])
-    ], Home);
-    return Home;
-    var _a, _b, _c;
+        __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
+    ], Inbox);
+    return Inbox;
+    var _a;
 }());
-exports.Home = Home;
+exports.Inbox = Inbox;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
 /***/ },
 
-/***/ "./src/app/home/home.component.scss":
-/***/ function(module, exports) {
-
-module.exports = ".no-products {\n  text-align: center;\n  font-size: 18px;\n  color: #34bac5;\n  display: none;\n  text-decoration: underline; }\n\n.loader-products {\n  background: url(assets/img/loader.svg) no-repeat center center;\n  height: 100px;\n  display: block; }\n"
-
-/***/ },
-
-/***/ "./src/app/home/home.module.ts":
+/***/ "./src/app/inbox/inbox.module.ts":
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-/**
- * New typescript file
- */
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
 var common_1 = __webpack_require__("./node_modules/@angular/common/index.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/index.js");
-var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/index.js");
-var ng2_modal_1 = __webpack_require__("./node_modules/ng2-modal/index.js");
-var Home_component_1 = __webpack_require__("./src/app/home/Home.component.ts");
+var inbox_component_1 = __webpack_require__("./src/app/inbox/inbox.component.ts");
+var mail_list_component_1 = __webpack_require__("./src/app/inbox/mail-list/mail-list.component.ts");
+var mail_form_component_1 = __webpack_require__("./src/app/inbox/mail-form/mail-form.component.ts");
+var mail_detail_component_1 = __webpack_require__("./src/app/inbox/mail-detail/mail-detail.component.ts");
+var search_pipe_1 = __webpack_require__("./src/app/inbox/mail-list/pipes/search-pipe.ts");
+var folders_pipe_1 = __webpack_require__("./src/app/inbox/mail-list/pipes/folders-pipe.ts");
 exports.routes = [
-    { path: '', component: Home_component_1.Home, pathMatch: 'full' }
+    { path: '', component: inbox_component_1.Inbox, pathMatch: 'full' }
 ];
-var HomeModule = (function () {
-    function HomeModule() {
+var InboxModule = (function () {
+    function InboxModule() {
     }
-    HomeModule.routes = exports.routes;
-    HomeModule = __decorate([
+    InboxModule.routes = exports.routes;
+    InboxModule = __decorate([
         core_1.NgModule({
-            declarations: [
-                Home_component_1.Home
-            ],
             imports: [
-                ng2_modal_1.ModalModule,
-                common_1.CommonModule,
                 forms_1.FormsModule,
-                router_1.RouterModule.forChild(exports.routes),
+                common_1.CommonModule,
+                router_1.RouterModule.forChild(exports.routes)],
+            declarations: [
+                inbox_component_1.Inbox,
+                mail_list_component_1.MailList,
+                mail_form_component_1.MailForm,
+                mail_detail_component_1.MailDetail,
+                folders_pipe_1.FoldersPipe,
+                search_pipe_1.SearchPipe
             ]
         }), 
         __metadata('design:paramtypes', [])
-    ], HomeModule);
-    return HomeModule;
+    ], InboxModule);
+    return InboxModule;
 }());
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = HomeModule;
+exports.default = InboxModule;
 
 
 /***/ },
 
-/***/ "./src/app/home/home.template.html":
+/***/ "./src/app/inbox/inbox.style.scss":
 /***/ function(module, exports) {
 
-module.exports = "<!--========================================\r\nMain\r\n===========================================-->\r\n\r\n<!-- Main Container -->\r\n<div class=\"main-section\">\r\n    <div class=\"category-list\">\r\n        <div class=\"container-fluid\">\r\n            <a class=\"category-triger\" href=\"#\">\r\n                <i class=\"fa fa-bars\"></i>\r\n                <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"semibold\">\r\n                <li class=\"active\"><a class=\"btn btn-block\" href=\"#\" (click)=\"onCategoryClick(-1)\">Featured</a></li>\r\n                <li *ngFor=\"let category of topCategories\"><a class=\"btn btn-block\" href=\"#\" (click)=\"onCategoryClick(category.Id)\">{{category.Name}}</a></li>\r\n                \r\n                <!--<li><a class=\"btn btn-block\" href=\"#\">MORE +</a></li>-->\r\n                <li class=\"cat-drop-triger\"><a class=\"btn btn-block\" href=\"#\">MORE +</a>\r\n                    <ul class=\"cat-dropdown semibold\">\r\n                        <li *ngFor=\"let category of dropdownCategories\"><a class=\"\" href=\"#\" (click)=\"onCategoryClick(category.Id)\">{{category.Name}}</a></li>\r\n                    </ul>    \r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    <div class=\"tags-list\">\r\n        <div class=\"container-fluid\">\r\n            <a class=\"category-triger\" href=\"#\">\r\n                <i class=\"fa fa-bars\"></i>\r\n                <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"texxt\">\r\n                <li><a class=\"icon\" href=\"#\"><i class=\"fa fa-sliders\" aria-hidden=\"true\"></i></a></li>\r\n                <li><a class=\"\" href=\"#\">#Latest</a></li>\r\n                <li><a class=\"\" href=\"#\">#Fashion</a></li>\r\n                <li><a class=\"\" href=\"#\">#Phone</a></li>\r\n                <li><a class=\"\" href=\"#\">#Upgrades</a></li>\r\n                <li><a class=\"\" href=\"#\">#Gadgets</a></li>\r\n                <li><a class=\"\" href=\"#\">#Hobbies</a></li>\r\n                <li><a class=\"\" href=\"#\">#Fashion</a></li>\r\n                <li><a class=\"\" href=\"#\">#Phone</a></li>\r\n                <li><a class=\"\" href=\"#\">#Upgrades</a></li>\r\n                <li><a class=\"\" href=\"#\">#Gadgets</a></li>\r\n                <li><a class=\"\" href=\"#\">#Fashion</a></li>\r\n                <li><a class=\"\" href=\"#\">#Phone</a></li>\r\n                <li><a class=\"\" href=\"#\">#Phone</a></li>\r\n                <li><a class=\"\" href=\"#\">#Upgrades</a></li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    <div class=\"container-fluid\">\r\n        <div class=\"products-main gif-loading\">\r\n            <div class=\"products-wrapper grid-4 products clearfix loading\">\r\n                <div class=\"product\" *ngFor=\"let product of products\" (mousedown)=\"rightClick($event, product.Id)\">\r\n                    <div class=\"product-inner\" [ngStyle]=\"{'background-image': 'url(' + product.imageUrl + ')'}\">\r\n                        <span *ngIf=\"product.discount != 0\" class=\"discount-tag semibold\">-{{product.discount}}%</span>\r\n                    </div>\r\n                    <div class=\"product-description\">\r\n                       <span *ngIf=\"product.oldPrice != 0\" class=\"old-price medium\">$ {{product.oldPrice}}</span>\r\n                        <span class=\"new-price medium\">${{product.productPrice}}</span>\r\n                        <span *ngIf=\"product.orderCount != 0\" class=\"item-sold medium\">{{product.orderCount}}+ sold</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"semibold no-products\">\r\n                    No Products Found!\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"loader-products\">\r\n        </div>         \r\n    </div>\r\n</div>\r\n<div class=\"my-modal prod-detail-modal\">\r\n    <div class=\"modal_style\">\r\n        <div class=\"modal-inner\">\r\n        <a class=\"close-modal\" href=\"#\">Close<i class=\"fa fa-remove\"></i></a>\r\n        <div class=\"detail-page modal-view\">\r\n            <div class=\"prod-detail-top clearfix\">\r\n                <div class=\"prod-zoom\">\r\n                    <div id=\"zoom_prod\" class=\"zoom-main\" [ngStyle]=\"{'background-image': 'url(' + mainimage + ')'}\" [attr.data-zoom-image]=\"mainimage\">\r\n                        <span class=\"tag medium\"><i class=\"fa fa-arrows-alt\"></i>Mouseover to zoom image</span>\r\n\t\t\t\t\t\t<div class=\"detail-discount-tag\" *ngIf=\"discountpercentage!=0\"><p>-70%</p></div>\r\n                    </div>\r\n                    <ul id=\"gallery-zoom\" class=\"thumbnails clearfix\">\r\n                        \r\n                        <li *ngFor=\"let img of productimages\">\r\n                            <a (click)=\"changeimage(img.FullSizeImageUrl)\" id=\"toprevent\" [attr.data-image]=\"img.ImageUrl\" [attr.data-zoom-image]=\"img.ImageUrl\">\r\n                                <div id=\"zoom_prod\" class=\"thumb\" [ngStyle]=\"{'background-image': 'url(' + img.ImageUrl + ')'}\">\r\n                                </div>\r\n                              \r\n                            </a>\r\n                        </li>\r\n                        \r\n                    </ul>\r\n                </div>\r\n                <div class=\"detail-content\">\r\n                    <h2 class=\"medium\">{{producttitle}}</h2>\r\n                    <div class=\"star-rating star-3\"></div> <div class=\"rating-count medium\">(45)</div>\r\n                    <div class=\"price\">\r\n                        <span class=\"now medium\"> {{productprice}} </span><span class=\"texxt currency\">USD</span>\r\n                        <del class=\"medium\">{{oldprice}}</del>\r\n                        \r\n                    </div>\r\n                   \r\n                    \r\n                    <div class=\"selections\">\r\n                        <ul class=\"clearfix\">\r\n                            <li *ngFor=\"let productAttribute of ProductAttributes\">\r\n                                <div class=\"fancy_select select-category\">\r\n                                    <div class=\"select_triger\">\r\n                                        <span class=\"text medium\">{{productAttribute.Name}}</span>\r\n                                        <i class=\"fa fa-angle-down\"></i>\r\n                                    </div>\r\n                                    <div class=\"select_options\">\r\n                                       \r\n                                        <span *ngFor=\"let value of productAttribute.Values\">{{value.Name}}</span>\r\n                                        \r\n                                    </div>\r\n                                </div>\r\n                            </li>\r\n                           \r\n                        </ul>\r\n                        \r\n                    </div>\r\n                    \r\n                    <div class=\"prod-btns clearfix\">\r\n                        <a class=\"buy cart-btn medium\" href=\"#\"><i class=\"fa fa-shopping-cart\"></i>Buy</a>\r\n                        <a class=\"save cart-btn medium\" href=\"#\"><i class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></i>Save</a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <div class=\"prod-detail-bottom\">\r\n                <div class=\"tabs-wrapper detail-tabs\">\r\n                    <ul class=\"tabs clearfix semibold\">\r\n                        <li class=\"active\"><a href=\"#tab1\">Overview</a></li>\r\n                        <li><a href=\"#tab2\">Related Products</a></li>\r\n                        <li><a href=\"#tab3\">Description</a></li>\r\n                        <li><a href=\"#tab4\">Ratings</a></li>\r\n                        <li><a href=\"#tab5\">Store Ratings</a></li>\r\n                        <li><a href=\"#tab6\">Shipping</a></li>\r\n                    </ul>\r\n                    <div class=\"tab-panel\">\r\n                        <div id=\"tab1\" class=\"tab-pane active\">\r\n                            <a href=\"#\" class=\"accorTrigger\">Overview</a>\r\n                            <div class=\"accorContent\">\r\n                                <div class=\"tab-overview clearfix\">\r\n                                    <div class=\"review\">\r\n                                        <div class=\"add-review clearfix\">\r\n                                            <h4>add a review</h4>\r\n                                            <div class=\"star-rating\"></div>\r\n                                            <textarea placeholder=\"Max 250 characters...\"></textarea>\r\n                                            <button class=\"btn btn-blue submit\">Submit Review</button>\r\n                                        </div>\r\n                                        <div class=\"prod-reviews small clearfix\">\r\n                                            <h4>recent reviews</h4>\r\n                                            <a class=\"showall\" href=\"#tab4\">VIEW ALL</a>\r\n                                            <div class=\"clearfix\"></div>\r\n                                            <div class=\"unit-wrapper\">\r\n                                                <div class=\"review-unit\">\r\n                                                    <div class=\"star-rating star-3\"></div>\r\n                                                    <h5 class=\"name\">Michael Gaston</h5>\r\n                                                    <p>Got it before delivery date</p>\r\n                                                </div>\r\n                                                <div class=\"review-unit\">\r\n                                                    <div class=\"star-rating star-3\"></div>\r\n                                                    <h5 class=\"name\">Dylan Willingham</h5>\r\n                                                    <p>Really great jacket took a little while to get\r\n    here but definitely worth it</p>\r\n\r\n                                                </div>\r\n                                            </div>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"arrival\">\r\n                                        <ul class=\"text-list\">\r\n                                            <li>\r\n                                                <span class=\"text\">estimated arrival</span>\r\n                                                <span class=\"text1\">30 - 40 days</span>\r\n                                            </li>\r\n                                            <li>\r\n                                                <span class=\"text\">shipping</span>\r\n                                                <span class=\"text1\">$ 2.00</span>\r\n                                            </li>\r\n                                        </ul>\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div id=\"tab2\" class=\"tab-pane \">\r\n                            <a href=\"#\" class=\"accorTrigger\">Related Products</a>\r\n                            <div class=\"accorContent\">\r\n                                <div class=\"products-wrapper grid-4 products clearfix related\">\r\n                                    <div class=\"products-scroller\">\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img2.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img2.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img2.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img2.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"product\">\r\n                                        <div class=\"product-inner\" style=\"background:url(assets/img/block-img.jpg)\">\r\n                                            <div class=\"time-left\">\r\n                                                <span class=\"text\">Hourly Deal</span>\r\n                                                <ul class=\"countdown clearfix\">\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"minutes\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                    <li> \r\n                                                        <div class=\"text\">\r\n                                                            <span class=\"seconds\">00</span>\r\n                                                        </div>\r\n                                                    </li>\r\n                                                </ul>\r\n                                            </div>\r\n                                            <span class=\"discount-tag\">-10%</span>\r\n                                            <span class=\"item-left\">only 10 left</span>\r\n                                        </div>\r\n                                    </div>\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div id=\"tab3\" class=\"tab-pane\">\r\n                            <a href=\"#\" class=\"accorTrigger\">Description</a>\r\n                            <div class=\"accorContent\">\r\n                                <div class=\"prod-description\">\r\n                                    <h4>Description</h4>\r\n                                    <span>{{productdescription}}</span>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div id=\"tab4\" class=\"tab-pane\">\r\n                            <a href=\"#\" class=\"accorTrigger\">Ratings</a>\r\n                            <div class=\"accorContent\">\r\n                                <div class=\"total-ratings\">\r\n                                    <div class=\"main\">\r\n                                        <div class=\"star-rating star-4\"></div>\r\n                                        <span class=\"count\">(245)</span>\r\n                                    </div>\r\n                                    <ul>\r\n                                        <li>\r\n                                            <div class=\"rating\">\r\n                                                <div class=\"star-rating star-5\"></div>\r\n                                            </div>\r\n                                            <div class=\"progress\">\r\n                                              <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 40%\">\r\n                                                <span class=\"sr-only\">40% Complete (success)</span>\r\n                                              </div>\r\n                                            </div>\r\n                                        </li>\r\n                                        <li>\r\n                                            <div class=\"rating\">\r\n                                                <div class=\"star-rating star-4\"></div>\r\n                                            </div>\r\n                                            <div class=\"progress\">\r\n                                              <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"80\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 80%\">\r\n                                                <span class=\"sr-only\">40% Complete (success)</span>\r\n                                              </div>\r\n                                            </div>\r\n                                        </li>\r\n                                        <li>\r\n                                            <div class=\"rating\">\r\n                                                <div class=\"star-rating star-3\"></div>\r\n                                            </div>\r\n                                            <div class=\"progress\">\r\n                                              <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"20\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 20%\">\r\n                                                <span class=\"sr-only\">40% Complete (success)</span>\r\n                                              </div>\r\n                                            </div>\r\n                                        </li>\r\n                                        <li>\r\n                                            <div class=\"rating\">\r\n                                                <div class=\"star-rating star-2\"></div>\r\n                                            </div>\r\n                                            <div class=\"progress\">\r\n                                              <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"68\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 68%\">\r\n                                                <span class=\"sr-only\">40% Complete (success)</span>\r\n                                              </div>\r\n                                            </div>\r\n                                        </li>\r\n                                        <li>\r\n                                            <div class=\"rating\">\r\n                                                <div class=\"star-rating star-1\"></div>\r\n                                            </div>\r\n                                            <div class=\"progress\">\r\n                                              <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"90\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 90%\">\r\n                                                <span class=\"sr-only\">40% Complete (success)</span>\r\n                                              </div>\r\n                                            </div>\r\n                                        </li>\r\n                                    </ul>\r\n                                </div>\r\n                                \r\n                                <div class=\"prod-reviews full clearfix\">\r\n                                    <div class=\"unit-wrapper\">\r\n                                        <div class=\"reviews-scroller\">\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Michael Gaston</h5>\r\n                                            <p>Came in on time, it's perfect charges both controllers just fine. The box was damaged when it\r\narrived but the item itself was in perfect condition and works great.</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Dylan Willingham</h5>\r\n                                            <p>I still never got this item..i got a email asking how i liked this product but no product..so after\r\nasking about my order they just went ahead and refunded it..</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Michael Gaston</h5>\r\n                                            <p>Came in on time, it's perfect charges both controllers just fine. The box was damaged when it\r\narrived but the item itself was in perfect condition and works great.</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Dylan Willingham</h5>\r\n                                            <p>I still never got this item..i got a email asking how i liked this product but no product..so after\r\nasking about my order they just went ahead and refunded it..</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                                \r\n                            </div>\r\n                        </div>\r\n                        <div id=\"tab5\" class=\"tab-pane\">\r\n                            <a href=\"#\" class=\"accorTrigger\">Store Ratings</a>\r\n                            <div class=\"accorContent\">\r\n                                <div class=\"total-ratings store-rating clearfix\">\r\n                                    <div class=\"view-stores\">\r\n                                        <figure class=\"storeimg\" style=\"background:url(assets/img/store-icon.png)\"></figure>\r\n                                        <a class=\"\" href=\"#\">View Stores</a>\r\n                                    </div>\r\n                                    <div class=\"ratings-wraper\">\r\n                                        <div class=\"main\">\r\n                                            <span class=\"store-name\">Lulutops</span>\r\n                                            <div class=\"star-rating star-4\"></div>\r\n                                            <span class=\"count\">(245)</span>\r\n                                        </div>\r\n                                        <ul>\r\n                                            <li>\r\n                                                <div class=\"rating\">\r\n                                                    <div class=\"star-rating star-5\"></div>\r\n                                                </div>\r\n                                                <div class=\"progress\">\r\n                                                  <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 40%\">\r\n                                                    <span class=\"sr-only\">40% Complete (success)</span>\r\n                                                  </div>\r\n                                                </div>\r\n                                            </li>\r\n                                            <li>\r\n                                                <div class=\"rating\">\r\n                                                    <div class=\"star-rating star-4\"></div>\r\n                                                </div>\r\n                                                <div class=\"progress\">\r\n                                                  <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"80\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 80%\">\r\n                                                    <span class=\"sr-only\">40% Complete (success)</span>\r\n                                                  </div>\r\n                                                </div>\r\n                                            </li>\r\n                                            <li>\r\n                                                <div class=\"rating\">\r\n                                                    <div class=\"star-rating star-3\"></div>\r\n                                                </div>\r\n                                                <div class=\"progress\">\r\n                                                  <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"20\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 20%\">\r\n                                                    <span class=\"sr-only\">40% Complete (success)</span>\r\n                                                  </div>\r\n                                                </div>\r\n                                            </li>\r\n                                            <li>\r\n                                                <div class=\"rating\">\r\n                                                    <div class=\"star-rating star-2\"></div>\r\n                                                </div>\r\n                                                <div class=\"progress\">\r\n                                                  <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"68\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 68%\">\r\n                                                    <span class=\"sr-only\">40% Complete (success)</span>\r\n                                                  </div>\r\n                                                </div>\r\n                                            </li>\r\n                                            <li>\r\n                                                <div class=\"rating\">\r\n                                                    <div class=\"star-rating star-1\"></div>\r\n                                                </div>\r\n                                                <div class=\"progress\">\r\n                                                  <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"90\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 90%\">\r\n                                                    <span class=\"sr-only\">40% Complete (success)</span>\r\n                                                  </div>\r\n                                                </div>\r\n                                            </li>\r\n                                        </ul>\r\n                                    </div>\r\n                                </div>\r\n                                \r\n                                <div class=\"prod-reviews full clearfix\">\r\n                                    <div class=\"unit-wrapper\">\r\n                                        <div class=\"reviews-scroller\">\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Michael Gaston</h5>\r\n                                            <p>Came in on time, it's perfect charges both controllers just fine. The box was damaged when it\r\narrived but the item itself was in perfect condition and works great.</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Dylan Willingham</h5>\r\n                                            <p>I still never got this item..i got a email asking how i liked this product but no product..so after\r\nasking about my order they just went ahead and refunded it..</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Michael Gaston</h5>\r\n                                            <p>Came in on time, it's perfect charges both controllers just fine. The box was damaged when it\r\narrived but the item itself was in perfect condition and works great.</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        <div class=\"review-unit\">\r\n                                            <figure class=\"visual\" style=\"background:url(assets/img/dp.png)\"></figure>\r\n                                            <div class=\"star-rating star-3\"></div>\r\n                                            <h5 class=\"name\">Dylan Willingham</h5>\r\n                                            <p>I still never got this item..i got a email asking how i liked this product but no product..so after\r\nasking about my order they just went ahead and refunded it..</p>\r\n                                            <span class=\"time\">about 9 hours ago</span>\r\n                                        </div>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                                \r\n                            </div>\r\n                        </div>\r\n                        <div id=\"tab6\" class=\"tab-pane \">\r\n                            <a href=\"#\" class=\"accorTrigger\">Shipping</a>\r\n                            <div class=\"accorContent\">\r\n                                <div class=\"shipping-detail\">\r\n                                    <h4>Shipping details</h4>\r\n                                    <ul class=\"detail\">\r\n                                        <li><span class=\"title\">Estimated shipping</span>$ 4.99</li>\r\n                                        <li><span class=\"title\">Availability</span>Ships to United States and 32 other countries</li>\r\n                                        <li><span class=\"title\">Estimated arrival</span>17 - 23 days</li>\r\n                                        <li><span class=\"title\">Return policy</span>You may return all products within 30 days of delivery.\r\n                                            <a class=\"more-detail\" href=\"#\">More Details</a>\r\n                                        </li>\r\n                                    </ul>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        \r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n"
+module.exports = ".nav-email-folders > li > .nav-link {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  border-radius: 0.25rem;\n  color: #777;\n  font-weight: 400; }\n  .nav-email-folders > li > .nav-link:hover {\n    background-color: #e5e5e5;\n    color: #55595c; }\n  .nav-email-folders > li > .nav-link > .fa-circle {\n    margin-top: 3px; }\n\n.nav-email-folders > li > .nav-link > .label {\n  padding-top: 5px;\n  padding-bottom: 5px; }\n\n.nav-email-folders > li.active > .nav-link, .nav-email-folders > li.active > .nav-link:hover, .nav-email-folders > li.active > .nav-link:focus {\n  background-color: #ddd;\n  color: #55595c;\n  font-weight: 600; }\n  .nav-email-folders > li.active > .nav-link > .label, .nav-email-folders > li.active > .nav-link:hover > .label, .nav-email-folders > li.active > .nav-link:focus > .label {\n    color: #55595c;\n    background-color: #fff; }\n\n.nav-email-folders .tag-white {\n  color: #555; }\n"
 
 /***/ },
 
-/***/ "./src/app/services/ProductDetailsService.ts":
+/***/ "./src/app/inbox/inbox.template.html":
+/***/ function(module, exports) {
+
+module.exports = "<ol class=\"breadcrumb\">\r\n  <li class=\"breadcrumb-item\">YOU ARE HERE</li>\r\n  <li class=\"breadcrumb-item active\">Email</li>\r\n</ol>\r\n<div class=\"alert alert-warning alert-sm pull-right no-margin animated bounceInLeft hide\" id=\"app-alert\">\r\n  <button type=\"button\" class=\"ml-lg close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>\r\n  Hey! This is a <span class=\"fw-semi-bold\">real app</span> with CRUD and Search functions. Have fun!\r\n</div>\r\n<h1 class=\"page-title\">Email - <span class=\"fw-semi-bold\">Inbox</span></h1>\r\n<div class=\"row\">\r\n  <div class=\"col-lg-3 col-xl-2 col-xs-12\">\r\n    <a class=\"btn btn-danger btn-block\" href=\"#\" id=\"compose-btn\" (click)=\"handleComposeBtn()\">Compose</a>\r\n    <ul class=\"nav nav-pills nav-stacked nav-email-folders mt\" id=\"folders-list\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" (click)=\"setFolderName('Inbox')\">\r\n          <span class=\"tag tag-pill tag-white pull-xs-right\">2</span>\r\n          Inbox\r\n        </a>\r\n      </li>\r\n      <li class=\"nav-item\"><a class=\"nav-link\" (click)=\"setFolderName('Starred')\">Starred</a></li>\r\n      <li class=\"nav-item\"><a class=\"nav-link\" (click)=\"setFolderName('Sent Mail')\">Sent Mail</a></li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" (click)=\"setFolderName('Draft')\">\r\n          <span class=\"tag tag-pill tag-danger pull-xs-right\">3</span>\r\n          Draft\r\n        </a>\r\n      </li>\r\n      <li class=\"nav-item\"><a class=\"nav-link\" (click)=\"setFolderName('Trash')\">Trash</a></li>\r\n    </ul>\r\n    <h6 class=\"mt\">QUICK VIEW</h6>\r\n    <ul class=\"nav nav-pills nav-stacked nav-email-folders mb-lg fs-mini\">\r\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"#\"><i class=\"fa fa-circle text-danger pull-xs-right\"></i> Work </a></li>\r\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"#\"><i class=\"fa fa-circle text-white pull-xs-right\"></i> Private </a></li>\r\n      <li class=\"nav-item\"><a class=\"nav-link\" href=\"#\"><i class=\"fa fa-circle text-gray-light pull-xs-right\"></i> Saved </a></li>\r\n    </ul>\r\n  </div>\r\n  <div *ngIf=\"mailListShow\" mail-list [folderName]=\"currentFolderName\" (replyMail)=\"onReplyMail($event)\" class=\"col-lg-9 col-xl-10 col-xs-12\"></div>\r\n  <div *ngIf=\"mailFormShow\" mail-form (backToMailList)=\"changeEmailComponents('mailList')\" [message]=\"repliedMessage\" class=\"col-lg-9 col-xl-10 col-xs-12\"></div>\r\n  <div *ngIf=\"mailDetailShow\" mail-detail [mail]=\"currentMail\" (replyMessage)=\"handleComposeBtn($event)\" (backToMailList)=\"changeEmailComponents('mailList')\" class=\"col-lg-9 col-xl-10 col-xs-12\"></div>\r\n</div>\r\n"
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-detail/mail-detail.component.ts":
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
-var http_1 = __webpack_require__("./node_modules/@angular/http/index.js");
-__webpack_require__("./node_modules/rxjs/add/operator/map.js");
-var UrlService_1 = __webpack_require__("./src/app/services/UrlService.ts");
-var ProductDetailsService = (function () {
-    function ProductDetailsService(http) {
-        this.http = http;
-        this.urlService = new UrlService_1.UrlService();
+var MailDetail = (function () {
+    function MailDetail() {
+        this.backToMailList = new core_1.EventEmitter();
+        this.replyMessage = new core_1.EventEmitter();
+        this.math = Math;
     }
-    ProductDetailsService.prototype.getProductDetails = function (Id) {
-        return this.http.get(this.urlService.baseUrl + 'api/default/ProductDetails/?productId=' + Id)
-            .map(function (res) { return res.json(); });
+    MailDetail.prototype.onToBack = function () {
+        this.backToMailList.emit('');
     };
-    ProductDetailsService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-    ], ProductDetailsService);
-    return ProductDetailsService;
-    var _a;
+    MailDetail.prototype.goToReply = function (mail) {
+        this.replyMessage.emit(mail);
+    };
+    MailDetail.prototype.Math = function () {
+        return Math.random();
+    };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], MailDetail.prototype, "mail", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], MailDetail.prototype, "backToMailList", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], MailDetail.prototype, "replyMessage", void 0);
+    MailDetail = __decorate([
+        core_1.Component({
+            selector: '[mail-detail]',
+            template: __webpack_require__("./src/app/inbox/mail-detail/mail-detail.template.html"),
+            styles: [__webpack_require__("./src/app/inbox/mail-detail/mail-detail.style.scss")]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MailDetail);
+    return MailDetail;
 }());
-exports.ProductDetailsService = ProductDetailsService;
+exports.MailDetail = MailDetail;
 
 
 /***/ },
 
-/***/ "./src/app/services/ProductService.ts":
+/***/ "./src/app/inbox/mail-detail/mail-detail.style.scss":
+/***/ function(module, exports) {
+
+module.exports = ".email-view hr {\n  margin: 5px 0; }\n\n.email-view .email-body {\n  margin-top: 1rem; }\n\n.email-details img {\n  width: 30px;\n  height: 30px;\n  float: left; }\n\n.email-details-content::after {\n  content: \"\";\n  display: table;\n  clear: both; }\n\n.email-details-content .email {\n  color: #999999;\n  font-size: 13px; }\n\n.email-details-content .receiver {\n  display: block;\n  color: #999999;\n  margin-top: -6px; }\n\n.email-details-content .email-date {\n  margin-right: 10px;\n  line-height: 28px;\n  vertical-align: middle; }\n\n.email-attachments .attachment img {\n  display: block; }\n\n.email-attachments .attachment .title {\n  margin: 0;\n  font-weight: bold; }\n"
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-detail/mail-detail.template.html":
+/***/ function(module, exports) {
+
+module.exports = "<div class=\"clearfix mb-xs\">\r\n  <a class=\"btn btn-default btn-sm width-50 pull-xs-left\" id=\"back-btn\" (click)=\"onToBack()\">\r\n    <i class=\"fa fa-angle-left fa-lg\"></i>\r\n  </a>\r\n</div>\r\n<section class=\"widget widget-email\">\r\n  <header>\r\n    <h4>{{mail.subject}}</h4>\r\n    <div class=\"widget-controls\">\r\n      <a href=\"#\"><i class=\"fa fa-print\"></i></a>\r\n    </div>\r\n  </header>\r\n  <div class=\"widget-body\">\r\n    <div id=\"email-view\" class=\"email-view\">\r\n      <div class=\"email-details clearfix\">\r\n        <div class=\"email-details-content\">\r\n          <span class=\"thumb thumb-sm pull-xs-left\">\r\n            <img class=\"img-circle\" src=\"assets/img/people/a5.jpg\" alt=\"Philip Horbacheuski\">\r\n          </span>\r\n          <div class=\"pull-xs-left\">\r\n            <strong>{{mail.sender}}</strong>\r\n            <span *ngIf=\"mail.senderMail\" class=\"email\">&lt;{{mail.senderMail}}&gt;</span>\r\n            <span class=\"receiver\">to Wrapbootstrap</span>\r\n          </div>\r\n          <div class=\"email-actions pull-xs-right\">\r\n            <div class=\"btn-group\">\r\n              <button id=\"email-opened-reply\" class=\"btn btn-sm btn-gray\" (click)=\"goToReply(mail)\">\r\n                <i class=\"fa fa-reply\"></i> Reply\r\n              </button>\r\n              <button class=\"btn btn-sm btn-gray dropdown-toggle\" data-toggle=\"dropdown\">\r\n                <i class=\"fa fa-angle-down\"></i>\r\n              </button>\r\n              <ul class=\"dropdown-menu pull-xs-right\">\r\n                <li><a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-reply reply-btn\"></i> Reply</a></li>\r\n                <li><a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-arrow-right reply-btn\"></i> Forward</a></li>\r\n                <li><a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-print\"></i> Print</a></li>\r\n                <li class=\"dropdown-divider\"></li>\r\n                <li><a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-ban\"></i> Spam</a></li>\r\n                <li><a class=\"dropdown-item\" href=\"#\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</a></li>\r\n              </ul>\r\n            </div>\r\n          </div>\r\n          <time class=\"email-date pull-xs-right\">\r\n            0:30\r\n          </time>\r\n        </div>\r\n      </div>\r\n      <div class=\"email-body\">\r\n        <div class=\"email-body\" [innerHTML]=\"mail.body\"></div>\r\n      </div>\r\n      <div *ngIf=\"!mail.body\" class=\"email-body\">\r\n        {{mail.subject}}\r\n      </div>\r\n      <div class=\"email-attachments\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-6\">\r\n            <hr *ngIf=\"mail.attachments\">\r\n            <p  *ngIf=\"mail.attachments\" class=\"details\"><strong>{{mail.attachments.length}} attachments</strong> &nbsp;-&nbsp; <a href=\"#\">Download all attachments</a>\r\n              &nbsp;&nbsp;&nbsp;<a href=\"#\">View all Images</a></p>\r\n            <section *ngFor=\"let attachment of mail.attachments; let i = index\" class=\"attachment\">\r\n              <img class=\"img-fluid\" src=\"{{attachment}}\" alt=\"\">\r\n              <h5 class=\"title\">some-cool-image{{i + 1}}.jpg</h5>\r\n              <p class=\"details\">\r\n                568K  &nbsp;&nbsp;\r\n                <a href=\"#\">View</a> &nbsp;&nbsp;\r\n                <a href=\"#\">Download</a>\r\n              </p>\r\n            </section>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n"
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-form/mail-form.component.ts":
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
-var http_1 = __webpack_require__("./node_modules/@angular/http/index.js");
-__webpack_require__("./node_modules/rxjs/add/operator/map.js");
-var UrlService_1 = __webpack_require__("./src/app/services/UrlService.ts");
-var ProductService = (function () {
-    function ProductService(http) {
-        this.http = http;
-        this.urlService = new UrlService_1.UrlService();
+var core_2 = __webpack_require__("./node_modules/@angular/core/index.js");
+var core_3 = __webpack_require__("./node_modules/@angular/core/index.js");
+var MailForm = (function () {
+    function MailForm() {
+        this.backToMailList = new core_3.EventEmitter();
+        this.sender = '';
+        this.subject = '';
+        this.body = 'There are no implementations' +
+            ' of Wysiwyg editors in Angular 2 version yet.' +
+            ' So we hope it will appear soon.';
     }
-    ProductService.prototype.getAllCategories = function () {
-        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllCategoriesDisplayedOnHomePage')
-            .map(function (res) { return res.json(); });
+    MailForm.prototype.onToBack = function () {
+        console.log('qwerty');
+        this.backToMailList.emit('');
     };
-    ProductService.prototype.getAllProducts = function (Id, pageNumber, pageSize) {
-        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?categoryId=' + Id + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize)
-            .map(function (res) { return res.json(); });
+    MailForm.prototype.ngOnInit = function () {
+        if (this.message) {
+            this.sender = this.message.sender;
+            this.subject = 'Re: ' + this.message.subject;
+            var span = document.createElement('span');
+            span.innerHTML = this.message.body;
+            this.body = span.innerText;
+        }
     };
-    ProductService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-    ], ProductService);
-    return ProductService;
+    __decorate([
+        core_2.Output(), 
+        __metadata('design:type', Object)
+    ], MailForm.prototype, "backToMailList", void 0);
+    __decorate([
+        core_2.Input(), 
+        __metadata('design:type', Object)
+    ], MailForm.prototype, "message", void 0);
+    MailForm = __decorate([
+        core_1.Component({
+            selector: '[mail-form]',
+            template: __webpack_require__("./src/app/inbox/mail-form/mail-form.template.html"),
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MailForm);
+    return MailForm;
+}());
+exports.MailForm = MailForm;
+
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-form/mail-form.template.html":
+/***/ function(module, exports) {
+
+module.exports = "<div class=\"clearfix mb-xs\">\r\n  <a class=\"btn btn-secondary btn-sm width-50 pull-xs-left\" id=\"back-btn\" (click)=\"onToBack()\">\r\n    <i class=\"fa fa-angle-left fa-lg\"></i>\r\n  </a>\r\n</div>\r\n<section class=\"widget widget-email\">\r\n  <header id=\"widget-email-header\">\r\n    <h4>Compose <span class=\"fw-semi-bold\">New</span></h4>\r\n  </header>\r\n  <div class=\"widget-body\" id=\"mailbox-content\">\r\n    <div class=\"compose-view\" id=\"compose-view\">\r\n      <form id=\"email-compose\" class=\"form-email-compose\" method=\"get\" action=\"#\">\r\n        <div class=\"form-group\">\r\n          <input type=\"email\" id=\"input-to\" placeholder=\"To\" [(ngModel)]=\"sender\" name=\"sender\" class=\"input-transparent form-control\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"text\" id=\"input-subject\" placeholder=\"Subject\" [(ngModel)]=\"subject\"  name=\"subject\" class=\"input-transparent form-control\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <textarea rows=\"10\" class=\"form-control\" id=\"wysiwyg\" placeholder=\"Message\">{{ body }}</textarea>\r\n        </div>\r\n        <div class=\"clearfix\">\r\n          <div class=\"btn-toolbar pull-right\">\r\n            <button type=\"reset\" id=\"compose-discard-button\" class=\"btn btn-gray\">Discard</button>\r\n            <button type=\"button\" id=\"compose-save-button\" class=\"btn btn-gray\">&nbsp;&nbsp;Save&nbsp;&nbsp;</button>\r\n            <button type=\"submit\" id=\"compose-send-button\" class=\"btn btn-danger\">&nbsp;&nbsp;&nbsp;Send&nbsp;&nbsp;&nbsp;</button>\r\n          </div>\r\n        </div>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</section>\r\n"
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-list/mail-list.component.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var core_2 = __webpack_require__("./node_modules/@angular/core/index.js");
+var core_3 = __webpack_require__("./node_modules/@angular/core/index.js");
+var MAILS = [
+    { id: 1,
+        'sender': 'Philip Horbacheuski',
+        'senderMail': 'philip.horbacheuski@example.com',
+        'subject': 'Hi, Welcome to Google Mail',
+        'date': '18:31',
+        'paperclip': true,
+        'attachment': true,
+        'unread': true,
+        'starred': true,
+        'folderId': 1,
+        'selected': false,
+        'attachments': ['assets/img/pictures/1.jpg', 'assets/img/pictures/2.jpg'],
+        'body': '<p>Projecting surrounded literature ' +
+            'yet delightful alteration but bed men. Open are' +
+            ' from long why cold. If must snug by upon sang ' +
+            'loud left. As me do preference entreaties compliment ' +
+            'motionless ye literature. Day behaviour explained law' +
+            ' remainder.</p>    <p><strong>On then sake' +
+            ' home</strong> is am leaf. Of suspicion do' +
+            ' departure at extremely he believing. Do know ' +
+            'said mind do rent they oh hope of. General enquire' +
+            ' picture letters garrets on offices of no on.</p>' +
+            ' <p>All the best,</p> <p>Vitaut the Great, CEO,' +
+            ' <br>Fooby Inc.</p>' },
+    { 'id': 2,
+        'sender': 'StackExchange',
+        'subject': 'New Python questions for this week!',
+        'date': 'Aug 14',
+        'paperclip': true,
+        'unread': true,
+        'attachment': true,
+        'timestamp': 1376508566000,
+        'folderId': 1,
+        'selected': false,
+        'attachments': ['assets/img/pictures/3.jpg'],
+        'body': '<h1>THIS IS HTML!!!!</h1>' },
+    { 'id': 3,
+        'sender': 'notifications@facebook.com',
+        'senderMail': 'notifications@facebook.com',
+        'subject': 'Someone just commented on your photo!',
+        'date': 'Aug 7',
+        'selected': false,
+        'unread': false,
+        'timestamp': 1375877213000,
+        'folderId': 1 },
+    { 'id': 4,
+        'sender': 'Twitter',
+        'subject': '@hackernews is now following you on Twitter',
+        'date': 'Jul 31',
+        'starred': true,
+        'unread': true,
+        'selected': false,
+        'timestamp': 1375261974000,
+        'folderId': 1 },
+    { 'id': 5,
+        'sender': 'LinkedIn',
+        'subject': 'Jobs you may be interested in',
+        'date': 'May 12',
+        'selected': false,
+        'unread': false,
+        'timestamp': 1373634231000,
+        'folderId': 1 },
+    { 'id': 6,
+        'sender': 'Naevius Victorsson',
+        'subject': 'Front no party young abode state up',
+        'date': 'May 1',
+        'starred': true,
+        'unread': false,
+        'selected': false,
+        'timestamp': 1373516566000,
+        'folderId': 1 },
+    { 'id': 7,
+        'sender': 'Nikola Foley',
+        'subject': 'Quiet led own cause three him',
+        'date': 'Apr 23',
+        'paperclip': true,
+        'attachment': true,
+        'attachments': ['assets/img/pictures/5.jpg', 'assets/img/pictures/4.jpg'],
+        'unread': false,
+        'selected': false,
+        'timestamp': 1374508566000,
+        'folderId': 1 },
+    { 'id': 8,
+        'sender': 'Ernst Hardy',
+        'subject': 'Raising say express had chiefly detract demands she',
+        'date': 'Apr 20',
+        'selected': false,
+        'unread': false,
+        'timestamp': 1373877213000,
+        'folderId': 1 },
+    { 'id': 9,
+        'sender': 'Lubbert Fuller',
+        'subject': 'Civility vicinity graceful is it at',
+        'date': 'Jul 3',
+        'starred': true,
+        'selected': false,
+        'unread': false,
+        'timestamp': 1376516566000,
+        'folderId': 2 },
+    { 'id': 10,
+        'sender': 'Tatenda Guerra',
+        'subject': 'Improve up at to on mention perhaps raising',
+        'date': 'Jul 13',
+        'attachment': true,
+        'attachments': ['assets/img/pictures/6.jpg'],
+        'selected': false,
+        'unread': false,
+        'timestamp': 1376508566000,
+        'folderId': 3 },
+    { 'id': 12,
+        'sender': 'Ladislao Roche',
+        'subject': 'Way building not get formerly her peculiar',
+        'date': 'Jul 18',
+        'selected': false,
+        'unread': true,
+        'timestamp': 1375877213000,
+        'folderId': 2 },
+    { 'id': 13,
+        'sender': 'Areli.Tanzi@gmail.com',
+        'senderMail': 'Areli.Tanzi@gmail.com',
+        'subject': 'Up uncommonly prosperous sentiments simplicity',
+        'date': 'Jul 24',
+        'starred': true,
+        'attachment': true,
+        'attachments': ['assets/img/pictures/9.jpg'],
+        'selected': false,
+        'unread': false,
+        'timestamp': 1375261974000,
+        'folderId': 2 },
+    { 'id': 14,
+        'sender': 'Oluwaseyi Tremble',
+        'subject': 'Reasonable appearance companions oh',
+        'date': 'Jul 28',
+        'selected': false,
+        'unread': false,
+        'timestamp': 1373634231000,
+        'folderId': 3 }
+];
+var MailList = (function () {
+    function MailList(el) {
+        this.replyMail = new core_3.EventEmitter();
+        this.mails = MAILS;
+        this.$el = jQuery(el.nativeElement);
+    }
+    MailList.prototype.openMail = function (mail) {
+        mail.unread = false;
+        this.replyMail.emit(mail);
+    };
+    MailList.prototype.selectMail = function (mail) {
+        mail.selected = mail.selected ? false : true;
+        this.checkToggleAll();
+    };
+    MailList.prototype.selectAll = function () {
+        var checked = this.$toggleAll.prop('checked');
+        this.toggleAll(checked);
+    };
+    MailList.prototype.checkToggleAll = function () {
+        var checked = true;
+        // TODO select read (all)
+        this.$el.find('.toggle-one').each(function (i, el) {
+            if (!jQuery(el).prop('checked') && checked) {
+                checked = false;
+            }
+        });
+        this.$toggleAll.prop('checked', checked);
+    };
+    MailList.prototype.toggleAll = function (checked) {
+        for (var _i = 0, _a = this.mails; _i < _a.length; _i++) {
+            var mail = _a[_i];
+            mail.selected = checked;
+        }
+        this.$toggleAll.prop('checked', checked);
+    };
+    MailList.prototype.selectRead = function () {
+        this.toggleAll(false);
+        this.mails.filter(function (mail) { return !mail.unread; }).forEach(function (mail) { return mail.selected = true; });
+        this.checkToggleAll();
+    };
+    MailList.prototype.selectUnread = function () {
+        this.toggleAll(false);
+        this.mails.filter(function (mail) { return mail.unread; }).forEach(function (mail) { return mail.selected = true; });
+        this.checkToggleAll();
+    };
+    MailList.prototype.markSelectedAsRead = function () {
+        this.mails.filter(function (mail) { return mail.selected; }).forEach(function (mail) { return mail.unread = false; });
+    };
+    MailList.prototype.markSelectedAsUnread = function () {
+        this.mails.filter(function (mail) { return mail.selected; }).forEach(function (mail) { return mail.unread = true; });
+    };
+    MailList.prototype.deleteEmails = function () {
+        var mails = [];
+        this.mails.forEach(function (mail) {
+            if (!mail.selected) {
+                mails.push(mail);
+            }
+        });
+        this.mails = mails;
+    };
+    MailList.prototype.ngOnInit = function () {
+        this.$toggleAll = this.$el.find('#toggle-all');
+    };
+    MailList.prototype.ngOnChanges = function (event) {
+        if ('folderName' in event) {
+            if (!(event.folderName.previousValue instanceof Object)) {
+                this.toggleAll(false);
+            }
+        }
+    };
+    MailList.prototype.changeStarStatus = function (mail) {
+        mail.starred = !mail.starred;
+    };
+    __decorate([
+        core_2.Output(), 
+        __metadata('design:type', Object)
+    ], MailList.prototype, "replyMail", void 0);
+    __decorate([
+        core_2.Input(), 
+        __metadata('design:type', Object)
+    ], MailList.prototype, "folderName", void 0);
+    MailList = __decorate([
+        core_1.Component({
+            selector: '[mail-list]',
+            template: __webpack_require__("./src/app/inbox/mail-list/mail-list.template.html"),
+            styles: [__webpack_require__("./src/app/inbox/mail-list/mail-list.style.scss")]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof core_3.ElementRef !== 'undefined' && core_3.ElementRef) === 'function' && _a) || Object])
+    ], MailList);
+    return MailList;
     var _a;
 }());
-exports.ProductService = ProductService;
+exports.MailList = MailList;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-list/mail-list.style.scss":
+/***/ function(module, exports) {
+
+module.exports = ".widget-email-count {\n  display: inline-block;\n  margin: 0;\n  font-size: 13px;\n  color: #818a91;\n  line-height: 29px; }\n  .widget-email-count + .widget-email-pagination {\n    margin-left: 10px;\n    border-left: 1px solid #ddd;\n    padding-left: 15px;\n    border-radius: 0;\n    vertical-align: -9px; }\n\n.widget-email header .form-control {\n  font-size: 0.8571rem;\n  border: 1px solid #ccc; }\n  .widget-email header .form-control:focus {\n    border-color: #66afe9;\n    outline: none; }\n\n.widget-email-pagination {\n  margin: 0; }\n  .widget-email-pagination .page-link {\n    color: #888; }\n\n.table-emails {\n  margin-bottom: 0; }\n  .table-emails tbody > tr > td:first-child {\n    width: 45px; }\n  .table-emails td,\n  .table-emails th {\n    padding: 7px 5px 7px 5px; }\n  .table-emails td > .abc-checkbox,\n  .table-emails th > .abc-checkbox {\n    left: -18px; }\n    .table-emails td > .abc-checkbox > label:before,\n    .table-emails td > .abc-checkbox > label:after,\n    .table-emails th > .abc-checkbox > label:before,\n    .table-emails th > .abc-checkbox > label:after {\n      margin-left: 0px; }\n  .table-emails .name,\n  .table-emails .subject,\n  .table-emails .date {\n    cursor: pointer; }\n  .table-emails .date {\n    text-align: right;\n    min-width: 65px; }\n  .table-emails .unread {\n    font-weight: 600;\n    color: #55595c; }\n  .table-emails .starred {\n    color: #818a91;\n    cursor: pointer; }\n    .table-emails .starred:hover {\n      color: #55595c; }\n    .table-emails .starred .fa-star {\n      color: #f0ad4e; }\n"
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-list/mail-list.template.html":
+/***/ function(module, exports) {
+
+module.exports = "<div class=\"clearfix mb-xs\">\r\n  <a class=\"btn btn-secondary btn-sm width-50 pull-left hide\" id=\"back-btn\" href=\"inbox.html\">\r\n    <i class=\"fa fa-angle-left fa-lg\"></i>\r\n  </a>\r\n  <div class=\"pull-xs-right\" id=\"folder-stats\">\r\n    <p class=\"widget-email-count\">Showing 1 - 10 of 96 messages</p>\r\n    <ul class=\"pagination pagination-sm widget-email-pagination\">\r\n      <li class=\"prev disabled page-item\"><a class=\"page-link\" href=\"#\"><i class=\"fa fa-chevron-left\"></i></a></li>\r\n      <li class=\"active page-item\"><a class=\"page-link\" href=\"#\">1</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" href=\"#\">2</a></li>\r\n      <li class=\"next page-item\"><a class=\"page-link\" href=\"#\"><i class=\"fa fa-chevron-right\"></i></a></li>\r\n    </ul>\r\n  </div>\r\n</div>\r\n<section class=\"widget widget-email\">\r\n  <header id=\"widget-email-header\">\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"btn-group\">\r\n          <a class=\"btn btn-secondary btn-sm dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">\r\n            Select\r\n            <i class=\"fa fa-angle-down \"></i>\r\n          </a>\r\n          <ul class=\"dropdown-menu\">\r\n            <li><a class=\"dropdown-item\" (click)=\"toggleAll(true)\">All</a></li>\r\n            <li><a class=\"dropdown-item\" (click)=\"toggleAll(false)\">None</a></li>\r\n            <li class=\"dropdown-divider\"></li>\r\n            <li><a class=\"dropdown-item\" (click)=\"selectRead()\">Read</a></li>\r\n            <li><a class=\"dropdown-item\" (click)=\"selectUnread()\">Unread</a></li>\r\n          </ul>\r\n        </div>\r\n        <div class=\"btn-group\">\r\n          <a class=\"btn btn-sm btn-secondary dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">\r\n            Actions\r\n            <i class=\"fa fa-angle-down \"></i>\r\n          </a>\r\n          <ul class=\"dropdown-menu\">\r\n            <li><a class=\"dropdown-item\" href=\"#\">Reply</a></li>\r\n            <li><a class=\"dropdown-item\" href=\"#\">Forward</a></li>\r\n            <li><a class=\"dropdown-item\" href=\"#\">Archive</a></li>\r\n            <li class=\"dropdown-divider\"></li>\r\n            <li><a class=\"dropdown-item\" (click)=\"markSelectedAsRead()\">Mark As Read</a></li>\r\n            <li><a class=\"dropdown-item\" (click)=\"markSelectedAsUnread()\">Mark As Unread</a></li>\r\n            <li class=\"dropdown-divider\"></li>\r\n            <li><a class=\"dropdown-item\" (click)=\"deleteEmails()\">Delete</a></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <input class=\"form-control form-control-sm width-200 pull-xs-right\" id=\"mailbox-search\" [(ngModel)]=\"searchText\" type=\"text\" placeholder=\"Search Messages\">\r\n      </div>\r\n    </div>\r\n  </header>\r\n  <div class=\"widget-body\" id=\"mailbox-content\">\r\n    <table class=\"table table-striped table-emails table-hover\" id=\"folder-view\" >\r\n      <thead>\r\n      <tr>\r\n        <th colspan=\"3\" id=\"folder-actions\">\r\n          <div class=\"checkbox abc-checkbox\">\r\n            <input id=\"toggle-all\" type=\"checkbox\" (click)=\"selectAll()\">\r\n            <label for=\"toggle-all\"></label>\r\n          </div>\r\n        </th>\r\n      </tr>\r\n      </thead>\r\n      <tbody>\r\n      <tr *ngFor=\"let mail of mails | FoldersPipe : folderName | SearchPipe : searchText\" [ngClass]=\"{'unread': mail.unread}\">\r\n        <td>\r\n          <div class=\"checkbox abc-checkbox\">\r\n            <input class=\"toggle-one\" type=\"checkbox\" id=\"checkbox{{mail.id}}\" [checked]=\"mail.selected\"  (click)=\"selectMail(mail)\">\r\n            <label attr.for=\"checkbox{{mail.id}}\"></label>\r\n          </div>\r\n        </td>\r\n        <td><span class=\"starred\"><i class=\"fa\" [ngClass]=\"{'fa-star': mail.starred, 'fa-star-o': !mail.starred}\" (click)=\"changeStarStatus(mail)\"></i></span></td>\r\n        <td class=\"name hidden-xs-down\" (click)=\"openMail(mail)\">{{mail.sender}}</td>\r\n        <td class=\"subject\" (click)=\"openMail(mail)\">{{mail.subject}}</td>\r\n        <td class=\"hidden-xs-down\">\r\n          <i [ngClass]=\"{'fa fa-paperclip': mail.paperclip}\"></i>\r\n        </td>\r\n        <td class=\"date\">{{mail.date}}</td>\r\n      </tr>\r\n      <tr *ngIf=\"(mails).length == 4\">\r\n          <td colspan=\"12\">\r\n              Nothing here yet\r\n          </td>\r\n      </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n</section>\r\n"
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-list/pipes/folders-pipe.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var FOLDERS = [
+    { 'name': 'Inbox', 'order': 0, 'id': 1, 'unread': 2 },
+    { 'name': 'Sent Mail', 'order': 6, 'id': 2, 'unread': 0 },
+    { 'name': 'Draft', 'order': 7, 'id': 3, 'unread': 3 },
+    { 'name': 'Trash', 'order': 8, 'id': 4, 'unread': 0 }
+];
+var FoldersPipe = (function () {
+    function FoldersPipe() {
+        this.folders = FOLDERS;
+    }
+    FoldersPipe.prototype.transform = function (value, args) {
+        var _this = this;
+        var folderName = args;
+        if (value) {
+            return value.filter(function (conversation) {
+                /* tslint:disable */
+                if (folderName == 'Starred') {
+                    return conversation.starred;
+                }
+                else {
+                    var folder = _this.folders.filter(function (folder) { return folder.name == folderName; });
+                    return folder[0].id == conversation.folderId;
+                }
+            });
+        }
+    };
+    FoldersPipe = __decorate([
+        core_1.Pipe({
+            name: 'FoldersPipe'
+        }), 
+        __metadata('design:paramtypes', [])
+    ], FoldersPipe);
+    return FoldersPipe;
+}());
+exports.FoldersPipe = FoldersPipe;
+
+
+/***/ },
+
+/***/ "./src/app/inbox/mail-list/pipes/search-pipe.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var SearchPipe = (function () {
+    function SearchPipe() {
+    }
+    SearchPipe.prototype.transform = function (value, args) {
+        var searchText = new RegExp(args, 'ig');
+        if (value) {
+            return value.filter(function (mail) {
+                if (mail.sender) {
+                    return mail.sender.search(searchText) !== -1;
+                }
+                if (mail.subject) {
+                    return mail.subject.search(searchText) !== -1;
+                }
+            });
+        }
+    };
+    SearchPipe = __decorate([
+        core_1.Pipe({
+            name: 'SearchPipe'
+        }), 
+        __metadata('design:paramtypes', [])
+    ], SearchPipe);
+    return SearchPipe;
+}());
+exports.SearchPipe = SearchPipe;
 
 
 /***/ }
