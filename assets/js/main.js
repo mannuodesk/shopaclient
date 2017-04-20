@@ -22,7 +22,7 @@ jQuery(function($) {
     $("body").on("click",".category-triger",function(e){
         var $this = $(this);
         e.preventDefault();
-        $(this).parents(".category-list").find("ul").slideToggle();
+        $(this).parents(".category-list").find("#smallDevices").slideToggle();
     });
     
     $("body").on("click",".nav-triger",function(e){
