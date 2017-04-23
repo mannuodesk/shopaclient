@@ -63,7 +63,7 @@ var ProductDetail = (function () {
             _this._productdetail.getProductDetails(_this.productId).subscribe(function (a) {
                 console.log(a);
                 //alert();
-                _this.product = a.data[0];
+                _this.product = a.data.productDetailsModel;
                 _this.productdescription = _this.product.FullDescription;
                 _this.productprice = _this.product.ProductPrice.Price;
                 _this.producttitle = _this.product.Name;
@@ -72,13 +72,7 @@ var ProductDetail = (function () {
                 _this.mainimage = _this.productimages[0].FullSizeImageUrl;
                 _this.ProductAttributes = _this.product.ProductAttributes;
                 console.log(_this.product.ProductPrice.OldPrice);
-                _this.oldprice = a.data[1];
-                if (_this.product.ProductPrice.PriceValue == 0 || _this.oldprice == null || _this.product.ProductPrice.PriceValue > _this.oldprice) {
-                    _this.discountpercentage = 0;
-                }
-                else {
-                    _this.discountpercentage = Math.floor(((parseInt(_this.oldprice) - parseInt(_this.product.ProductPrice.PriceValue)) * 100) / _this.oldprice);
-                }
+                _this.discountpercentage = a.data.discountPercentage;
                 console.log(_this.product.ProductPrice);
             });
         });

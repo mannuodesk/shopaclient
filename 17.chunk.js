@@ -173,7 +173,7 @@ var Home = (function () {
         else {
             console.log(productId);
             this._productdetail.getProductDetails(productId).subscribe(function (a) {
-                _this.product = a.data[0];
+                _this.product = a.data.productDetailsModel;
                 _this.productId = productId;
                 _this.productdescription = _this.product.FullDescription;
                 _this.productprice = _this.product.ProductPrice.PriceValue;
@@ -183,13 +183,7 @@ var Home = (function () {
                 _this.mainimage = _this.productimages[0].FullSizeImageUrl;
                 _this.ProductAttributes = _this.product.ProductAttributes;
                 console.log(_this.mainimage);
-                _this.oldprice = a.data[1];
-                if (_this.product.ProductPrice.PriceValue == 0 || _this.oldprice == null || _this.product.ProductPrice.PriceValue > _this.oldprice) {
-                    _this.discountpercentage = 0;
-                }
-                else {
-                    _this.discountpercentage = Math.floor(((parseInt(_this.oldprice) - parseInt(_this.product.ProductPrice.PriceValue)) * 100) / _this.oldprice);
-                }
+                _this.discountpercentage = a.data.discountPercentage;
                 jQuery(".prod-detail-modal").fadeIn();
                 jQuery("body").css('overflow', 'hidden');
             });
