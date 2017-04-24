@@ -1204,8 +1204,10 @@ Main
     color:white !important; 
 }
 .category-list li a{
-    border-radius: 3px;
-    border: 2px solid #34bac5;
+     border:none;
+        padding: 20px !important;
+        width: 100%;
+        border-radius: 0;
     color: #34bac5;
     display: block;
     line-height: 0px;
@@ -1213,10 +1215,6 @@ Main
     overflow: hidden;
     text-overflow: ellipsis;
     width: 134px;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-left: 10px;
-    padding-right: 10px;
     height: 15px;
 }
 .category-list .container{
@@ -3527,6 +3525,9 @@ Responsive
 
 /*========*/
 @media (max-width: 860px) {
+     #largeDevices{
+         display:none;
+     }
     .category-list .container{
         height: 50px;
     }
@@ -3658,13 +3659,17 @@ Responsive
     }
 }
 /*========*/
-@media (min-width: 768px){
-    #smallDevices{
+
+@media ( min-width: 860px){
+        #smallDevices{
         display:none !important;
     }
      #largeDevices{
          display:block;
      }
+}
+@media (min-width: 768px){
+
     .tab-pane.active{
         display: block;
     }
@@ -4117,20 +4122,33 @@ Modal
     border-bottom: none !important; 
 }
 .modal-logo{
-    background: url(../img/logo.png) no-repeat center center;
-    height: 70px;
+    background: url(../img/images/logo.png) no-repeat center center;
+    height: 115px;
     display:block;
 }
 .socialBtn{
     color: white !important;
     margin-bottom:10px;
     border-radius: 0px !important;
-    height: 55px;
+    height: 60px;
     line-height: 43px !important;
     font-size: 20px !important;
     cursor: pointer;
     width:100%;
     font-family: myriad_bold;
+}
+.fb-logo{
+    width:42px;
+    height:42px;
+    border-radius: 4px;
+    margin-top: -8px;
+}
+
+.tw-logo{
+    width:42px;
+    height:35px;
+    border-radius: 4px;
+    margin-top: -8px;
 }
 .btnText{
     display: inline-block;
@@ -4138,15 +4156,30 @@ Modal
     line-height: 55px;
     height: 60px;
     font-size:20px;
-    font-family:myriad_bold;
+    font-family:myriad_semibold;
+}
+.semibold-text{
+    font-family: myriad_semibold;
+    font-size:22px;
+    color:white;
 }
 .fb{
     background-color: #3b5998;
+    margin-top:47px;
+    height:80px;
+    border-radius:6px !important;
+}
+#login-modal .fb{
+    margin-top:30px;
 }
 .modal-div{
     /*padding: 15%;*/
     padding: 55.296px;
-    padding-top:30px;
+    padding-top:56px;
+    padding-bottom:42px;
+}
+#registration-modal{
+    padding-bottom:110px !important;
 }
 .modal-heading{
     font-size: 28px;
@@ -4155,15 +4188,38 @@ Modal
     text-align: center;
     padding: 0 20px;
 }
-.google{
-    background-color: #D50F25;
+
+#registration-modal .modal-heading{ 
+    width:200px;
+    margin:0 auto;
+}
+.twitter{
+    background-color: #55acee;
+     margin-top:6px;
+    height:80px;
+    border-radius:6px !important;
 }
 .email{
     border:1px solid #34bac5 !important;
     color:#34bac5 !important;
+    line-height: 50px !important;
 }
 .login{
     background-color: #34bac5;
+    margin-top:11px;
+    font-size:22px !important;
+    font-family: myriad_bold;
+    line-height: 50px !important;
+}
+
+#login-modal .login{
+    background-color: #34bac5;
+    margin-top:0px;
+    font-size:22px !important;
+    font-family: myriad_bold;
+    line-height: 50px !important;
+    padding-bottom: 0;
+    margin-bottom: 9px;
 }
 .or-text {
    width: 100%; 
@@ -4177,9 +4233,8 @@ Modal
     width: 75px;
     display: inline-block;
     text-align: center;
-    border-right: 1px solid #1b3c83;
-    height: 36px;
-    margin-top: 10px;
+        margin-top: 21px;
+
 }
 .or-text span { 
     background:#fff; 
@@ -4189,8 +4244,11 @@ Modal
 }
 .signup-title{
     text-align: center;
+    margin-bottom: 60px;
+    margin-top: 43px;
+}
+#login-modal .signup-title{
     margin-bottom: 45px;
-    margin-top: 18px;
 }
 
 /*============================
@@ -4850,6 +4908,14 @@ Shopa Cart
 .signUp-btn-div a{
     width:83%;
 }
+
+#login-modal .signUp-btn-div{
+    padding-left:0;
+    text-align: center;
+}
+#login-modal .signUp-btn-div a{
+    width:100%;
+}
 .right-required p{
     font-size:18px;
     font-family: myriad_medium;
@@ -4863,15 +4929,21 @@ input[type="text"]:focus{
 
 #registration-modal{
     display:none;
-        padding-left: 36px;
 }
 
 #registration-modal .signup-title{
-    margin-bottom:22px;
+    margin-bottom:100px;
 }
 #registration-modal .signUp-btn-div{
-    padding-left:16%;
+   padding-left:0 !important;
+   margin-top:30px;
+ 
 }
+#registration-modal .signUp-btn-div a{
+    width:100%;
+ 
+}
+ 
 .reg-signUp{
 margin-top: 30px;
 
@@ -4881,16 +4953,16 @@ margin-top: 30px;
     display:none;
 }
 .almost-done{
-    padding-left: 26%;
+    margin-top:50px;
 }
 .google .btnLogo{
     border-right: 1px solid #a73725 !important;
 }
 .modal-back-btn{
     position: absolute;
-    top: 10px;
+    top: 24px;
     width: 10%;
-    left: 10px;
+    left: 24px;
 }
 .label-login{
     width: 18%;
@@ -4904,13 +4976,14 @@ margin-top: 30px;
     padding-top: 11px;
 }
 .input-login{
-    width: 68%;
+    width: 100%;
 }
 .input-login input{
-    height:40px !important;
-}
-.input-row{
-    margin-left: -30px !important;
+    height:58px !important;
+    margin-bottom:20px;
+    font-size:20px;
+    font-family:myriad_semibold;
+    background-color:#f2f2f2;
 }
 .already-an-account{
     font-size: 12px;
@@ -4921,6 +4994,20 @@ margin-top: 30px;
 }
 #forgot-password-modal{
     display:none;
+}
+#forgot-password-modal{
+
+    padding-bottom:300px;
+}
+#forgot-password-modal .signUp-btn-div{
+padding-left:0 !important;
+}
+#forgot-password-modal .signUp-btn-div a{
+    width:100%;
+    margin-top:0;
+}
+#forgot-password-modal .signup-title{
+    margin-bottom:90px;
 }
 .main-row{
    margin-left: 75px ;

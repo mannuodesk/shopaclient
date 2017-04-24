@@ -18,7 +18,7 @@ var StatusCodeEnum = exports.StatusCodeEnum;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(jQuery) {"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery, $) {"use strict";
 /**
  * Home Component typescript file
  */
@@ -166,27 +166,33 @@ var Home = (function () {
     };
     Home.prototype.rightClick = function (event, productId) {
         var _this = this;
-        console.log(event);
-        if (event.which == 3) {
-            window.open('#/app/product-detail?productId=' + productId, '_newtab'); // To open in new tab
+        var width = $(window).width();
+        console.log(event, width);
+        if (width > 768) {
+            if (event.which == 3) {
+                window.open('#/app/product-detail?productId=' + productId, '_newtab'); // To open in new tab
+            }
+            else {
+                console.log(productId);
+                this._productdetail.getProductDetails(productId).subscribe(function (a) {
+                    _this.product = a.data.productDetailsModel;
+                    _this.productId = productId;
+                    _this.productdescription = _this.product.FullDescription;
+                    _this.productprice = _this.product.ProductPrice.PriceValue;
+                    _this.producttitle = _this.product.Name;
+                    _this.productimages = _this.product.PictureModels;
+                    _this.oldprice = _this.product.ProductPrice.OldPrice;
+                    _this.mainimage = _this.productimages[0].FullSizeImageUrl;
+                    _this.ProductAttributes = _this.product.ProductAttributes;
+                    console.log(_this.mainimage);
+                    _this.discountpercentage = a.data.discountPercentage;
+                    jQuery(".prod-detail-modal").fadeIn();
+                    jQuery("body").css('overflow', 'hidden');
+                });
+            }
         }
         else {
-            console.log(productId);
-            this._productdetail.getProductDetails(productId).subscribe(function (a) {
-                _this.product = a.data.productDetailsModel;
-                _this.productId = productId;
-                _this.productdescription = _this.product.FullDescription;
-                _this.productprice = _this.product.ProductPrice.PriceValue;
-                _this.producttitle = _this.product.Name;
-                _this.productimages = _this.product.PictureModels;
-                _this.oldprice = _this.product.ProductPrice.OldPrice;
-                _this.mainimage = _this.productimages[0].FullSizeImageUrl;
-                _this.ProductAttributes = _this.product.ProductAttributes;
-                console.log(_this.mainimage);
-                _this.discountpercentage = a.data.discountPercentage;
-                jQuery(".prod-detail-modal").fadeIn();
-                jQuery("body").css('overflow', 'hidden');
-            });
+            window.open('#/app/product-detail?productId=' + productId, '_newtab'); // To open in new tab
         }
     };
     Home.prototype.onWishList = function () {
@@ -254,7 +260,7 @@ var Home = (function () {
 }());
 exports.Home = Home;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js"), __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
 /***/ },
 
