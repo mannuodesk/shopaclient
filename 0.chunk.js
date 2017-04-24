@@ -14378,9 +14378,9 @@ exports.SigninSignupService = SigninSignupService;
 "use strict";
 "use strict";
 var UrlService = (function () {
+    //public baseUrl:string = "http://localhost:13377/";
     function UrlService() {
-        //public baseUrl:string = "http://shopabackend.azurewebsites.net/";
-        this.baseUrl = "http://localhost:13377/";
+        this.baseUrl = "http://shopabackend.azurewebsites.net/";
     }
     UrlService.prototype.getUrl = function () {
         return this.baseUrl;
