@@ -22,7 +22,7 @@ var CartComponent = (function () {
                 _this.TotalShippingPrice = a.TotalShippingPrice;
                 _this.LastTotalPrice = _this.TotalPrice + _this.TotalShippingPrice;
                 _this.shoppingCartArray = a.shoppingCartItemDTOList;
-                if (_this.shoppingCartArray == undefined) {
+                if (_this.shoppingCartArray.length == 0) {
                     _this.TotalPrice = 0;
                     _this.TotalShippingPrice = 0;
                     _this.LastTotalPrice = 0;
@@ -76,7 +76,7 @@ var CartComponent = (function () {
             _this.TotalShippingPrice = a.data.TotalShippingPrice;
             _this.LastTotalPrice = _this.TotalPrice + _this.TotalShippingPrice;
             _this.shoppingCartArray = a.data.shoppingCartItemDTOList;
-            if (_this.shoppingCartArray == undefined) {
+            if (_this.shoppingCartArray.length == 0) {
                 _this.TotalPrice = 0;
                 _this.TotalShippingPrice = 0;
                 _this.LastTotalPrice = 0;
