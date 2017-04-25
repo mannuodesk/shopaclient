@@ -118,66 +118,64 @@ var CheckoutComponent = (function () {
             checkErrorCount = checkErrorCount + 1;
         }
         if (this.userRole == "Guests") {
-            {
-                if (this.Email !== undefined && this.Email != "" && this.Email.trim().length != 0) {
-                    this.shippingAddress.Email = this.Email;
-                }
-                else {
-                    jQuery('#EmailRequiredError').show();
-                    checkErrorCount = checkErrorCount + 1;
-                }
-            }
-            if (this.Address1 !== undefined && this.Address1 != "") {
-                this.shippingAddress.Address1 = this.Address1;
+            if (this.Email !== undefined && this.Email != "" && this.Email.trim().length != 0) {
+                this.shippingAddress.Email = this.Email;
             }
             else {
-                jQuery('#addressLineOneRequiredError').show();
+                jQuery('#EmailRequiredError').show();
                 checkErrorCount = checkErrorCount + 1;
             }
-            if (this.City !== undefined && this.City != "") {
-                this.shippingAddress.City = this.City;
-            }
-            else {
-                jQuery('#cityRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            if (jQuery('#countryId').val() !== null) {
-                this.shippingAddress.CountryId = jQuery('#countryId').val();
-            }
-            else {
-                jQuery('#countryRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            if (this.PhoneNumber == undefined || this.PhoneNumber == "" || this.PhoneNumber.trim().length == 0) {
-                jQuery('#telephoneNumberRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            else {
-                this.shippingAddress.PhoneNumber = this.PhoneNumber;
-            }
-            if (this.ZipPostalCode !== undefined && this.ZipPostalCode != "") {
-                this.shippingAddress.ZipPostalCode = this.ZipPostalCode;
-            }
-            else {
-                jQuery('#zipPostalCodeRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            if (this.StateProvinceText !== undefined && this.StateProvinceText != "") {
-                this.shippingAddress.StateProvinceText = this.StateProvinceText;
-            }
-            else {
-                jQuery('#stateProvinceRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            if (checkErrorCount == 0) {
-                this.shippingAddress.Address2 = this.Address2;
-                this.shippingAddress.StateProvinceId = this.StateProvinceId;
-                this.shippingAddress.PhoneNumber = this.PhoneNumber;
-                return true;
-            }
-            else {
-                return false;
-            }
+        }
+        if (this.Address1 !== undefined && this.Address1 != "") {
+            this.shippingAddress.Address1 = this.Address1;
+        }
+        else {
+            jQuery('#addressLineOneRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (this.City !== undefined && this.City != "") {
+            this.shippingAddress.City = this.City;
+        }
+        else {
+            jQuery('#cityRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (jQuery('#countryId').val() !== null) {
+            this.shippingAddress.CountryId = jQuery('#countryId').val();
+        }
+        else {
+            jQuery('#countryRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (this.PhoneNumber == undefined || this.PhoneNumber == "" || this.PhoneNumber.trim().length == 0) {
+            jQuery('#telephoneNumberRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        else {
+            this.shippingAddress.PhoneNumber = this.PhoneNumber;
+        }
+        if (this.ZipPostalCode !== undefined && this.ZipPostalCode != "") {
+            this.shippingAddress.ZipPostalCode = this.ZipPostalCode;
+        }
+        else {
+            jQuery('#zipPostalCodeRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (this.StateProvinceText !== undefined && this.StateProvinceText != "") {
+            this.shippingAddress.StateProvinceText = this.StateProvinceText;
+        }
+        else {
+            jQuery('#stateProvinceRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (checkErrorCount == 0) {
+            this.shippingAddress.Address2 = this.Address2;
+            this.shippingAddress.StateProvinceId = this.StateProvinceId;
+            this.shippingAddress.PhoneNumber = this.PhoneNumber;
+            return true;
+        }
+        else {
+            return false;
         }
     };
     CheckoutComponent.prototype.addPaymentInfo = function () {
