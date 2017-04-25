@@ -216,7 +216,10 @@ var Home = (function () {
         });
     };
     Home.prototype.ngOnInit = function () {
+        var self = this;
         jQuery("body").on("click", ".close-modal", function (e) {
+            self.errors = [];
+            jQuery('#addToCartErrors').hide();
             var $this = jQuery(this);
             e.preventDefault();
             jQuery(this).parents(".prod-detail-modal").fadeOut();
@@ -234,6 +237,9 @@ var Home = (function () {
             this.pageNumber = this.pageNumber + 1;
             this.populateProducts(this.categoryId, this.pageNumber, this.pageSize);
         }
+    };
+    Home.prototype.changeimage = function (image) {
+        this.mainimage = image;
     };
     __decorate([
         core_1.ViewChild('productModal'), 

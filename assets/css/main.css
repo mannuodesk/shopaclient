@@ -774,6 +774,18 @@ form.form-widget .customFieldWrap label:before{
 /*=============================
 Header
 ===========================*/
+
+.modal-header .close{
+        display:none;
+        position: absolute;
+        color: black;
+        right: 8px;
+        font-size: 40px;
+        top: 0;
+        z-index: 2;
+        font-weight: bold;
+    }
+
     #smallDevices{
         display:none;
     }
@@ -1204,10 +1216,11 @@ Main
     color:white !important; 
 }
 .category-list li a{
-     border:none;
+     
         padding: 20px !important;
         width: 100%;
-        border-radius: 0;
+       border-radius: 5px;
+        border:2px solid #34bac5;
     color: #34bac5;
     display: block;
     line-height: 0px;
@@ -1226,7 +1239,8 @@ Main
     padding: 5px 8px;
     position: absolute;
     right: 20px;
-        top: 106px;
+    top: 106px;
+    height:34px;
     transform: translate(0, -50%);
     -webkit-transform: translate(0, -50%);
     -moz-transform: translate(0, -50%);
@@ -3524,7 +3538,39 @@ Responsive
 }
 
 /*========*/
+@media (max-width: 860px) and (min-width:340px){
+    .category-list ul{
+        top:122px;
+    }
+}
+@media (max-width:340px){
+    .category-list ul{
+        top:100px !important;
+    }
+}
+@media (max-width: 860px) and (min-width:768px){
+    .tags-list{
+        margin-bottom:20px;
+    }
+    .category-list li{
+        border-radius:0;
+    }
+    .category-list li a{
+        border:none !important;
+        border-radius:0;
+    }
+}
 @media (max-width: 860px) {
+        .filter-icon{
+        display:none;
+    }
+        .hash-tags{
+        display:none;
+    }
+        .hashtagDropDown{
+        display:block;
+        margin-top: 16px;
+    }
      #largeDevices{
          display:none;
      }
@@ -3554,6 +3600,8 @@ Responsive
         font-weight: 400;
         font-size: 14px;
     }
+
+
     .category-list li:last-child{
         border-bottom: 0;
     }
@@ -3855,7 +3903,7 @@ Responsive
 /*========*/
 @media (max-width:340px){
     .category-list .category-triger{
-        top:14.5%;
+        top:83px;
     }
 }
 @media (max-width: 560px) {
@@ -4305,6 +4353,11 @@ Shopa search
 .grid-3{
  margin-left: 270px !important;
 }
+.search-page .products-wrapper.grid-3 .product{
+     float: left;
+    width: 19%;
+    padding: 12px;
+}
 .products-wrapper.grid-3 .product{
      float: left;
     width: 18%;
@@ -4699,16 +4752,6 @@ and (orientation : landscape) {
     .products-wrapper.grid-4{
         margin-top:15px;
     }
-    .hash-tags{
-        display:none;
-    }
-    .filter-icon{
-        display:none;
-    }
-    .hashtagDropDown{
-        display:block;
-        margin-top: 16px;
-    }
     .cart-page{
         padding-left:0;
         padding-right:0;
@@ -4808,6 +4851,20 @@ and (orientation : landscape) {
     
 }
 @media (max-width: 640px) {
+    .modal-header .close{
+        display:block;
+    }
+    .modal-div{
+        padding:25px;
+    }
+    .modal-content{
+        margin-left:0 !important;
+        width:100%;
+    }
+    .btnText{
+        font-size:16px;
+        padding-left:2%;
+    }
     .products-main{
         margin-top:25px;
     }

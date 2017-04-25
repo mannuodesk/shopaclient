@@ -93,34 +93,32 @@ var CheckoutComponent = (function () {
         });
     };
     CheckoutComponent.prototype.populatePaymentModel = function () {
-        {
-            var checkErrorCount = 0;
-            if (this.creditCardNumber !== undefined && this.creditCardNumber != "" && this.creditCardNumber.trim().length != 0) {
-                console.log("No credit information");
-            }
-            else {
-                jQuery('#creditCardNumberRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            if (checkErrorCount == 0) {
-                return true;
-            }
-            else {
-                return false;
-            }
+        var checkErrorCount = 0;
+        if (this.creditCardNumber !== undefined && this.creditCardNumber != "" && this.creditCardNumber.trim().length != 0) {
+            console.log("No credit information");
+        }
+        else {
+            jQuery('#creditCardNumberRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (checkErrorCount == 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     };
     CheckoutComponent.prototype.populateShippingModel = function () {
-        {
-            var checkErrorCount = 0;
-            if (this.FirstName !== undefined && this.FirstName != "" && this.FirstName.trim().length != 0) {
-                this.shippingAddress.FirstName = this.FirstName;
-            }
-            else {
-                jQuery('#firstNameRequiredError').show();
-                checkErrorCount = checkErrorCount + 1;
-            }
-            if (this.userRole == "Guest") {
+        var checkErrorCount = 0;
+        if (this.FirstName !== undefined && this.FirstName != "" && this.FirstName.trim().length != 0) {
+            this.shippingAddress.FirstName = this.FirstName;
+        }
+        else {
+            jQuery('#firstNameRequiredError').show();
+            checkErrorCount = checkErrorCount + 1;
+        }
+        if (this.userRole == "Guests") {
+            {
                 if (this.Email !== undefined && this.Email != "" && this.Email.trim().length != 0) {
                     this.shippingAddress.Email = this.Email;
                 }
@@ -150,7 +148,7 @@ var CheckoutComponent = (function () {
                 jQuery('#countryRequiredError').show();
                 checkErrorCount = checkErrorCount + 1;
             }
-            if (jQuery("#phoneNumber").val() == "" || this.PhoneNumber.trim().length == 0) {
+            if (this.PhoneNumber == undefined || this.PhoneNumber == "" || this.PhoneNumber.trim().length == 0) {
                 jQuery('#telephoneNumberRequiredError').show();
                 checkErrorCount = checkErrorCount + 1;
             }
@@ -207,7 +205,7 @@ var CheckoutComponent = (function () {
         }
     };
     CheckoutComponent.prototype.ngOnInit = function () {
-        $("body").on("click", ".checkout-form .step2-next", function (e) {
+        jQuery("body").on("click", ".checkout-form .step2-next", function (e) {
             var $this = $(this);
             e.preventDefault();
             $(".checkout-form .step1").hide();
@@ -216,8 +214,8 @@ var CheckoutComponent = (function () {
             $(".checkout-tabs li").removeClass("active");
             $(".checkout-tabs li:nth-child(3)").addClass("active");
         });
-        $("body").on("click", ".checkout-form .edit-step1", function (e) {
-            var $this = $(this);
+        jQuery("body").on("click", ".checkout-form .edit-step1", function (e) {
+            var $this = jQuery(this);
             e.preventDefault();
             $(".checkout-form .step2").hide();
             $(".checkout-form .step3").hide();
@@ -225,14 +223,14 @@ var CheckoutComponent = (function () {
             $(".checkout-tabs li").removeClass("active");
             $(".checkout-tabs li:nth-child(1)").addClass("active");
         });
-        $("body").on("click", ".checkout-form .edit-step2", function (e) {
-            var $this = $(this);
+        jQuery("body").on("click", ".checkout-form .edit-step2", function (e) {
+            var $this = jQuery(this);
             e.preventDefault();
-            $(".checkout-form .step1").hide();
-            $(".checkout-form .step3").hide();
-            $(".checkout-form .step2").show();
-            $(".checkout-tabs li").removeClass("active");
-            $(".checkout-tabs li:nth-child(2)").addClass("active");
+            jQuery(".checkout-form .step1").hide();
+            jQuery(".checkout-form .step3").hide();
+            jQuery(".checkout-form .step2").show();
+            jQuery(".checkout-tabs li").removeClass("active");
+            jQuery(".checkout-tabs li:nth-child(2)").addClass("active");
         });
     };
     CheckoutComponent.prototype.onPlaceOrder = function () {
