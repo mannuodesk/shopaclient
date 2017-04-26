@@ -41,6 +41,10 @@ Fonts
 /*============================
 General
 ===========================*/
+button::-moz-focus-inner {
+  border: 0;
+}
+button:focus {outline:0;}
 .w3-modal
 {
     z-index:10000 !important;
@@ -550,9 +554,10 @@ form.form-widget label.required::before{
     margin-bottom: 2px;
     font-size: 16px;
 }
+
 .custom-form-wid.check label{
     font-size: 18px;
-    padding-left: 28px
+    padding-left: 30px
 }
 .custom-form-wid label:hover{
     cursor: pointer;
@@ -579,9 +584,9 @@ form.form-widget .customFieldWrap label:before{
 
 .custom-form-wid input[type=checkbox]:not(old) + label > i,
 .custom-form-wid input[type=radio]:not(old) + label > i{
-    width: 13px;
-    height: 13px;
-    line-height: 13px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
     font-size: 8px;
     background: #fff;
@@ -594,8 +599,8 @@ form.form-widget .customFieldWrap label:before{
     text-align: center;
 }
 .custom-form-wid input[type=checkbox]:not(old) + label > i{
-    height: 16px;
-    width: 15px;
+    height: 20px;
+    width: 20px;
     border-radius: 2px;
     border: 1px solid #d9dbe2;
     border-top: 2px solid #ebecf0;
@@ -606,11 +611,11 @@ form.form-widget .customFieldWrap label:before{
 }
 .custom-form-wid input[type=checkbox]:not(old) + label > i:before{
     content: " ";
-    font-size: 13px;
+    font-size: 22px;
     height: 15px;
     left: -1px;
     position: absolute;
-    top: -1px;
+    top: -2px;
     width: 15px;
 }
 .custom-form-wid input[type=checkbox]:not(old):checked + label > i:before{
@@ -774,7 +779,11 @@ form.form-widget .customFieldWrap label:before{
 /*=============================
 Header
 ===========================*/
-
+.input-camera{
+    position: absolute;
+    top: 10px;
+    right: 85px;
+}
 .modal-header .close{
         display:none;
         position: absolute;
@@ -1165,6 +1174,9 @@ Main
 .icon{
     padding-bottom: 14px !important;
     font-size: 24px;
+    border:none;
+    background:transparent;
+    outline:none;
 }
 .tags-list li a{
         color: #34bac5;
@@ -3488,7 +3500,7 @@ Responsive
 @media (max-width: 1080px) {
     .header-items .header-search {
     width: 60%;
-    margin-left: 44%;
+    margin-left: 22%;
     }
     .products-wrapper.grid-4 .product{
         width: 33.3334%;
@@ -3505,6 +3517,7 @@ Responsive
     }
     .doc-header a.nav-triger{
         display: block;
+        color:black;
     }
     
     .header-items{
@@ -3561,14 +3574,18 @@ Responsive
     }
 }
 @media (max-width: 860px) {
-        .filter-icon{
-        display:none;
-    }
         .hash-tags{
         display:none;
     }
+     .filter-icon{
+         padding-top: 13px;
+         margin-top:0;
+         padding-left:0 !important;
+         padding-right:8px;
+     }
         .hashtagDropDown{
         display:block;
+        float:left;
         margin-top: 16px;
     }
      #largeDevices{
@@ -3701,10 +3718,7 @@ Responsive
     .search-page .sidebar{
         width: 32%;
     }
-    .search-page .products {
-        float: left;
-        width: 100%;
-    }
+
 }
 /*========*/
 
@@ -3727,7 +3741,11 @@ Responsive
 }
 /*========*/
 @media (max-width: 767px) {
-
+    .input-camera{
+        position: absolute;
+        right: 35px;
+        top: 30px;
+        }   
 
      #largeDevices{
          display:none;
@@ -3862,12 +3880,8 @@ Responsive
     .store-rating .ratings-wraper{
         width: 100%;
     }
-    .search-page .products ,.search-page .view-wrapper{
-        width: 100%;
-    }
-    .search-page .sidebar{
-        width: 100%;
-    }
+
+
     .profile-head .profile-visual,
     .profile-head .profile-stats{
         width: 100%;
@@ -4213,21 +4227,23 @@ Modal
 }
 .fb{
     background-color: #3b5998;
-    margin-top:47px;
+    /*margin-top:47px;*/
+    margin-top:10px;
     height:80px;
     border-radius:6px !important;
 }
 #login-modal .fb{
-    margin-top:30px;
+    /*margin-top:30px; */
 }
 .modal-div{
     /*padding: 15%;*/
     padding: 55.296px;
-    padding-top:56px;
+    padding-top:25px !important;
     padding-bottom:42px;
 }
 #registration-modal{
-    padding-bottom:110px !important;
+    /*padding-bottom:110px !important;*/
+    padding-bottom:25px !important;
 }
 .modal-heading{
     font-size: 28px;
@@ -4292,17 +4308,114 @@ Modal
 }
 .signup-title{
     text-align: center;
-    margin-bottom: 60px;
-    margin-top: 43px;
+   /* margin-bottom: 60px;
+    margin-top: 43px; */
+    margin:20px 0 20px 0;
 }
 #login-modal .signup-title{
-    margin-bottom: 45px;
+    /*margin-bottom: 45px;*/
 }
 
 /*============================
 Shopa search
 ===========================*/
+.fifth-column{
+    margin-top:55px;
+}
+.color-box{
 
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 30px;
+    top: -2px;
+
+}
+
+
+.left-btn,.right-btn{
+    position: relative;
+    float:left;
+}
+#filter-content{
+   /* position: absolute;
+    top: 178px; */
+    position:relative;
+    background: white;
+    z-index: 200;
+    width: 100%;
+    padding-bottom:80px;
+}
+.searchBtn{
+    border-radius:0 !important;
+    border:2px solid #34bac5 !important;
+    background-color:#34bac5 !important;
+    color:white !important;
+    height:60px;
+    width:208px;
+    font-family: myriad_bold;
+    font-size:22px !important;
+    margin-left:70px;
+}
+
+.clearBtn{
+    border-radius:0 !important;
+    border:2px solid #34bac5 !important;
+    color:#34bac5 !important;
+    background-color:transparent !important;
+    height:60px;
+    width:208px;
+    font-family: myriad_bold;
+    font-size:22px !important;
+    margin-left:35px;
+}
+.filter-btns-row{
+    padding-left: 60px;
+    padding-right: 60px;
+    margin:20px 0 8px 0;
+}
+.all-filters{
+    padding-left: 85px;
+}
+.close-holder{
+    background:transparent;
+    border:none;
+    outline:none;
+}
+.rank-filter li,.price-filter li,.ship-filter li,.gender-filter li{
+    margin-bottom:10px;
+}
+.size-filter li{
+    margin-bottom:10px;
+}
+.colorsList li{
+    margin-bottom:7px;
+}
+.colorsList .check{
+    position:relative;
+}
+.colorsList .custom-form-wid.check label{
+    font-size:20px !important;
+    color:#888d93;
+    font-family: myriad_medium;
+    padding-left:66px !important;
+}
+.filter-heading{
+    font-size:28px;
+    font-family: myriad_medium;
+    color:#a8aaae;
+}
+
+.filter-subheading{
+    font-size:20px;
+    font-family: myriad_semibold;
+    color:black;
+    text-transform: uppercase;
+    margin-bottom:20px;
+}
+.second-sub{
+        margin-top: 25px;
+}
 .side-title{
     color:#8a8c90;
     font-size:26px;
@@ -4332,7 +4445,11 @@ Shopa search
     float: left;
 }
 .min-price,.max-price{
-    width:40%;
+    width:100px;
+    height:36px;
+}
+.min-price input,.max-price input{
+height:36px;
 }
 .search-fields{
     border:1px solid #e4e6ed;
@@ -4353,11 +4470,7 @@ Shopa search
 .grid-3{
  margin-left: 270px !important;
 }
-.search-page .products-wrapper.grid-3 .product{
-     float: left;
-    width: 19%;
-    padding: 12px;
-}
+
 .products-wrapper.grid-3 .product{
      float: left;
     width: 18%;
@@ -4393,6 +4506,23 @@ height:150px !important;
 }
 
 @media (max-width:992px) and (min-width:768px) {
+    .min-price, .max-price{
+        width:64px;
+    }
+    .min-price input,.max-price input{
+        width:64px;
+    }
+    .dash{
+        padding:0 3px 0 3px !important;
+    }
+    #filter-content{
+        /*top:140px; */
+    }
+    .search-page .products-wrapper.grid-3 .product {
+    float: left;
+    width: 50%;
+    padding: 12px;
+    }
     .prod-detail-top .prod-zoom .zoom-main{
         height:320px;
         width:320px;
@@ -4674,7 +4804,7 @@ and (orientation : landscape) {
 
 @media (max-width:1200px) and (min-width:992px) {
     .category-list li{
-        margin-right:23px;
+        margin-right:20px;
     }
     .prod-detail-top .prod-zoom .zoom-main{
         margin-left:0;
@@ -4693,6 +4823,8 @@ and (orientation : landscape) {
 @media (max-width:992px) and (min-width:768px) {
     .hashtagDropDown{
         margin-left:4px;
+        float:left;
+
     }
     .category-list .category-triger{
           right:28px;
@@ -4756,8 +4888,7 @@ and (orientation : landscape) {
         padding-left:0;
         padding-right:0;
     }
-    .grid-3{margin-left: 0 !important;
-	}
+
     .main-row{
    margin-left: 0px !important;
     margin-right: 0px !important;
@@ -4823,7 +4954,14 @@ and (orientation : landscape) {
 }
 
 @media (min-width:640px) and (max-width:768px){
-
+    .dash{
+        padding: 0px 4px 0 4px ;
+    }
+    .search-page .products-wrapper.grid-3 .product {
+    float: left;
+    width: 50%;
+    padding: 12px;
+    }
     .order-heading{
         margin-bottom:30px;
     }
@@ -4851,6 +4989,46 @@ and (orientation : landscape) {
     
 }
 @media (max-width: 640px) {
+    .filter-btns-row{
+        padding-right:0 !important;
+    }
+    .action-buttons{
+        width:100%;
+    }
+    .left-btn,.right-btn{
+        width: 80%;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-left: 6%;
+    }
+    
+    .close-holder{
+        margin-top:10px;
+    }
+    #filter-content{
+       /* top:110px;*/
+    }
+    .filter-btns-row{
+        padding-left:0;
+    }
+    .searchBtn, .clearBtn{
+        margin-left:0 !important;
+        width:100%;
+    }
+    .all-filters{
+        padding-left:15px;
+    }
+    .sidebar{
+        width:100% !important;
+        
+    }
+    .search-page .grid-3{
+        width:100% !important;
+    }
+    .grid-3{
+        margin-left:0 !important;
+
+    }
     .modal-header .close{
         display:block;
     }
@@ -4989,11 +5167,14 @@ input[type="text"]:focus{
 }
 
 #registration-modal .signup-title{
-    margin-bottom:100px;
+   /* margin-bottom:100px; */
+   margin-bottom:20px;
+   margin-top:20px;
 }
 #registration-modal .signUp-btn-div{
    padding-left:0 !important;
-   margin-top:30px;
+   /*margin-top:30px;*/
+   margin-top:0;
  
 }
 #registration-modal .signUp-btn-div a{

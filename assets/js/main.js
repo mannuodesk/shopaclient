@@ -386,6 +386,7 @@ jQuery(function($) {
         }, 4000);
     }
 
+
     $('body').on("click", ".quantity-control .btn-plus", function (e) {
         var p = $(this).parent(),
             tInput = p.find("input"),
@@ -441,3 +442,9 @@ jQuery(function($) {
     
     
 }); /*end ready*/ /*end*/
+
+
+/* Shopa Search */
+
+
+  
