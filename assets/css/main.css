@@ -1586,6 +1586,8 @@ Product Details
 .detail-page.modal-view{
     background: #fff;
     padding: 22px;
+    padding-left:50px;
+    padding-right:50px;
 }
 .prod-detail-top .prod-zoom{
     float: left;
@@ -1593,7 +1595,8 @@ Product Details
 }
 .prod-detail-top .prod-zoom .thumbnails{
     margin: 0 -4px;
-		margin-left:45px;
+    margin-top:8px;
+	/*margin-left:45px;*/
 }
 .prod-detail-top .prod-zoom .thumbnails li{
     float: left;
@@ -4868,7 +4871,9 @@ and (orientation : landscape) {
 }
 
 @media (max-width:768px){
-
+    .small{
+        width:100% !important;
+    }
      #largeDevices{
          display:none;
      }
@@ -5276,4 +5281,72 @@ padding-left:0 !important;
 }
 .error-width{
     width:100%;
+}
+
+
+
+
+
+
+/* Zoooooommmmer * /
+
+
+
+
+
+/*Some CSS*/
+* {margin: 0; padding: 0;}
+.magnify { margin-top:0;position: relative; cursor: none}
+
+/*Lets create the magnifying glass*/
+.large {
+	width: 175px; height: 175px;
+	position: absolute;
+	border-radius: 100%;
+	
+	/*Multiple box shadows to achieve the glass effect*/
+	box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 
+	0 0 7px 7px rgba(0, 0, 0, 0.25), 
+	inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+	
+	/*hide the glass by default*/
+	display: none;
+}
+
+/*To solve overlap bug at the edges during magnification*/
+.small { display: block;width:320px;height:320px;object-fit: cover; }
+
+#changePassword{
+    width:25%; 
+    margin:auto;
+    background-color:#34BAC5;
+    border-radius: 0;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+}
+
+#changePassword .input-login input{
+    width:80%;
+    margin:0 auto;
+    margin-bottom:20px;
+        border-radius: 0;
+}
+
+#changePassword .modal-heading{
+    color:white;
+    margin-top:30px;
+}
+
+#changePassword .signUp-btn-div{
+    padding-left:0;
+}
+
+#changePassword a.login{
+    border:1px solid white;
+    border-radius:0 !important;
+    margin: 0 auto;
+    width: 80%;
 }
