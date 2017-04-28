@@ -1978,6 +1978,14 @@ Product Details
 .add-review .add_review_stars::after {
     font-size: 28px;
     }
+    .add_review_stars {
+    font-size: 28px;
+        float: right;
+        color: #c5d1da;
+    }
+    .coloredStar{
+        color:#34bac5;
+    }
 .add-review .submit{
     float: right;
     margin-top: 20px;
