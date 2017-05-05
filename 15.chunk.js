@@ -3708,6 +3708,7 @@ var Home = (function () {
             }
             else {
                 console.log(productId);
+                this.user = JSON.parse(localStorage.getItem('user'));
                 this._productdetail.getProductDetails(productId, this.user.Id).subscribe(function (a) {
                     _this.isAllowedReview = a.data.isAllowedForReview;
                     _this.product = a.data.productDetailsModel;
