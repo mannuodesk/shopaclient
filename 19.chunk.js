@@ -253,6 +253,9 @@ var CheckoutComponent = (function () {
                 console.log('Place Order');
                 _this.router.navigate(['/app/index']);
             }
+            else if (a.code == 400) {
+                console.log("Error" + a.data);
+            }
         });
     };
     CheckoutComponent = __decorate([

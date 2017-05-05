@@ -4931,6 +4931,11 @@ and (orientation : landscape) {
     .tags-list{
         display:none;
     }
+    .cat-btns{
+         padding: 7px 0 15px 0 !important;
+         line-height:24px !important;
+         height:40px;
+    }
     .mobile-caraousel-cats{
         margin-top:10px;
     }
@@ -5110,6 +5115,23 @@ and (orientation : landscape) {
     
 }
 @media (max-width: 640px) {
+    .product-description{
+        padding-top:6px;
+    }
+    .old-price {
+    font-size: 13px;
+    left: 4px;
+    top: 15px;
+    } 
+    
+    .new-price {
+    font-size: 17px;
+
+    }
+    .item-sold {
+    margin-top:-6px !important;
+        }
+
     .doc-footer{
         padding:0;
     }

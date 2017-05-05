@@ -4,7 +4,7 @@ webpackJsonpac__name_([21],{
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {"use strict";
 var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/index.js");
 var router_2 = __webpack_require__("./node_modules/@angular/router/index.js");
@@ -16,11 +16,25 @@ var ChangePasswordComponent = (function () {
         this.router = router;
     }
     ChangePasswordComponent.prototype.submitNewPassword = function () {
-        if (this.Password != this.ConfirmPassword) {
+        if (this.Password == undefined || this.Password == "") {
+            jQuery("#rpasswordRequiredError").show();
+            return;
+        }
+        else if (this.Password != this.ConfirmPassword) {
+            jQuery("#rpasswordRequiredError").hide();
+            jQuery("#passwordMustMatch").show();
+            return;
         }
         else if (!this.checkStringComplexity(this.Password)) {
+            jQuery("#rpasswordRequiredError").hide();
+            jQuery("#passwordMustMatch").hide();
+            jQuery("#passwordMustMatchcom").show();
         }
         else {
+            jQuery("#passwordMustMatchcom").hide();
+            jQuery("#rpasswordRequiredError").hide();
+            jQuery("#passwordMustMatch").hide();
+            jQuery("#rpasswordRequiredError").hide();
             this.verifyUser();
         }
     };
@@ -38,6 +52,14 @@ var ChangePasswordComponent = (function () {
             _this._forgotPasswordService.verifyResetRequest(_this.UserEmail, _this.UserGuid, _this.Password).subscribe(function (a) {
                 if (a.code == 200) {
                     console.log("Password Successfully Updated");
+                    jQuery("#passwordMustMatchv").html("Password Successfully Updated");
+                    _this.Password = "";
+                    _this.ConfirmPassword = "";
+                    jQuery("#passwordMustMatchv").show();
+                }
+                else if (a.code == 100) {
+                    //console.log("Password Successfully Updated");
+                    jQuery("#passwordMustMatchv").html("Invalid Reset request");
                 }
                 else {
                     console.log("Error!");
@@ -60,6 +82,7 @@ var ChangePasswordComponent = (function () {
 }());
 exports.ChangePasswordComponent = ChangePasswordComponent;
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
 /***/ },
 
@@ -113,7 +136,7 @@ module.exports = ""
 /***/ "./src/app/changepassword/changepassword.template.html":
 /***/ function(module, exports) {
 
-module.exports = "\r\n       \r\n           <div id=\"changePassword\">\r\n    \r\n              \r\n        <div class=\"row signup-title almost-done\">\r\n            <h3 class=\"bold modal-heading\">Please enter your new password!</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"Password\" class=\"form-control\" placeholder=\"Password..\"/>\r\n            </div>\r\n            <div id=\"passwordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n            <div id=\"passwordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Password must contains alpha numeric characters</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\"  [(ngModel)]=\"ConfirmPassword\" class=\"form-control\" placeholder=\"Confirm Password..\"/>\r\n            </div>\r\n            <div id=\"passwordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Confirm Password is Required</label>\r\n            </div>\r\n            <div id=\"passwordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Confirm Password must contains alpha numeric characters</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"submitNewPassword()\" class=\"btn btn-block reg-signUp socialBtn login\">\r\n                Submit\r\n            </a>\r\n        </div>\r\n\r\n        <div id=\"invalidRegistration\" class=\"error\">\r\n            <label class=\"texxt\"></label>\r\n        </div>\r\n\r\n        </div>\r\n"
+module.exports = "\r\n       \r\n           <div id=\"changePassword\">\r\n    \r\n              \r\n        <div class=\"row signup-title almost-done\">\r\n            <h3 class=\"bold modal-heading\">Please enter your new password!</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"Password\" class=\"form-control\" placeholder=\"Password..\"/>\r\n            </div>\r\n            <div id=\"rpasswordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n            <div id=\"rpasswordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Password must contains alpha numeric characters</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\"  [(ngModel)]=\"ConfirmPassword\" class=\"form-control\" placeholder=\"Confirm Password..\"/>\r\n            </div>\r\n            <div id=\"rpasswordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Confirm Password is Required</label>\r\n            </div>\r\n            <div id=\"rpasswordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Confirm Password must contains alpha numeric characters</label>\r\n            </div>\r\n            \r\n             <div id=\"passwordMustMatch\" class=\"error\">\r\n                <label class=\"texxt\">Password must match</label>\r\n            </div>\r\n             <div id=\"passwordMustMatchcom\" class=\"error\">\r\n                <label class=\"texxt\">Password must consists of Alpha numeric characters</label>\r\n            </div>\r\n             <div id=\"passwordMustMatchv\" class=\"error\">\r\n                <label class=\"texxt\">Password must consists of Alpha numeric characters</label>\r\n            </div>\r\n            \r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"submitNewPassword()\" class=\"btn btn-block reg-signUp socialBtn login\">\r\n                Submit\r\n            </a>\r\n        </div>\r\n\r\n        <div id=\"invalidRegistration\" class=\"error\">\r\n            <label class=\"texxt\"></label>\r\n        </div>\r\n\r\n        </div>\r\n"
 
 /***/ }
 
