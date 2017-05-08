@@ -161,7 +161,13 @@ var ProductDetail = (function () {
             console.log(data);
             _this.reviewsRatings = data.data;
             _this.productReviewList = _this.reviewsRatings.productReviewList;
-            _this.productRecentReviewList[0] = _this.reviewsRatings.productReviewList[0];
+            if (_this.reviewsRatings.productReviewList[0] != undefined) {
+                _this.productRecentReviewList = [];
+                _this.productRecentReviewList[0] = _this.reviewsRatings.productReviewList[0];
+            }
+            else {
+                _this.productRecentReviewList = null;
+            }
             _this.totalRating = _this.reviewsRatings.totalRating;
             _this.ratingAverage = _this.reviewsRatings.ratingAverage;
             console.log(_this.reviewsRatings);
