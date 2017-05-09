@@ -73,6 +73,13 @@ p {
 .title{
     color: #8a8c90;
 }
+.recentreview{    height: 60px;
+    width: 60px;
+    background-size: cover !important;
+    background-position: center center;
+    position: absolute;
+    left: 5px;
+    top: 32px;}
 iframe{
     width: 100% !important;
     border: none !important;
@@ -5110,6 +5117,9 @@ and (orientation : landscape) {
     .tags-list li{
       margin-left:65px;
     }
+    .products-wrapper.grid-4 .product{
+        width:11%;
+    }
 
     .products-wrapper .product .product-inner {
     height: 210px !important;
@@ -5154,8 +5164,11 @@ and (orientation : landscape) {
 
 @media (min-width:1900px) and (max-width:1999px){
     .category-list li{
-                margin-right: 1.099% !important;
+                margin-right: 0.9% !important;
     }
+	.tags-list li{
+		margin-left:67px;
+	}
 }
 
 @media (min-width:1800px) and (max-width:1899px){
