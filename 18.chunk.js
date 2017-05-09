@@ -88,7 +88,11 @@ var ProductDetail = (function () {
                 console.log(a);
                 //alert();
                 _this.product = a.data.productDetailsModel;
-                _this.isAllowedReview = a.data.isAllowedForReview;
+                if (_this.user.role == "Guests") {
+                    _this.isAllowedReview = 0;
+                }
+                else
+                    _this.isAllowedReview = a.data.isAllowedForReview;
                 _this.productdescription = _this.product.FullDescription;
                 _this.productprice = _this.product.ProductPrice.Price;
                 _this.producttitle = _this.product.Name;

@@ -3759,7 +3759,13 @@ var Home = (function () {
                 console.log(productId);
                 this.user = JSON.parse(localStorage.getItem('user'));
                 this._productdetail.getProductDetails(productId, this.user.Id).subscribe(function (a) {
-                    _this.isAllowedReview = a.data.isAllowedForReview;
+                    _this.isReviewedNow = 0;
+                    _this.isAllowedReview = 0;
+                    if (_this.user.role == "Guests") {
+                        _this.isAllowedReview = 0;
+                    }
+                    else
+                        _this.isAllowedReview = a.data.isAllowedForReview;
                     _this.product = a.data.productDetailsModel;
                     _this.productId = productId;
                     _this.productdescription = _this.product.FullDescription;
