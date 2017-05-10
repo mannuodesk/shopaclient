@@ -5213,7 +5213,7 @@ and (orientation : landscape) {
 
 @media (min-width:1250px) and (max-width:1299px){
     .category-list li{
-                margin-right: 34px !important;
+                margin-right: 33px !important;
     }
     .tags-list li{   
                 margin-left: 88px;
@@ -5231,8 +5231,12 @@ and (orientation : landscape) {
 
 @media (min-width:1100px) and (max-width:1199px){
     .category-list li{
-                margin-right: 1.69%;
+                margin-right: 1.39% !important;
     }
+    .tags-list li{   
+                margin-left: 69px;
+    }
+
 }
 @media (min-width:3000px){
     .products-wrapper.grid-4 .product{
@@ -5241,28 +5245,31 @@ and (orientation : landscape) {
 }
 @media (min-width:1000px) and (max-width:1099px){
     .category-list li{
-            margin-right: 2.399999% !important;
+            margin-right: 2.199999% !important;
                
     }
 
     .tags-list li{
-        margin-left:81px;
+        margin-left:78px;
     }
 }
 
-@media (min-width:901px) and (max-width:999px){
+@media (min-width:918px) and (max-width:999px){
     .category-list li{
-        margin-right: 1.8% !important;
+        margin-right: 0.6% !important;
+    }
+    .tags-list li{
+        margin-left:63px;
     }
 }
 
 @media (min-width:800px) and (max-width:900px){
     .category-list li{
-        margin-right: 1.8% !important;
+        margin-right: 1.51% !important;
     }
 
     .tags-list li{
-        margin-left:75px
+        margin-left:72px
     }
     .hash-tags{
         margin-top:12px;
