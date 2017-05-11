@@ -43,6 +43,8 @@ var CartComponent = (function () {
     };
     CartComponent.prototype.delete = function () {
         this.deleteCartItem(this.productToRemove);
+        var cartcount = jQuery(".header-btn .cart-icon .head_btn .count").text();
+        jQuery(".header-btn .cart-icon .head_btn .count").text(--cartcount);
     };
     CartComponent.prototype.onQuantityChange = function (shoppingCartItemId, quantity, index) {
         var _this = this;

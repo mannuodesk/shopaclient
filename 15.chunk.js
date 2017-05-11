@@ -3832,6 +3832,8 @@ var Home = (function () {
         this.addToCartDTO.quantity = 1;
         this._shoppingCartService.addToCart(this.addToCartDTO).subscribe(function (a) {
             if (a.success == true) {
+                var cartcount = jQuery(".header-btn .cart-icon .head_btn .count").text();
+                jQuery(".header-btn .cart-icon .head_btn .count").text(++cartcount);
                 jQuery("body").css('overflow', 'scroll');
                 _this.router.navigate(['/app/cart']);
             }

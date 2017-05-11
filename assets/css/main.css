@@ -1031,7 +1031,8 @@ header-icons path {fill: #bebebe !important;}
 .header-items .header-btn{
     position: absolute;
     left: auto;
-    right:35px;
+    /*right:35px;*/
+    right:95px;
     top: 50%;
     transform: translate(0, -50%);
     -webkit-transform: translate(0, -50%);
@@ -1055,12 +1056,30 @@ header-icons path {fill: #bebebe !important;}
     padding: 8px 3px;
    
 }
+.header-btn .cart-icon{
+    display:none;
+}
+.cart-contents{
+    position: absolute;
+    left: auto;
+    right:28px;
+    top: 50%;
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+}
+.cart-contents img{
+max-width: 42px;
+}
 .header-btn a.head_btn i.fa{
     color: #4f4f4f;
     font-size: 26px;
     float: left;
     margin-right: 8px;
 }
+
 .header-btn a.head_btn span.count{
     background: #34bac5;
     color: #fff;
@@ -1074,6 +1093,22 @@ header-icons path {fill: #bebebe !important;}
     font-weight: 400;
     bottom: 7px;
     left: 40px;
+    position: relative;
+    font-size:13px;
+}
+.cart-contents span.count{
+background: #34bac5;
+    color: #fff;
+    height: 20px;
+    width: 20px;
+    line-height: 18px;
+    border-radius: 20px;
+    display: block;
+    text-align: center;
+    float: left;
+    font-weight: 400;
+    bottom: 4px;
+    left: 42px;
     position: relative;
     font-size:13px;
 }
@@ -3399,6 +3434,7 @@ label.required:after{
 
 .total-shipping .tag{
     color:#8a8c90 !important;
+    font-size:14px;
 }
 .price-review p {
     font-size:18px;
@@ -3636,6 +3672,9 @@ Responsive
     .header-items .header-btn,
     .header-items .header-admin{
         display: none;
+    }
+    .cart-contents{
+        display:none;
     }
     .doc-header a.nav-triger{
         display: block;
