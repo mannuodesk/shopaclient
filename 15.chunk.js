@@ -3692,6 +3692,7 @@ var Home = (function () {
                 _this.successMsgAfterReview = "Your Review is Submitted Successfully.";
                 _this.isAllowedReview = 0;
                 _this.isReviewedNow = 1;
+                _this.reviewDescription = "";
             }
             console.log(data);
         });

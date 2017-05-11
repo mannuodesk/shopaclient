@@ -102,6 +102,7 @@ var ProductDetail = (function () {
                 _this.ProductAttributes = _this.product.ProductAttributes;
                 console.log(_this.product.ProductPrice.OldPrice);
                 _this.discountpercentage = a.data.discountPercentage;
+                _this.reviewDescription = "";
                 console.log(_this.product.ProductPrice);
                 var native_width = 0;
                 var native_height = 0;

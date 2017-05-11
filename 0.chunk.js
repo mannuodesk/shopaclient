@@ -11573,35 +11573,30 @@ var FBCommentEmbedComponent = (function (_super) {
     }
     return FBCommentEmbedComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBCommentEmbedComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-comment-embed',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBCommentEmbedComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBCommentEmbedComponent.propDecorators = {
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'includeParent': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBCommentEmbedComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBCommentEmbedComponent.prototype, "width", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBCommentEmbedComponent.prototype, "includeParent", void 0);
+FBCommentEmbedComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-comment-embed',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBCommentEmbedComponent);
+
 //# sourceMappingURL=fb-comment-embed.js.map
 
 /***/ },
@@ -11662,50 +11657,45 @@ var FBCommentsComponent = (function (_super) {
     }
     return FBCommentsComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBCommentsComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-comments',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBCommentsComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBCommentsComponent.propDecorators = {
-    'colorscheme': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'mobile': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'numposts': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'orderBy': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBCommentsComponent.prototype, "colorscheme", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBCommentsComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBCommentsComponent.prototype, "mobile", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Number)
 ], FBCommentsComponent.prototype, "numposts", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBCommentsComponent.prototype, "orderBy", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBCommentsComponent.prototype, "width", void 0);
+FBCommentsComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-comments',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBCommentsComponent);
+
 //# sourceMappingURL=fb-comments.js.map
 
 /***/ },
@@ -11755,55 +11745,50 @@ var FBFollowComponent = (function (_super) {
     }
     return FBFollowComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBFollowComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-follow',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBFollowComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBFollowComponent.propDecorators = {
-    'colorScheme': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'kidDirectedSite': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'layout': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'showFaces': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'size': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBFollowComponent.prototype, "colorScheme", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBFollowComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBFollowComponent.prototype, "kidDirectedSite", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBFollowComponent.prototype, "layout", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBFollowComponent.prototype, "showFaces", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBFollowComponent.prototype, "size", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBFollowComponent.prototype, "width", void 0);
+FBFollowComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-follow',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBFollowComponent);
+
 //# sourceMappingURL=fb-follow.js.map
 
 /***/ },
@@ -11861,70 +11846,64 @@ var FBLikeComponent = (function (_super) {
     }
     return FBLikeComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBLikeComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-like',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBLikeComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBLikeComponent.propDecorators = {
-    'action': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'colorScheme': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'kidDirectedSite': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'layout': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'ref': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'share': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'showFaces': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'size': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "action", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "colorScheme", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBLikeComponent.prototype, "kidDirectedSite", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "layout", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "ref", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBLikeComponent.prototype, "share", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBLikeComponent.prototype, "showFaces", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "size", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBLikeComponent.prototype, "width", void 0);
+FBLikeComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-like',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBLikeComponent);
+
 //# sourceMappingURL=fb-like.js.map
 
 /***/ },
@@ -11975,65 +11954,60 @@ var FBPageComponent = (function (_super) {
     }
     return FBPageComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBPageComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-page',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBPageComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBPageComponent.propDecorators = {
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'height': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'tabs': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'hideCover': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'showFacepile': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'hideCTA': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'smallHeader': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'adaptContainerWidth': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBPageComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Number)
 ], FBPageComponent.prototype, "width", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Number)
 ], FBPageComponent.prototype, "height", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBPageComponent.prototype, "tabs", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBPageComponent.prototype, "hideCover", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBPageComponent.prototype, "showFacepile", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBPageComponent.prototype, "hideCTA", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBPageComponent.prototype, "smallHeader", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBPageComponent.prototype, "adaptContainerWidth", void 0);
+FBPageComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-page',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBPageComponent);
+
 //# sourceMappingURL=fb-page.js.map
 
 /***/ },
@@ -12085,35 +12059,30 @@ var FBPostComponent = (function (_super) {
     }
     return FBPostComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBPostComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-post',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBPostComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBPostComponent.propDecorators = {
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'showText': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBPostComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBPostComponent.prototype, "width", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBPostComponent.prototype, "showText", void 0);
+FBPostComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-post',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBPostComponent);
+
 //# sourceMappingURL=fb-post.js.map
 
 /***/ },
@@ -12165,30 +12134,25 @@ var FBQuoteComponent = (function (_super) {
     }
     return FBQuoteComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBQuoteComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-quote',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBQuoteComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBQuoteComponent.propDecorators = {
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'layout': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBQuoteComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBQuoteComponent.prototype, "layout", void 0);
+FBQuoteComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-quote',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBQuoteComponent);
+
 //# sourceMappingURL=fb-quote.js.map
 
 /***/ },
@@ -12229,7 +12193,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * The Save button lets people save items or services to a private list on Facebook, share it with friends, and receive relevant notifications.
  * @usage
  * ```html
- * <fb-save uri="https://github.com/zyra/ng2-facebook-sdk/"></fb-save>
+ * <fb-save uri="https://github.com/zyramedia/ng2-facebook-sdk/"></fb-save>
  * ```
  */
 var FBSaveComponent = (function (_super) {
@@ -12245,25 +12209,20 @@ var FBSaveComponent = (function (_super) {
     }
     return FBSaveComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBSaveComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-save',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBSaveComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBSaveComponent.propDecorators = {
-    'uri': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBSaveComponent.prototype, "uri", void 0);
+FBSaveComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-save',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBSaveComponent);
+
 //# sourceMappingURL=fb-save.js.map
 
 /***/ },
@@ -12304,7 +12263,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * The Send button lets people privately send content on your site to one or more friends in a Facebook message.
  * @usage
  * ```html
- * <fb-send href="https://github.com/zyra/ng2-facebook-sdk/"></fb-send>
+ * <fb-send href="https://github.com/zyramedia/ng2-facebook-sdk/"></fb-send>
  * ```
  */
 var FBSendComponent = (function (_super) {
@@ -12319,45 +12278,40 @@ var FBSendComponent = (function (_super) {
     }
     return FBSendComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBSendComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-send',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBSendComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBSendComponent.propDecorators = {
-    'colorScheme': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'kidDirectedSite': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'ref': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'size': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBSendComponent.prototype, "colorScheme", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBSendComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBSendComponent.prototype, "kidDirectedSite", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBSendComponent.prototype, "ref", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBSendComponent.prototype, "size", void 0);
+FBSendComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-send',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBSendComponent);
+
 //# sourceMappingURL=fb-send.js.map
 
 /***/ },
@@ -12398,7 +12352,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * The Share button lets people add a personalized message to links before sharing on their timeline, in groups, or to their friends via a Facebook Message.
  * @usage
  * ```html
- * <fb-share href="https://github.com/zyra/ng2-facebook-sdk/"></fb-share>
+ * <fb-share href="https://github.com/zyramedia/ng2-facebook-sdk/"></fb-share>
  * ```
  */
 var FBShareComponent = (function (_super) {
@@ -12408,40 +12362,35 @@ var FBShareComponent = (function (_super) {
     }
     return FBShareComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBShareComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-share',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBShareComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBShareComponent.propDecorators = {
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'layout': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'mobileIframe': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'size': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBShareComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBShareComponent.prototype, "layout", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBShareComponent.prototype, "mobileIframe", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBShareComponent.prototype, "size", void 0);
+FBShareComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-share',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBShareComponent);
+
 //# sourceMappingURL=fb-share.js.map
 
 /***/ },
@@ -12608,56 +12557,60 @@ var FBVideoComponent = (function (_super) {
     FBVideoComponent.prototype.getDuration = function () { };
     return FBVideoComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__fbml_component__["a" /* FBMLComponent */]));
-
-FBVideoComponent.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
-                selector: 'fb-video',
-                template: ''
-            },] },
-];
-/** @nocollapse */
-FBVideoComponent.ctorParameters = function () { return [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"], },
-]; };
-FBVideoComponent.propDecorators = {
-    'href': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'allowfullscreen': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'autoplay': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'width': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'showText': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'showCaptions': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
-    'startedPlaying': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
-    'paused': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
-    'finishedPlaying': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
-    'startedBuffering': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
-    'finishedBuffering': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
-    'error': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
-};
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBVideoComponent.prototype, "href", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBVideoComponent.prototype, "allowfullscreen", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBVideoComponent.prototype, "autoplay", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", String)
 ], FBVideoComponent.prototype, "width", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBVideoComponent.prototype, "showText", void 0);
 __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["b" /* FBMLAttribute */],
     __metadata("design:type", Boolean)
 ], FBVideoComponent.prototype, "showCaptions", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], FBVideoComponent.prototype, "startedPlaying", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], FBVideoComponent.prototype, "paused", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], FBVideoComponent.prototype, "finishedPlaying", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], FBVideoComponent.prototype, "startedBuffering", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], FBVideoComponent.prototype, "finishedBuffering", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], FBVideoComponent.prototype, "error", void 0);
 __decorate([
     __WEBPACK_IMPORTED_MODULE_1__fbml_component__["c" /* FBMLInstanceMethod */],
     __metadata("design:type", Function),
@@ -12718,6 +12671,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], FBVideoComponent.prototype, "getDuration", null);
+FBVideoComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'fb-video',
+        template: ''
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
+], FBVideoComponent);
+
 //# sourceMappingURL=fb-video.js.map
 
 /***/ },
@@ -12813,6 +12775,12 @@ var FBMLComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_fb_video_fb_video__ = __webpack_require__("./node_modules/ng2-facebook-sdk/dist/esm/components/fb-video/fb-video.js");
 /* unused harmony export getComponents */
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return FacebookModule; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 
 
 
@@ -12866,26 +12834,25 @@ function getComponents() {
  * export class AppModule { }
  * ```
  */
-var FacebookModule = (function () {
+var FacebookModule = FacebookModule_1 = (function () {
     function FacebookModule() {
     }
     FacebookModule.forRoot = function () {
         return {
-            ngModule: FacebookModule,
+            ngModule: FacebookModule_1,
             providers: [__WEBPACK_IMPORTED_MODULE_1__providers_facebook__["a" /* FacebookService */]]
         };
     };
     return FacebookModule;
 }());
+FacebookModule = FacebookModule_1 = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+        declarations: getComponents(),
+        exports: getComponents()
+    })
+], FacebookModule);
 
-FacebookModule.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
-                declarations: getComponents(),
-                exports: getComponents()
-            },] },
-];
-/** @nocollapse */
-FacebookModule.ctorParameters = function () { return []; };
+var FacebookModule_1;
 //# sourceMappingURL=facebook.module.js.map
 
 /***/ },
@@ -12946,6 +12913,12 @@ FacebookModule.ctorParameters = function () { return []; };
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/index.js");
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return FacebookService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 
 /**
  * @shortdesc
@@ -12973,14 +12946,13 @@ var FacebookService = (function () {
     /**
      * This method is used to initialize and setup the SDK.
      * @param params {InitParams} Initialization parameters
-     * @returns {Promise<any>}
      */
     FacebookService.prototype.init = function (params) {
         try {
-            return Promise.resolve(FB.init(params));
+            FB.init(params);
         }
         catch (e) {
-            return Promise.reject(e);
+            console.error('ng2-facebook-sdk: ', e);
         }
     };
     /**
@@ -13080,7 +13052,7 @@ var FacebookService = (function () {
      *
      * // login with options
      * const options: LoginOptions = {
-     *   scope: 'public_profile,user_friends,email,pages_show_list',
+     *   scope: 'public_profiel,user_friends,email,pages_show_list',
      *   return_scopes: true,
      *   enable_profile_selector: true
      * };
@@ -13150,12 +13122,10 @@ var FacebookService = (function () {
     };
     return FacebookService;
 }());
+FacebookService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
+], FacebookService);
 
-FacebookService.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
-];
-/** @nocollapse */
-FacebookService.ctorParameters = function () { return []; };
 //# sourceMappingURL=facebook.js.map
 
 /***/ },
@@ -13788,6 +13758,106 @@ function dispatchNext(subscriber) {
     subscriber.debouncedNext();
 }
 //# sourceMappingURL=debounceTime.js.map
+
+/***/ },
+
+/***/ "./node_modules/rxjs/operator/filter.js":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Subscriber_1 = __webpack_require__("./node_modules/rxjs/Subscriber.js");
+/**
+ * Filter items emitted by the source Observable by only emitting those that
+ * satisfy a specified predicate.
+ *
+ * <span class="informal">Like
+ * [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter),
+ * it only emits a value from the source if it passes a criterion function.</span>
+ *
+ * <img src="./img/filter.png" width="100%">
+ *
+ * Similar to the well-known `Array.prototype.filter` method, this operator
+ * takes values from the source Observable, passes them through a `predicate`
+ * function and only emits those values that yielded `true`.
+ *
+ * @example <caption>Emit only click events whose target was a DIV element</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var clicksOnDivs = clicks.filter(ev => ev.target.tagName === 'DIV');
+ * clicksOnDivs.subscribe(x => console.log(x));
+ *
+ * @see {@link distinct}
+ * @see {@link distinctKey}
+ * @see {@link distinctUntilChanged}
+ * @see {@link distinctUntilKeyChanged}
+ * @see {@link ignoreElements}
+ * @see {@link partition}
+ * @see {@link skip}
+ *
+ * @param {function(value: T, index: number): boolean} predicate A function that
+ * evaluates each value emitted by the source Observable. If it returns `true`,
+ * the value is emitted, if `false` the value is not passed to the output
+ * Observable. The `index` parameter is the number `i` for the i-th source
+ * emission that has happened since the subscription, starting from the number
+ * `0`.
+ * @param {any} [thisArg] An optional argument to determine the value of `this`
+ * in the `predicate` function.
+ * @return {Observable} An Observable of values from the source that were
+ * allowed by the `predicate` function.
+ * @method filter
+ * @owner Observable
+ */
+function filter(predicate, thisArg) {
+    return this.lift(new FilterOperator(predicate, thisArg));
+}
+exports.filter = filter;
+var FilterOperator = (function () {
+    function FilterOperator(predicate, thisArg) {
+        this.predicate = predicate;
+        this.thisArg = thisArg;
+    }
+    FilterOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new FilterSubscriber(subscriber, this.predicate, this.thisArg));
+    };
+    return FilterOperator;
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var FilterSubscriber = (function (_super) {
+    __extends(FilterSubscriber, _super);
+    function FilterSubscriber(destination, predicate, thisArg) {
+        _super.call(this, destination);
+        this.predicate = predicate;
+        this.thisArg = thisArg;
+        this.count = 0;
+        this.predicate = predicate;
+    }
+    // the try catch block below is left specifically for
+    // optimization and perf reasons. a tryCatcher is not necessary here.
+    FilterSubscriber.prototype._next = function (value) {
+        var result;
+        try {
+            result = this.predicate.call(this.thisArg, value, this.count++);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        if (result) {
+            this.destination.next(value);
+        }
+    };
+    return FilterSubscriber;
+}(Subscriber_1.Subscriber));
+//# sourceMappingURL=filter.js.map
 
 /***/ },
 
@@ -14923,7 +14993,7 @@ var routes = [
             { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(18).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(22).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'checkout', loadChildren: function () { return __webpack_require__.e/* System.import */(19).then(__webpack_require__.bind(null, "./src/app/checkout/checkout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(9).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(8).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'changepassword', loadChildren: function () { return __webpack_require__.e/* System.import */(21).then(__webpack_require__.bind(null, "./src/app/changepassword/changepassword.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }
 ];
