@@ -13761,106 +13761,6 @@ function dispatchNext(subscriber) {
 
 /***/ },
 
-/***/ "./node_modules/rxjs/operator/filter.js":
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Subscriber_1 = __webpack_require__("./node_modules/rxjs/Subscriber.js");
-/**
- * Filter items emitted by the source Observable by only emitting those that
- * satisfy a specified predicate.
- *
- * <span class="informal">Like
- * [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter),
- * it only emits a value from the source if it passes a criterion function.</span>
- *
- * <img src="./img/filter.png" width="100%">
- *
- * Similar to the well-known `Array.prototype.filter` method, this operator
- * takes values from the source Observable, passes them through a `predicate`
- * function and only emits those values that yielded `true`.
- *
- * @example <caption>Emit only click events whose target was a DIV element</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var clicksOnDivs = clicks.filter(ev => ev.target.tagName === 'DIV');
- * clicksOnDivs.subscribe(x => console.log(x));
- *
- * @see {@link distinct}
- * @see {@link distinctKey}
- * @see {@link distinctUntilChanged}
- * @see {@link distinctUntilKeyChanged}
- * @see {@link ignoreElements}
- * @see {@link partition}
- * @see {@link skip}
- *
- * @param {function(value: T, index: number): boolean} predicate A function that
- * evaluates each value emitted by the source Observable. If it returns `true`,
- * the value is emitted, if `false` the value is not passed to the output
- * Observable. The `index` parameter is the number `i` for the i-th source
- * emission that has happened since the subscription, starting from the number
- * `0`.
- * @param {any} [thisArg] An optional argument to determine the value of `this`
- * in the `predicate` function.
- * @return {Observable} An Observable of values from the source that were
- * allowed by the `predicate` function.
- * @method filter
- * @owner Observable
- */
-function filter(predicate, thisArg) {
-    return this.lift(new FilterOperator(predicate, thisArg));
-}
-exports.filter = filter;
-var FilterOperator = (function () {
-    function FilterOperator(predicate, thisArg) {
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-    }
-    FilterOperator.prototype.call = function (subscriber, source) {
-        return source._subscribe(new FilterSubscriber(subscriber, this.predicate, this.thisArg));
-    };
-    return FilterOperator;
-}());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var FilterSubscriber = (function (_super) {
-    __extends(FilterSubscriber, _super);
-    function FilterSubscriber(destination, predicate, thisArg) {
-        _super.call(this, destination);
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-        this.count = 0;
-        this.predicate = predicate;
-    }
-    // the try catch block below is left specifically for
-    // optimization and perf reasons. a tryCatcher is not necessary here.
-    FilterSubscriber.prototype._next = function (value) {
-        var result;
-        try {
-            result = this.predicate.call(this.thisArg, value, this.count++);
-        }
-        catch (err) {
-            this.destination.error(err);
-            return;
-        }
-        if (result) {
-            this.destination.next(value);
-        }
-    };
-    return FilterSubscriber;
-}(Subscriber_1.Subscriber));
-//# sourceMappingURL=filter.js.map
-
-/***/ },
-
 /***/ "./node_modules/rxjs/operator/toArray.js":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -14219,6 +14119,7 @@ module.exports = function(module) {
     UserChannelsEnum[UserChannelsEnum["EMAIL"] = 1] = "EMAIL";
     UserChannelsEnum[UserChannelsEnum["FACEBOOK"] = 2] = "FACEBOOK";
     UserChannelsEnum[UserChannelsEnum["GOOGLE"] = 3] = "GOOGLE";
+    UserChannelsEnum[UserChannelsEnum["TWITTER"] = 4] = "TWITTER";
 })(exports.UserChannelsEnum || (exports.UserChannelsEnum = {}));
 var UserChannelsEnum = exports.UserChannelsEnum;
 
@@ -14531,56 +14432,64 @@ var Header = (function () {
          * End
          */
     }
-    Header.prototype.googleInit = function () {
-        var that = this;
-        gapi.load('auth2', function () {
-            that.auth2 = gapi.auth2.init({
-                apiKey: 'AIzaSyC2uvuwzMx3F_An7MyLYIZ4K6gv1QrUd24',
-                client_id: '938943519107-bhvesf3hd0s9nmnpucap8pc8ltgppt1g.apps.googleusercontent.com',
-                scope: 'profile'
-            });
-            that.attachSignin(document.getElementById('googleSignInBtn'));
-            that.attachSignin(document.getElementById('googleSignUpBtn'));
-        });
-    };
-    Header.prototype.attachSignin = function (element) {
-        var that = this;
-        this.auth2.attachClickHandler(element, {}, function (googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('Token || ' + googleUser.getAuthResponse().id_token);
-            console.log('ID: ' + profile.getId());
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
-            var googleCustomer = new User_1.User();
-            //this.user = JSON.parse(localStorage.getItem('user'));
-            console.log(JSON.parse(localStorage.getItem('user')));
-            googleCustomer.Id = JSON.parse(localStorage.getItem('user')).Id;
-            googleCustomer.Email = profile.getEmail();
-            googleCustomer.imageUrl = profile.getImageUrl();
-            googleCustomer.firstName = profile.getName();
-            googleCustomer.password = profile.getEmail();
-            googleCustomer.channel = UserChannelsEnum_1.UserChannelsEnum.GOOGLE;
-            that._signinsignup.userSignup(googleCustomer).subscribe(function (a) {
-                console.log(a);
-                that.user = new User_1.User();
-                that.user = a.data;
-                localStorage.setItem('user', JSON.stringify(that.user));
-                console.log(JSON.parse(localStorage.getItem('user')));
-                that.signUPModalComponent.close();
-            });
-        }, function (error) {
-            console.log(error);
-        });
-    };
+    /**
+      Google Sign UP
+     */
     Header.prototype.initializeModal = function () {
     };
-    Header.prototype.signUpWithGmail = function (element) {
-        console.log('Sign Up With Gmail');
-    };
-    Header.prototype.signInWithGmail = function () {
-        console.log('Sign In With Gmail');
-    };
+    /*public googleInit() {
+      let that = this;
+      gapi.load('auth2', function () {
+        that.auth2 = gapi.auth2.init({
+          apiKey: 'AIzaSyC2uvuwzMx3F_An7MyLYIZ4K6gv1QrUd24',
+          client_id: '938943519107-bhvesf3hd0s9nmnpucap8pc8ltgppt1g.apps.googleusercontent.com',
+          scope: 'profile'
+        });
+        that.attachSignin(document.getElementById('googleSignInBtn'));
+        that.attachSignin(document.getElementById('googleSignUpBtn'));
+      });
+    }*/
+    /*public attachSignin(element) {
+      let that = this;
+      this.auth2.attachClickHandler(element, {},
+        function (googleUser) {
+  
+          let profile = googleUser.getBasicProfile();
+          console.log('Token || ' + googleUser.getAuthResponse().id_token);
+          console.log('ID: ' + profile.getId());
+          console.log('Name: ' + profile.getName());
+          console.log('Image URL: ' + profile.getImageUrl());
+          console.log('Email: ' + profile.getEmail());
+          let googleCustomer = new User();
+          //this.user = JSON.parse(localStorage.getItem('user'));
+          console.log(JSON.parse(localStorage.getItem('user')));
+  
+          googleCustomer.Id = JSON.parse(localStorage.getItem('user')).Id;
+          googleCustomer.Email = profile.getEmail();
+          googleCustomer.imageUrl = profile.getImageUrl();
+          googleCustomer.firstName = profile.getName();
+          googleCustomer.password = profile.getEmail();
+          googleCustomer.channel = UserChannelsEnum.GOOGLE;
+          that._signinsignup.userSignup(googleCustomer).subscribe(
+            a => {
+              console.log(a);
+              that.user = new User();
+              that.user = a.data;
+              localStorage.setItem('user', JSON.stringify(that.user));
+              console.log(JSON.parse(localStorage.getItem('user')));
+              that.signUPModalComponent.close();
+            }
+          );
+        }, function (error) {
+          console.log(error);
+        });
+    }*/
+    /*signUpWithGmail(element) {
+      console.log('Sign Up With Gmail');
+    }
+    signInWithGmail() {
+      console.log('Sign In With Gmail');
+    }*/
     /**
     End
      */
@@ -14786,7 +14695,7 @@ var Header = (function () {
     Header.prototype.openSignUPModal = function () {
         this.reset_Values();
         this.signUPModalComponent.open();
-        this.googleInit();
+        //this.googleInit();
     };
     Header.prototype.openSignUpModalDiv = function () {
         this.reset_Values();
@@ -14826,6 +14735,80 @@ var Header = (function () {
         localStorage.clear();
         window.location.reload();
     };
+    /**
+     * Sign Up with Twitter
+     */
+    Header.prototype.signUpWithTwitter = function () {
+        var self = this;
+        /**
+         * For Code Bird JS
+         */
+        self.cb = new window.Codebird;
+        self.cb.setConsumerKey("gu8GLZNrTfzsxZP5umk9FyFns", "d93B5Zg3ep8dZHFD2S0yTiA6ETEMTx8XiyZ4HdR9JL8Q82JzjK");
+        /**
+         * End
+         */
+        // gets a request token 
+        self.cb.__call("oauth_requestToken", { oauth_callback: "oob" }, function (reply) {
+            // stores it 
+            console.log("Reply");
+            console.log(reply);
+            self.cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+            var params = {
+                screen_name: reply.screen_name,
+                include_email: true
+            };
+            // gets the authorize screen URL 
+            self.cb.__call("oauth_authorize", params, function (auth_url) {
+                window.codebird_auth = window.open(auth_url);
+                self.signUPModalComponent.close();
+                self.twitterPinCodeModalComponent.open();
+            });
+        });
+    };
+    Header.prototype.twitterPinCodeEntered = function () {
+        var twitterCustomer = new User_1.User();
+        var self = this;
+        self.cb.__call("oauth_accessToken", { oauth_verifier: self.TwitterPin }, function (reply) {
+            // store the authenticated token, which may be different from the request token (!)
+            if (reply.httpstatus == 200) {
+                self.cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+                var params = {
+                    screen_name: reply.screen_name
+                };
+                self.cb.__call("account_verifyCredentials", params, function (reply, rate, err) {
+                    console.log(reply);
+                    if (reply.httpstatus == 200) {
+                        twitterCustomer.Id = self.user.Id;
+                        twitterCustomer.Email = reply.id.toString() + "@twitter.com";
+                        var nameArray = reply.name.split(' ');
+                        if (nameArray.length != 0 && nameArray[0] !== undefined) {
+                            twitterCustomer.firstName = nameArray[0];
+                        }
+                        if (nameArray.length != 0 && nameArray[1] !== undefined) {
+                            twitterCustomer.lastName = nameArray[1];
+                        }
+                        twitterCustomer.imageUrl = reply.profile_image_url;
+                        twitterCustomer.password = reply.id.toString() + "@twitter.com";
+                        twitterCustomer.channel = UserChannelsEnum_1.UserChannelsEnum.TWITTER;
+                        self._signinsignup.userSignup(twitterCustomer).subscribe(function (a) {
+                            console.log(a);
+                            self.user = new User_1.User();
+                            self.user = a.data;
+                            localStorage.setItem('user', JSON.stringify(self.user));
+                            console.log(JSON.parse(localStorage.getItem('user')));
+                            self.twitterPinCodeModalComponent.close();
+                        });
+                    }
+                });
+            }
+            // if you need to persist the login after page reload,
+            // consider storing the token in a cookie or HTML5 local storage
+        });
+    };
+    /**
+     * End
+     */
     Header.prototype.ngOnInit = function () {
         jQuery(document).ready(function () {
             jQuery(".header-btn .image-cart .dropping").hover(function () {
@@ -14843,6 +14826,10 @@ var Header = (function () {
         core_1.ViewChild('signUPModal'), 
         __metadata('design:type', (typeof (_a = typeof ng2_modal_1.Modal !== 'undefined' && ng2_modal_1.Modal) === 'function' && _a) || Object)
     ], Header.prototype, "signUPModalComponent", void 0);
+    __decorate([
+        core_1.ViewChild('twitterPinCode'), 
+        __metadata('design:type', (typeof (_b = typeof ng2_modal_1.Modal !== 'undefined' && ng2_modal_1.Modal) === 'function' && _b) || Object)
+    ], Header.prototype, "twitterPinCodeModalComponent", void 0);
     Header = __decorate([
         core_1.Component({
             selector: 'headers',
@@ -14850,10 +14837,10 @@ var Header = (function () {
             encapsulation: core_1.ViewEncapsulation.None,
             providers: [SigninSignupService_1.SigninSignupService, ShoppingCartService_1.ShoppingCartService, SharedService_1.SharedService, ForgotPasswordService_1.ForgotPasswordService]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof SharedService_1.SharedService !== 'undefined' && SharedService_1.SharedService) === 'function' && _b) || Object, (typeof (_c = typeof ng2_facebook_sdk_1.FacebookService !== 'undefined' && ng2_facebook_sdk_1.FacebookService) === 'function' && _c) || Object, (typeof (_d = typeof SigninSignupService_1.SigninSignupService !== 'undefined' && SigninSignupService_1.SigninSignupService) === 'function' && _d) || Object, (typeof (_e = typeof ShoppingCartService_1.ShoppingCartService !== 'undefined' && ShoppingCartService_1.ShoppingCartService) === 'function' && _e) || Object, (typeof (_f = typeof ForgotPasswordService_1.ForgotPasswordService !== 'undefined' && ForgotPasswordService_1.ForgotPasswordService) === 'function' && _f) || Object])
+        __metadata('design:paramtypes', [(typeof (_c = typeof SharedService_1.SharedService !== 'undefined' && SharedService_1.SharedService) === 'function' && _c) || Object, (typeof (_d = typeof ng2_facebook_sdk_1.FacebookService !== 'undefined' && ng2_facebook_sdk_1.FacebookService) === 'function' && _d) || Object, (typeof (_e = typeof SigninSignupService_1.SigninSignupService !== 'undefined' && SigninSignupService_1.SigninSignupService) === 'function' && _e) || Object, (typeof (_f = typeof ShoppingCartService_1.ShoppingCartService !== 'undefined' && ShoppingCartService_1.ShoppingCartService) === 'function' && _f) || Object, (typeof (_g = typeof ForgotPasswordService_1.ForgotPasswordService !== 'undefined' && ForgotPasswordService_1.ForgotPasswordService) === 'function' && _g) || Object])
     ], Header);
     return Header;
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g;
 }());
 exports.Header = Header;
 
@@ -14864,7 +14851,7 @@ exports.Header = Header;
 /***/ "./src/app/weblayout/header/header.template.html":
 /***/ function(module, exports) {
 
-module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#/app/index\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <img src=\"assets/img/images/cam.png\" class=\"input-camera\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                        <button class=\"camera-button\"><img src=\"assets/img/images/cam.png\"></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul class=\"image-cart\">\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, {{user.firstName}}!</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold dropping\">\r\n                            <a class=\"admin-options-triger head_btn\" *ngIf=\"user.imageUrl == null\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">0</span>\r\n                            </a>\r\n                            <a class=\"admin-options-triger head_btn\" *ngIf=\"user.imageUrl != null\" href=\"#\">\r\n                                <img class=\"header-icons header-image-circle\" src=\"{{user.imageUrl}}\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                            <ul class=\"admin-options\">\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Guests'\" href=\"#\" (click)=\"openSignUPModal()\">Sign In/Sign Up</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Profile</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Wallet</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Order History</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Settings</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\" (click)=\"logout()\">Logout</a></li>\r\n                            </ul>\r\n                        </li>\r\n                        <li class=\"bold cart-icon\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" (click)=\"openCart()\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">{{user.cartCount}}</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n                <!-- <div class=\"cart-contents\">\r\n                    <a class=\"head_btn\" href=\"#\">\r\n                        <img class=\"header-icons\" (click)=\"openCart()\" src=\"assets/img/cartIcon.svg\"/>\r\n                        <span class=\"count\">{{user.cartCount}}</span>\r\n                    </a>\r\n                </div> -->\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">{{user.firstName}}</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Guests'\" href=\"#\" (click)=\"openSignUPModal()\">Sign In/Sign Up</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Profile</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Wallet</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Order History</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Settings</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\" (click)=\"logout()\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"true\" [closeOnEscape]=\"true\"  (onOpen)=\"initializeModal()\">\r\n  <modal-header>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div id=\"welcomeRegistrationDiv\" class=\"modal-div\">\r\n\r\n            <div class=\"modal-logo\">\r\n                </div>\r\n\r\n        <div class=\"row signup-title\">\r\n            <h3 class=\"bold modal-heading\">Sign up to browse Products!</h3>\r\n        </div>\r\n\r\n        <div class=\"row bold\">\r\n            <a class=\"btn btn-block socialBtn email\" (click)=\"openSignUpModalDiv()\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n\r\n        <div class=\"row semibold\">\r\n            <a (click)=\"openLoginModalDiv()\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn fb\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                <img src=\"assets/img/images/fb.png\" class=\"fb-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign up with Facebook\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div id=\"googleSignUpBtn\" (click)=\"signUpWithGmail()\" class=\"socialBtn twitter\">\r\n                <div class=\"btnLogo\">\r\n                    <img src=\"assets/img/images/twitter.png\" class=\"tw-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign up with Twitter\r\n                </div>\r\n            </div>\r\n        </div>\r\n<!--        <div class=\"row ultralight\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>   -->\r\n\r\n    </div>\r\n    <div id=\"registration-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n                <div class=\"modal-logo\">\r\n                </div>\r\n        <div class=\"row signup-title almost-done\">\r\n            <h3 class=\"bold modal-heading\">Sign up<br>almost done!</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"Email\" class=\"form-control\" placeholder=\"Email..\"/>\r\n            </div>\r\n            <div id=\"emailRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"Password\" class=\"form-control\" placeholder=\"Password..\"/>\r\n            </div>\r\n            <div id=\"passwordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n            <div id=\"passwordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Password must contains alpha numeric characters</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"signUpWithEmail()\" class=\"btn btn-block reg-signUp socialBtn login\">\r\n                Sign Up\r\n            </a>\r\n        </div>\r\n\r\n        <div id=\"invalidRegistration\" class=\"error\">\r\n            <label class=\"texxt\">{{registrationError}}</label>\r\n        </div>\r\n    </div>\r\n    <div id=\"login-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n                <div class=\"modal-logo\">\r\n                </div>\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Login</h3>\r\n        </div>\r\n\r\n                <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"LoginEmail\" class=\"form-control\" placeholder=\"Email..\"/>\r\n            </div>\r\n            <div id=\"emailLoginRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailLoginNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"LoginPassword\" class=\"form-control\" placeholder=\"Password..\"/>\r\n            </div>\r\n            <div id=\"passwordLoginRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"signInWithEmail()\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold already-an-account signUp-btn-div\">\r\n            <a (click)=\"forgot_password_modal()\">\r\n                Forgot password?\r\n            </a>\r\n        </div>\r\n        <div id=\"invalidLogin\" class=\"error\">\r\n            <label class=\"texxt\">{{loginError}}</label>\r\n        </div>\r\n\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn fb\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                <img src=\"assets/img/images/fb.png\" class=\"fb-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Login with Facebook\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn twitter\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                <img src=\"assets/img/images/twitter.png\" class=\"tw-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Login with Twitter\r\n                </div>\r\n            </div>\r\n        </div>\r\n        \r\n    </div>\r\n    <div id=\"forgot-password-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n                <div class=\"modal-logo\">\r\n                </div>\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Forgot Password</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"Email\" class=\"form-control\" placeholder=\"Email..\"/>\r\n            </div>\r\n            <div id=\"forgotemailRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"forgotEmailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n            <div id=\"forgotEmailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n            \r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"forgotPassword()\" class=\"btn btn-block socialBtn login\">\r\n                Submit\r\n            </a>\r\n        </div>\r\n    </div>\r\n  </modal-content>\r\n</modal>\r\n"
+module.exports = "<header class=\"doc-header\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"doc-inner\">\r\n            <a class=\"logo2\" href=\"#/app/index\"><img src=\"assets/img/logo.png\" alt=\"\"></a>\r\n            <a href=\"#\" class=\"nav-triger\"><i class=\"fa fa-bars\"></i></a>\r\n            <a href=\"#\" class=\"search-triger\"><i class=\"fa fa-search\"></i></a>\r\n            <div class=\"header-items clearfix\">\r\n                <div class=\"header-search\">\r\n                    <div class=\"search-product\">\r\n                        <input type=\"text\" class=\"medium\" placeholder=\"Search..\" style=\"background-color: #f5f5f5;\">\r\n                        <img src=\"assets/img/images/cam.png\" class=\"input-camera\">\r\n                        <button class=\"\"><i class=\"fa fa-search\"></i></button>\r\n                        <button class=\"camera-button\"><img src=\"assets/img/images/cam.png\"></button>\r\n                    </div>\r\n                </div>\r\n                <div class=\"header-btn\">\r\n                    <ul class=\"image-cart\">\r\n                        <li>\r\n                            <a class=\"head_btn welcome\" href=\"#\">\r\n                                <span class=\"medium\">Hello, {{user.firstName}}!</span>\r\n                            </a>\r\n                            \r\n                        </li>\r\n                        <li class=\"bold dropping\">\r\n                            <a class=\"admin-options-triger head_btn\" *ngIf=\"user.imageUrl == null\" href=\"#\">\r\n                                <img class=\"header-icons\" src=\"assets/img/profileIcon.svg\"/>\r\n                                <span class=\"count\">0</span>\r\n                            </a>\r\n                            <a class=\"admin-options-triger head_btn\" *ngIf=\"user.imageUrl != null\" href=\"#\">\r\n                                <img class=\"header-icons header-image-circle\" src=\"{{user.imageUrl}}\"/>\r\n                                <span class=\"count\">7</span>\r\n                            </a>\r\n                            <ul class=\"admin-options\">\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Guests'\" (click)=\"openSignUPModal()\">Sign In/Sign Up</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Profile</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Wallet</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Order History</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Settings</a></li>\r\n                                <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\" (click)=\"logout()\">Logout</a></li>\r\n                            </ul>\r\n                        </li>\r\n                        <li class=\"bold cart-icon\">\r\n                            <a class=\"head_btn\" href=\"#\">\r\n                                <img class=\"header-icons\" (click)=\"openCart()\" src=\"assets/img/cartIcon.svg\"/>\r\n                                <span class=\"count\">{{user.cartCount}}</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    \r\n                </div>\r\n                <!-- <div class=\"cart-contents\">\r\n                    <a class=\"head_btn\" href=\"#\">\r\n                        <img class=\"header-icons\" (click)=\"openCart()\" src=\"assets/img/cartIcon.svg\"/>\r\n                        <span class=\"count\">{{user.cartCount}}</span>\r\n                    </a>\r\n                </div> -->\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"toggle-content\">\r\n        <div class=\"admin-visual\">\r\n            <figure style=\"background: url(assets/img/admin.png)\"></figure>\r\n            <span class=\"name\">{{user.firstName}}</span>\r\n        </div>\r\n        <ul class=\"list\">\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Guests'\" href=\"#\" (click)=\"openSignUPModal()\">Sign In/Sign Up</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Profile</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">My Wallet</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Order History</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\">Settings</a></li>\r\n            <li><a class=\"\" *ngIf=\"user.role == 'Registered'\" href=\"#\" (click)=\"logout()\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n</header>\r\n<modal #signUPModal \r\n[closeOnOutsideClick]=\"true\" [closeOnEscape]=\"true\"  (onOpen)=\"initializeModal()\">\r\n  <modal-header>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div id=\"welcomeRegistrationDiv\" class=\"modal-div\">\r\n\r\n            <div class=\"modal-logo\">\r\n                </div>\r\n\r\n        <div class=\"row signup-title\">\r\n            <h3 class=\"bold modal-heading\">Sign up to browse Products!</h3>\r\n        </div>\r\n\r\n        <div class=\"row bold\">\r\n            <a class=\"btn btn-block socialBtn email\" (click)=\"openSignUpModalDiv()\">\r\n                Sign Up with Email\r\n            </a>\r\n        </div>\r\n\r\n        <div class=\"row semibold\">\r\n            <a (click)=\"openLoginModalDiv()\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn fb\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                <img src=\"assets/img/images/fb.png\" class=\"fb-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign up with Facebook\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div (click)=\"signUpWithTwitter()\" class=\"socialBtn twitter\">\r\n                <div class=\"btnLogo\">\r\n                    <img src=\"assets/img/images/twitter.png\" class=\"tw-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Sign up with Twitter\r\n                </div>\r\n            </div>\r\n        </div>\r\n<!--        <div class=\"row ultralight\">\r\n            <h5 class=\"or-text\"><span>or</span></h5>\r\n        </div>   -->\r\n\r\n    </div>\r\n    <div id=\"registration-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n                <div class=\"modal-logo\">\r\n                </div>\r\n        <div class=\"row signup-title almost-done\">\r\n            <h3 class=\"bold modal-heading\">Sign up<br>almost done!</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"Email\" class=\"form-control\" placeholder=\"Email..\"/>\r\n            </div>\r\n            <div id=\"emailRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"Password\" class=\"form-control\" placeholder=\"Password..\"/>\r\n            </div>\r\n            <div id=\"passwordRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n            <div id=\"passwordSeverityError\" class=\"error\">\r\n                <label class=\"texxt\">Password must contains alpha numeric characters</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"signUpWithEmail()\" class=\"btn btn-block reg-signUp socialBtn login\">\r\n                Sign Up\r\n            </a>\r\n        </div>\r\n\r\n        <div id=\"invalidRegistration\" class=\"error\">\r\n            <label class=\"texxt\">{{registrationError}}</label>\r\n        </div>\r\n    </div>\r\n    <div id=\"login-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n                <div class=\"modal-logo\">\r\n                </div>\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Login</h3>\r\n        </div>\r\n\r\n                <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"LoginEmail\" class=\"form-control\" placeholder=\"Email..\"/>\r\n            </div>\r\n            <div id=\"emailLoginRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"emailLoginNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"password\" [(ngModel)]=\"LoginPassword\" class=\"form-control\" placeholder=\"Password..\"/>\r\n            </div>\r\n            <div id=\"passwordLoginRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Password is Required</label>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"signInWithEmail()\" class=\"btn btn-block socialBtn login\">\r\n                Login\r\n            </a>\r\n        </div>\r\n        <div class=\"row semibold already-an-account signUp-btn-div\">\r\n            <a (click)=\"forgot_password_modal()\">\r\n                Forgot password?\r\n            </a>\r\n        </div>\r\n        <div id=\"invalidLogin\" class=\"error\">\r\n            <label class=\"texxt\">{{loginError}}</label>\r\n        </div>\r\n\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn fb\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                <img src=\"assets/img/images/fb.png\" class=\"fb-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Login with Facebook\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row bold\">\r\n            <div class=\"socialBtn twitter\" (click)=\"loginWithFacebook()\">\r\n                <div class=\"btnLogo\">\r\n                <img src=\"assets/img/images/twitter.png\" class=\"tw-logo\">\r\n                </div>\r\n                <div class=\"btnText\">\r\n                    Login with Twitter\r\n                </div>\r\n            </div>\r\n        </div>\r\n        \r\n    </div>\r\n    <div id=\"forgot-password-modal\" class=\"modal-div\">\r\n        <a (click)=\"back_modal()\">\r\n            <img class=\"modal-back-btn\" src=\"assets/img/img_back_arrow.png\"/>\r\n        </a>\r\n                <div class=\"modal-logo\">\r\n                </div>\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Forgot Password</h3>\r\n        </div>\r\n        <div class=\"row input-row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"Email\" class=\"form-control\" placeholder=\"Email..\"/>\r\n            </div>\r\n            <div id=\"forgotemailRequiredError\" class=\"error\">\r\n                <label class=\"texxt\">Email is Required</label>\r\n            </div>\r\n            <div id=\"forgotEmailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n            <div id=\"forgotEmailNotValidError\" class=\"error\">\r\n                <label class=\"texxt\">Email is not valid</label>\r\n            </div>\r\n            \r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"forgotPassword()\" class=\"btn btn-block socialBtn login\">\r\n                Submit\r\n            </a>\r\n        </div>\r\n    </div>\r\n  </modal-content>\r\n</modal>\r\n<modal #twitterPinCode \r\n[closeOnOutsideClick]=\"true\" [closeOnEscape]=\"true\"  (onOpen)=\"initializeModal()\">\r\n  <modal-header>\r\n  </modal-header>\r\n  <modal-content>\r\n    <div class=\"modal-div\">\r\n        <div class=\"row signup-title login-title\">\r\n            <h3 class=\"semibold modal-heading\">Twitter Pin Code</h3>\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"input-login texxt\">\r\n                <input type=\"text\" [(ngModel)]=\"TwitterPin\" class=\"form-control\" placeholder=\"Pin Code...\"/>\r\n            </div>\r\n        </div>\r\n        <div class=\"row semibold signUp-btn-div\">\r\n            <a (click)=\"twitterPinCodeEntered()\" class=\"btn btn-block socialBtn login\">\r\n                Enter\r\n            </a>\r\n        </div>\r\n    </div>\r\n  </modal-content>\r\n</modal>\r\n"
 
 /***/ },
 
@@ -14991,10 +14978,11 @@ var routes = [
             { path: '', redirectTo: 'index', pathMatch: 'full' },
             { path: 'index', loadChildren: function () { return __webpack_require__.e/* System.import */(15).then(__webpack_require__.bind(null, "./src/app/home/home.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'product-detail', loadChildren: function () { return __webpack_require__.e/* System.import */(18).then(__webpack_require__.bind(null, "./src/app/productdetail/productdetail.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(22).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'cart', loadChildren: function () { return __webpack_require__.e/* System.import */(23).then(__webpack_require__.bind(null, "./src/app/cart/cart.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'checkout', loadChildren: function () { return __webpack_require__.e/* System.import */(19).then(__webpack_require__.bind(null, "./src/app/checkout/checkout.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(8).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'changepassword', loadChildren: function () { return __webpack_require__.e/* System.import */(21).then(__webpack_require__.bind(null, "./src/app/changepassword/changepassword.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
+            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(9).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'changepassword', loadChildren: function () { return __webpack_require__.e/* System.import */(22).then(__webpack_require__.bind(null, "./src/app/changepassword/changepassword.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'stripepay', loadChildren: function () { return __webpack_require__.e/* System.import */(20).then(__webpack_require__.bind(null, "./src/app/stripe-form/stripe.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }
 ];
 exports.ROUTES = router_1.RouterModule.forChild(routes);

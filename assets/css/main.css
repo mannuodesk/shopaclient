@@ -6023,7 +6023,7 @@ img {
 
 @media (max-width: 1620px) {
     .products-wrapper .product .product-inner {
-        height: 238px;
+        height: 237.5px;
     }
 }
 
@@ -6045,7 +6045,7 @@ img {
 
 @media (max-width: 1480px) {
     .products-wrapper .product .product-inner {
-        height: 255px;
+        height: 250.66px;
     }
 }
 
@@ -6073,13 +6073,13 @@ img {
 
 @media (max-width: 1250px) {
     .products-wrapper .product .product-inner {
-        height: 208px;
+        height: 220px;
     }
 }
 
 @media (max-width: 1170px) {
     .products-wrapper .product .product-inner {
-        height: 250px;
+        height: 255.5px;
     }
 }
 
@@ -6097,7 +6097,7 @@ img {
 
 @media (max-width: 1050px) {
     .products-wrapper .product .product-inner {
-        height: 220px;
+        height: 224.5px;
     }
 }
 
@@ -6134,13 +6134,13 @@ img {
 
 @media (max-width: 810px) {
     .products-wrapper .product .product-inner {
-        height: 230px;
+        height: 232px;
     }
 }
 
 @media (max-width: 792px) {
     .products-wrapper .product .product-inner {
-        height: 220px;
+        height: 221px;
     }
 }
 
@@ -6170,14 +6170,14 @@ img {
 
 @media (max-width: 640px) {
     .products-wrapper .product .product-inner {
-        height: 186px;
+        height: 191.3px;
     }
 }
 
 
 @media (max-width: 624px) {
     .products-wrapper .product .product-inner {
-        height: 176px;
+        height: 177px;
     }
 }
 
@@ -6234,7 +6234,7 @@ img {
 
 @media (max-width: 423px) {
     .products-wrapper .product .product-inner {
-        height: 172px;
+        height: 179px;
     }
 }
 
@@ -6246,13 +6246,13 @@ img {
 
 @media (max-width: 380px) {
     .products-wrapper .product .product-inner {
-        height: 155px;
+        height: 160px;
     }
 }
 
 @media (max-width: 360px) {
     .products-wrapper .product .product-inner {
-        height: 145px;
+        height: 153px;
     }
 }
 
@@ -6264,7 +6264,7 @@ img {
 
 @media (max-width: 320px) {
     .products-wrapper .product .product-inner {
-        height: 125px;
+        height: 133px;
     }
 }
 
@@ -6402,7 +6402,7 @@ img {
 
 @media (max-width: 2600px) and (min-width: 2501px) {
     .products-wrapper .product .product-inner {
-        height: 255px !important;
+        height: 257.88px !important;
     }
 }
 
@@ -6485,29 +6485,106 @@ img {
 
 @media (max-width: 3870px) and (min-width: 3571px) {
     .products-wrapper .product .product-inner {
-        height: 280px !important;
+        height: 289px !important;
     }
 }
 
 
 @media (min-width: 3871px) {
     .products-wrapper .product .product-inner {
-        height: 320px !important;
+        height: 290px !important;
     }
 }
 
 
 
+/* Iphone 5 landscape view */
+@media only screen 
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (device-aspect-ratio: 568/320)
+and (orientation : landscape) {
+   .products-wrapper.grid-4 .product{
+       width:50%;
+   }
+   .products-wrapper .product .product-inner{
+       height:257px;
+   }
+}
+
+/* Iphone 5 landscape view */
 
 
 
 
 
+/* Iphone 6 landscape view */
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) 
+and (orientation : landscape) 
+and (device-aspect-ratio: 667/375){ 
+ .products-wrapper.grid-4 .product{
+       width:50%;
+   }
+    .products-wrapper .product .product-inner{
+       height:294.5px;
+   }
+}
+/* Iphone 6 landscape view */
 
 
 
 
 
+/* Iphone 6plus landscape view */
+@media only screen 
+and (min-device-width : 414px) 
+and (max-device-width : 736px) 
+and (orientation : landscape)
+and (device-aspect-ratio: 736/414){ 
+ .products-wrapper.grid-4 .product{
+       width:33%;
+   }
+    .products-wrapper .product .product-inner{
+       height:209px;
+   }
+}
+/* Iphone 6plus landscape view */
+
+
+
+/* Nexus S5 landscape view */
+@media only screen 
+and (min-device-width : 360px) 
+and (max-device-width : 640px) 
+and (orientation : landscape)
+and (device-aspect-ratio: 640/360){ 
+ .products-wrapper.grid-4 .product{
+       width:33%;
+   }
+    .products-wrapper .product .product-inner{
+       height:189.3px;
+   }
+}
+/* Nexus S5 landscape view */
+
+
+
+/* Nexus 6p landscape view */
+@media only screen 
+and (min-device-width : 412px) 
+and (max-device-width : 732px) 
+and (orientation : landscape)
+and (device-aspect-ratio: 732/412){ 
+ .products-wrapper.grid-4 .product{
+       width:33%;
+   }
+    .products-wrapper .product .product-inner{
+       height:207.66px;
+   }
+}
+/* Nexus 6p landscape view */
 
 
 

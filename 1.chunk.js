@@ -11753,106 +11753,6 @@ function dispatchNext(subscriber) {
 
 /***/ },
 
-/***/ "./node_modules/rxjs/operator/filter.js":
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Subscriber_1 = __webpack_require__("./node_modules/rxjs/Subscriber.js");
-/**
- * Filter items emitted by the source Observable by only emitting those that
- * satisfy a specified predicate.
- *
- * <span class="informal">Like
- * [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter),
- * it only emits a value from the source if it passes a criterion function.</span>
- *
- * <img src="./img/filter.png" width="100%">
- *
- * Similar to the well-known `Array.prototype.filter` method, this operator
- * takes values from the source Observable, passes them through a `predicate`
- * function and only emits those values that yielded `true`.
- *
- * @example <caption>Emit only click events whose target was a DIV element</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var clicksOnDivs = clicks.filter(ev => ev.target.tagName === 'DIV');
- * clicksOnDivs.subscribe(x => console.log(x));
- *
- * @see {@link distinct}
- * @see {@link distinctKey}
- * @see {@link distinctUntilChanged}
- * @see {@link distinctUntilKeyChanged}
- * @see {@link ignoreElements}
- * @see {@link partition}
- * @see {@link skip}
- *
- * @param {function(value: T, index: number): boolean} predicate A function that
- * evaluates each value emitted by the source Observable. If it returns `true`,
- * the value is emitted, if `false` the value is not passed to the output
- * Observable. The `index` parameter is the number `i` for the i-th source
- * emission that has happened since the subscription, starting from the number
- * `0`.
- * @param {any} [thisArg] An optional argument to determine the value of `this`
- * in the `predicate` function.
- * @return {Observable} An Observable of values from the source that were
- * allowed by the `predicate` function.
- * @method filter
- * @owner Observable
- */
-function filter(predicate, thisArg) {
-    return this.lift(new FilterOperator(predicate, thisArg));
-}
-exports.filter = filter;
-var FilterOperator = (function () {
-    function FilterOperator(predicate, thisArg) {
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-    }
-    FilterOperator.prototype.call = function (subscriber, source) {
-        return source._subscribe(new FilterSubscriber(subscriber, this.predicate, this.thisArg));
-    };
-    return FilterOperator;
-}());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var FilterSubscriber = (function (_super) {
-    __extends(FilterSubscriber, _super);
-    function FilterSubscriber(destination, predicate, thisArg) {
-        _super.call(this, destination);
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-        this.count = 0;
-        this.predicate = predicate;
-    }
-    // the try catch block below is left specifically for
-    // optimization and perf reasons. a tryCatcher is not necessary here.
-    FilterSubscriber.prototype._next = function (value) {
-        var result;
-        try {
-            result = this.predicate.call(this.thisArg, value, this.count++);
-        }
-        catch (err) {
-            this.destination.error(err);
-            return;
-        }
-        if (result) {
-            this.destination.next(value);
-        }
-    };
-    return FilterSubscriber;
-}(Subscriber_1.Subscriber));
-//# sourceMappingURL=filter.js.map
-
-/***/ },
-
 /***/ "./node_modules/rxjs/operator/toArray.js":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -12723,16 +12623,16 @@ var routes = [
             { path: 'dashboard', loadChildren: function () { return __webpack_require__.e/* System.import */(14).then(__webpack_require__.bind(null, "./src/app/dashboard/dashboard.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'inbox', loadChildren: function () { return __webpack_require__.e/* System.import */(16).then(__webpack_require__.bind(null, "./src/app/inbox/inbox.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'charts', loadChildren: function () { return __webpack_require__.e/* System.import */(5).then(__webpack_require__.bind(null, "./src/app/charts/charts.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'profile', loadChildren: function () { return __webpack_require__.e/* System.import */(20).then(__webpack_require__.bind(null, "./src/app/profile/profile.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'forms', loadChildren: function () { return __webpack_require__.e/* System.import */(9).then(__webpack_require__.bind(null, "./src/app/forms/forms.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'profile', loadChildren: function () { return __webpack_require__.e/* System.import */(21).then(__webpack_require__.bind(null, "./src/app/profile/profile.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'forms', loadChildren: function () { return __webpack_require__.e/* System.import */(6).then(__webpack_require__.bind(null, "./src/app/forms/forms.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'ui', loadChildren: function () { return __webpack_require__.e/* System.import */(11).then(__webpack_require__.bind(null, "./src/app/ui-elements/ui-elements.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'extra', loadChildren: function () { return __webpack_require__.e/* System.import */(6).then(__webpack_require__.bind(null, "./src/app/extra/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
+            { path: 'extra', loadChildren: function () { return __webpack_require__.e/* System.import */(7).then(__webpack_require__.bind(null, "./src/app/extra/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'tables', loadChildren: function () { return __webpack_require__.e/* System.import */(12).then(__webpack_require__.bind(null, "./src/app/tables/tables.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'maps', loadChildren: function () { return __webpack_require__.e/* System.import */(13).then(__webpack_require__.bind(null, "./src/app/maps/maps.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'grid', loadChildren: function () { return __webpack_require__.e/* System.import */(17).then(__webpack_require__.bind(null, "./src/app/grid/grid.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'charts', loadChildren: function () { return __webpack_require__.e/* System.import */(5/* duplicate */).then(__webpack_require__.bind(null, "./src/app/charts/charts.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
             { path: 'widgets', loadChildren: function () { return __webpack_require__.e/* System.import */(10).then(__webpack_require__.bind(null, "./src/app/widgets/widgets.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } },
-            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(7).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
+            { path: 'search', loadChildren: function () { return __webpack_require__.e/* System.import */(8).then(__webpack_require__.bind(null, "./src/app/search/extra.module.ts")).then(function (mod) { return (mod.__esModule && mod.default) ? mod.default : mod; }); } }
         ] }
 ];
 exports.ROUTES = router_1.RouterModule.forChild(routes);
