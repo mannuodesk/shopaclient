@@ -41,7 +41,65 @@
 /*============================
  General
  ===========================*/
-	.featured-and-cats{		
+ .tw-share,.fb-share{
+     position:relative;
+     float:left;
+     margin-top:30px;
+     margin-right:20px;
+         cursor: pointer;
+ }
+.tw-share{
+    background-color:#59c1f1;
+     height:36px;
+     width:100px;
+     border-radius:6px;
+     box-shadow: 1px 4px #c7c6c7;
+}
+ .fb-share{
+     background-color:#4e79c9;
+     height:36px;
+     width:100px;
+     border-radius:6px;
+     box-shadow: 1px 2px #c7c6c7;
+
+
+ }
+.logo-left,.vertical-line,.text-share{
+    position:relative;
+    float:left;
+}
+.logo-left{
+    width: 30px;
+    text-align:center;
+        padding-top: 5px;
+    padding-left: 5px;
+}
+
+
+.vertical-line{
+    width: 2px;
+    height: 27px;
+    margin-top: 5px;
+     box-shadow:1px 0 #426bbf;
+     margin-left: 3px;
+}
+.tw-share .vertical-line{
+    width: 2px;
+    height: 27px;
+    margin-top: 5px;
+    box-shadow:1px 0 #3da7d7;
+    margin-left: 3px;
+}
+
+.text-share{
+    color: white;
+    font-size: 16px;
+    font-family: myriad_medium;
+    padding-top: 8px;
+    padding-left: 16px;
+}
+
+.featured-and-cats{		
     display: none;		
 }		
 .featured-mobile{		
@@ -4050,7 +4108,7 @@ label.required:after{
         margin-bottom: 20px;
     }
     .prod-detail-top .prod-zoom .thumbnails li .thumb{
-        height: 80px;
+        height: 70px;
     }
     .prod-detail-top .list-details{
         border: 1px solid #d2d9dc ;
@@ -5425,6 +5483,9 @@ and (orientation : landscape) {
     .product-description{
         /*padding-top:6px;*/
         height: 45px;
+    }
+    img.small{
+        height:285px;
     }
     .old-price {
         font-size: 16px;

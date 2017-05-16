@@ -11,11 +11,13 @@ var ShippingAddressModel_1 = __webpack_require__("./src/app/models/ShippingAddre
 var CheckoutService_1 = __webpack_require__("./src/app/services/CheckoutService.ts");
 var ShoppingCartService_1 = __webpack_require__("./src/app/services/ShoppingCartService.ts");
 var core_2 = __webpack_require__("./node_modules/@angular/core/index.js");
+var PaymentService_1 = __webpack_require__("./src/app/services/PaymentService.ts");
 var CheckoutComponent = (function () {
-    function CheckoutComponent(_shoppingCartService, _checkoutService, router, _zone) {
+    function CheckoutComponent(_shoppingCartService, _checkoutService, _paymentService, router, _zone) {
         var _this = this;
         this._shoppingCartService = _shoppingCartService;
         this._checkoutService = _checkoutService;
+        this._paymentService = _paymentService;
         this._zone = _zone;
         this.CountryId = -1;
         this.states = [];
@@ -80,6 +82,9 @@ var CheckoutComponent = (function () {
             _this._zone.run(function () {
                 if (status === 200) {
                     _this.message = "Success! Card token " + response.card.id + ".";
+                    _this._paymentService.charge(_this.Email, response.card.id).subscribe(function (data) {
+                        console.log(data);
+                    });
                 }
                 else {
                     _this.message = response.error.message;
@@ -285,12 +290,12 @@ var CheckoutComponent = (function () {
             selector: 'checkout',
             styles: [__webpack_require__("./src/app/checkout/checkout.style.scss")],
             template: __webpack_require__("./src/app/checkout/checkout.template.html"),
-            providers: [CheckoutService_1.CheckoutService, ShoppingCartService_1.ShoppingCartService]
+            providers: [CheckoutService_1.CheckoutService, ShoppingCartService_1.ShoppingCartService, PaymentService_1.PaymentService]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof ShoppingCartService_1.ShoppingCartService !== 'undefined' && ShoppingCartService_1.ShoppingCartService) === 'function' && _a) || Object, (typeof (_b = typeof CheckoutService_1.CheckoutService !== 'undefined' && CheckoutService_1.CheckoutService) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object, (typeof (_d = typeof core_2.NgZone !== 'undefined' && core_2.NgZone) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof ShoppingCartService_1.ShoppingCartService !== 'undefined' && ShoppingCartService_1.ShoppingCartService) === 'function' && _a) || Object, (typeof (_b = typeof CheckoutService_1.CheckoutService !== 'undefined' && CheckoutService_1.CheckoutService) === 'function' && _b) || Object, (typeof (_c = typeof PaymentService_1.PaymentService !== 'undefined' && PaymentService_1.PaymentService) === 'function' && _c) || Object, (typeof (_d = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _d) || Object, (typeof (_e = typeof core_2.NgZone !== 'undefined' && core_2.NgZone) === 'function' && _e) || Object])
     ], CheckoutComponent);
     return CheckoutComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 exports.CheckoutComponent = CheckoutComponent;
 
@@ -416,6 +421,36 @@ var CheckoutService = (function () {
     var _a;
 }());
 exports.CheckoutService = CheckoutService;
+
+
+/***/ },
+
+/***/ "./src/app/services/PaymentService.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+var http_1 = __webpack_require__("./node_modules/@angular/http/index.js");
+__webpack_require__("./node_modules/rxjs/add/operator/map.js");
+var UrlService_1 = __webpack_require__("./src/app/services/UrlService.ts");
+var PaymentService = (function () {
+    function PaymentService(http) {
+        this.http = http;
+        this.urlService = new UrlService_1.UrlService();
+    }
+    PaymentService.prototype.charge = function (email, stripeToken) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/Charge/?stripeEmail=' + email + '&stripeToken=' + stripeToken)
+            .map(function (res) { return res.json(); });
+    };
+    PaymentService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+    ], PaymentService);
+    return PaymentService;
+    var _a;
+}());
+exports.PaymentService = PaymentService;
 
 
 /***/ }
