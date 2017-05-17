@@ -14228,6 +14228,13 @@ var ShoppingCartService = (function () {
         return this.http.post(this.urlService.baseUrl + 'api/default/AddProductToCart_Details', body, options)
             .map(function (res) { return res.json(); });
     };
+    ShoppingCartService.prototype.addToWishlist = function (addToCartDTO) {
+        var body = JSON.stringify(addToCartDTO);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ method: 'post', headers: headers });
+        return this.http.post(this.urlService.baseUrl + 'api/default/AddProductToWishlist_Details', body, options)
+            .map(function (res) { return res.json(); });
+    };
     ShoppingCartService.prototype.updateShoppingCartItem = function (customerId, shoppingCartItemId, quantity) {
         return this.http.get(this.urlService.baseUrl + 'api/default/UpdateCart?customerId=' + customerId + '&shoppingCartItemId=' + shoppingCartItemId + '&quantity=' + quantity)
             .map(function (res) { return res.json(); });
