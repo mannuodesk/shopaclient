@@ -14321,7 +14321,7 @@ exports.SigninSignupService = SigninSignupService;
 "use strict";
 "use strict";
 var UrlService = (function () {
-    //public baseUrl:string = "http://localhost:13377/";
+    // public baseUrl:string = "http://localhost:13377/";
     function UrlService() {
         this.baseUrl = "http://shopabackend.azurewebsites.net/";
     }

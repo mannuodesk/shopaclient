@@ -81,8 +81,8 @@ var CheckoutComponent = (function () {
             // Wrapping inside the Angular zone
             _this._zone.run(function () {
                 if (status === 200) {
-                    _this.message = "Success! Card token " + response.card.id + ".";
-                    _this._paymentService.charge(_this.Email, response.card.id).subscribe(function (data) {
+                    // this.message = `Success! Card token ${response.card.id}.`;
+                    _this._paymentService.charge(_this.Email, response.id, _this.TotalPrice * 100).subscribe(function (data) {
                         console.log(data);
                     });
                 }
@@ -439,8 +439,8 @@ var PaymentService = (function () {
         this.http = http;
         this.urlService = new UrlService_1.UrlService();
     }
-    PaymentService.prototype.charge = function (email, stripeToken) {
-        return this.http.get(this.urlService.baseUrl + 'api/default/Charge/?stripeEmail=' + email + '&stripeToken=' + stripeToken)
+    PaymentService.prototype.charge = function (email, stripeToken, price) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/Charge/?stripeEmail=' + email + '&stripeToken=' + stripeToken + '&totalamount=' + price)
             .map(function (res) { return res.json(); });
     };
     PaymentService = __decorate([
