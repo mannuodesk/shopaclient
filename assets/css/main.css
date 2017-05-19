@@ -38,9 +38,11 @@ Fonts
     font-family: myriad_bold;
     src: url('../fonts/myriad-set-pro_bold.ttf') format('truetype');
 }
+
 /*============================
 General
 ===========================*/
+
 	 .tw-share,.fb-share{
      position:relative;
      float:left;
@@ -2189,6 +2191,9 @@ Product Details
     left: 0;
     top: 3px;
 }
+.prod-detail-modal #tab2 .products-wrapper.related .product .product-inner{
+	height:176px;
+}
 .prod-detail-modal .prod-reviews .review-unit .name{
 
     padding-top: 5px;
@@ -4168,6 +4173,11 @@ Responsive
 
 /*========*/
 
+@media (max-width: 560px) and (max-width:640px){
+	#tab2 .products-wrapper.related .product .product-inner{
+		height:241px !important;
+	}
+}
 @media (max-width: 560px) {
     .products-wrapper.grid-4{
         margin:0;
@@ -5164,10 +5174,10 @@ and (orientation : landscape) {
 
 @media (min-width:2551px) and (max-width:2599px){
     .category-list li{
-      margin-right:19px !important;
+      margin-right:17px !important;
     }
     .tags-list li{
-      margin-left:70px;
+      margin-left:68px;
     }
     .products-wrapper.grid-4 .product{
         width:11%;
@@ -5184,7 +5194,7 @@ and (orientation : landscape) {
                 margin-right:16px !important;
     }
     .tags-list li{
-      margin-left:63px;
+      margin-left:67px;
     }
     .products-wrapper.grid-4 .product{
         width:11%;
@@ -5201,7 +5211,7 @@ and (orientation : landscape) {
                 margin-right:23px !important;
 	}
 	.tags-list li{
-		margin-left:68px;
+		margin-left:72.5px;
 	}
     .products-wrapper .product .product-inner {
     height: 200px !important;
@@ -5213,7 +5223,7 @@ and (orientation : landscape) {
                 margin-right:20px !important;
     }
 		.tags-list li{
-		margin-left:65px;
+		margin-left:69px;
 	}
     .products-wrapper .product .product-inner {
     height: 200px !important;
@@ -5226,7 +5236,7 @@ and (orientation : landscape) {
     }
 	
 	.tags-list li{
-		margin-left:62px;
+		margin-left:66px;
 	}
 	
     .products-wrapper .product .product-inner {
@@ -5236,8 +5246,11 @@ and (orientation : landscape) {
 
 @media (min-width:2300px) and (max-width:2350px){
     .category-list li{
-                margin-right:14px !important;
+                margin-right:13.1px !important;
     }
+	.tags-list li{
+		margin-left:63px;
+	}
 
     .products-wrapper .product .product-inner {
     height: 200px !important;
@@ -5249,16 +5262,16 @@ and (orientation : landscape) {
     margin-right: 20.88px !important;
 	}
 			.tags-list li{
-		margin-left:70px;
+		margin-left:74px;
 	}
 }
 
 @media (min-width:2200px) and (max-width:2250px){
 	.category-list li {
-		margin-right: 17.88px !important;
+		    margin-right: 17px !important;
 	}
 		.tags-list li{
-		margin-left:67px;
+		margin-left:70px;
 	}
 	
 }
@@ -5266,10 +5279,10 @@ and (orientation : landscape) {
 
 @media (min-width:2151px) and (max-width:2199px){
     .category-list li {
-    margin-right: 1.2299444% !important;
+    margin-right: 1.1999444% !important;
 	}
 	.tags-list li{
-		margin-left:76px;
+		margin-left:80px;
 	}
 }
 
@@ -5278,16 +5291,16 @@ and (orientation : landscape) {
                 margin-right: 1.00999444% !important;
     }
 		.tags-list li{
-		margin-left:71px;
+		margin-left:75px;
 	}
 }
 
 @media (min-width:2051px) and (max-width:2099px){
     .category-list li {
-    margin-right: 0.899999999% !important;
+    margin-right: 0.8% !important;
 	}
 	.tags-list li{
-		margin-left:69px;
+		margin-left:70.5px;
 	}
 }
 
@@ -5296,16 +5309,16 @@ and (orientation : landscape) {
                 margin-right: 0.699999999% !important;
     }
 	.tags-list li{
-		margin-left:64px;
+		margin-left:68px;
 	}
 }
 
 @media (min-width:1951px) and (max-width:1999px){
     .category-list li{
-       margin-right: 1.19999% !important;
+       margin-right: 1.1% !important;
     }
 	.tags-list li{
-		margin-left:73px;
+		margin-left:75px;
 	}
 }
 
@@ -5322,26 +5335,26 @@ and (orientation : landscape) {
                 margin-right: 14px !important;
     }
 	.tags-list li{
-		margin-left:64px;
+		margin-left:69px;
 	}
 }
 
 @media (min-width:1800px) and (max-width:1850px){
     .category-list li{
-                margin-right: 10px !important;
+                margin-right: 9px !important;
     }
 	.tags-list li{
-		margin-left:60px;
+		margin-left:64px;
 	}
 }
 
 @media (max-width:1799px) and (min-width:1751px){
     .category-list li{
-        margin-right: 19px;
+        margin-right: 18px;
     }
 
     .tags-list li{
-        margin-left: 68px;
+        margin-left: 71px;
     }
 }
 @media (max-width:1750px) and (min-width:1700px){
@@ -5350,7 +5363,7 @@ and (orientation : landscape) {
     }
 
     .tags-list li{
-        margin-left:23px;
+        margin-left:67px;
     }
 }
 
@@ -5360,47 +5373,47 @@ and (orientation : landscape) {
     }
 
     .tags-list li{
-        margin-left:72px;
+        margin-left:76px;
     }
 }
 
 @media (max-width:1650px) and (min-width:1600px){
     .category-list li{
-                margin-right: 19px;
+                margin-right: 17px;
     }
 
     .tags-list li{
-        margin-left:67px;
+        margin-left:69px;
     }
 }
 
 @media (min-width:1551px) and (max-width:1599px){
    .category-list li {
-    margin-right: 1.0111% !important;
+    margin-right: 0.9% !important;
 	}
 	
 	.tags-list li{
-        margin-left:63px;
+        margin-left:66px;
     }
 	
 }
 
 @media (min-width:1500px) and (max-width:1550px){
     .category-list li{
-                    margin-right: 0.7111111% !important;
+                    margin-right: 0.6111111% !important;
     }
 	
 	.tags-list li{
-        margin-left:66px;
+        margin-left:60px;
     }
 }
 
 @media (max-width:1499px) and (min-width:1451px){
     #largeDevices li{
-                margin-right:20px !important;
+                margin-right:19px !important;
     }
 	.tags-list li{
-        margin-left:66px;
+        margin-left:69px;
     }
 }
 
@@ -5409,23 +5422,26 @@ and (orientation : landscape) {
     #largeDevices li{
                 margin-right: 14px !important;
     }
+	.tags-list li{
+        margin-left:64px;
+    }
 }
 @media (min-width:1351px) and (max-width:1399px){
     .category-list li{
                 margin-right: 9px !important;
     }
     .tags-list li{
-        margin-left:55px;
+        margin-left:59px;
     }
 }
 
 
 @media (min-width:1300px) and (max-width:1350px){
     .category-list li{
-                margin-right: 3px !important;
+                margin-right: 1px !important;
     }
     .tags-list li{
-        margin-left:48px;
+        margin-left:51px;
     }
 }
 
@@ -5463,7 +5479,7 @@ and (orientation : landscape) {
                 margin-right: 1.39% !important;
     }
     .tags-list li{   
-                margin-left: 69px;
+                margin-left: 74px;
     }
 
 }
@@ -5489,15 +5505,15 @@ and (orientation : landscape) {
     }
 
     .tags-list li{
-        margin-left:87px;
+        margin-left:83px;
     }
 }
 @media (min-width:951px) and (max-width:1000px){
 	.category-list li{
-        margin-right: 1.7% !important;
+        margin-right: 1.6% !important;
     }
     .tags-list li{
-        margin-left:73px;
+        margin-left:77px;
     }
 }
 
@@ -5506,7 +5522,7 @@ and (orientation : landscape) {
         margin-right: 0.6% !important;
     }
     .tags-list li{
-        margin-left:63px;
+        margin-left:68px;
     }
 }
 @media (min-width:851px) and (max-width:900px){
@@ -5526,7 +5542,7 @@ and (orientation : landscape) {
         margin-left:79px
     }
     .hash-tags{
-        margin-top:12px;
+        /* margin-top:12px; */
     }
 }
 
@@ -5615,25 +5631,41 @@ and (orientation : landscape) {
     
 }
 @media (max-width: 640px) {
+	.prod-detail-bottom{
+		margin-top:35px;
+	}
+	#tab2 .related{
+		    width: 100%;
+	}
+	#tab2 .related .product{
+		width:50%;
+	}
+	
+	#tab2 .products-wrapper.related .product .product-inner{
+		    height: 133px;
+	}
+	#gallery-zoom li:first-child{
+		padding-left:0 !important;
+	}
     .product-description{
-        padding-top:6px;
+        padding-top:3px;
 		height: 45px;
     }
 	img.small{
         height:285px;
     }		    
     .old-price {
-    font-size: 16px;
+    font-size: 14px;
     left: 5px;
-    top: 3px;
+    top: 14px;
     } 
     
     .new-price {
-    font-size: 20px;
+    font-size: 18px;
 
     }
     .item-sold {
-    margin-top:-6px !important;
+     margin-top:-6px !important; 
         }
 
     .doc-footer{
@@ -5655,7 +5687,7 @@ and (orientation : landscape) {
     text-transform: uppercase;
     width: 45px;
     height: 45px;
-    right: -6x;
+    right: -6px;
     top: -13px;
         }
 
@@ -6284,6 +6316,10 @@ img {
     .products-wrapper .product .product-inner {
         height: 240px;
     }
+	
+	#tab2 .products-wrapper .product .product-inner {
+        height: 152px !important;
+    }
 }
 
 @media (max-width: 1090px) {
@@ -6451,6 +6487,12 @@ img {
     .products-wrapper .product .product-inner {
         height: 153px;
     }
+	#tab2 .related .product {
+    width: 50%;
+    }
+	#tab2 .products-wrapper.related .product .product-inner{
+		height:151px;
+	}
 }
 
 @media (max-width: 340px) {
@@ -6585,6 +6627,12 @@ img {
     .products-wrapper.grid-4 .product {
         width: 11.11% !important;
     }
+	#tab2 .products-wrapper.grid-4 .product{
+		  width: 24.11% !important;
+	}
+	#tab2 .products-wrapper.grid-4 .product .product-inner{
+		  height: 198px !important;
+	}
 }
 
 
@@ -6707,6 +6755,12 @@ and (orientation : landscape) {
    .products-wrapper .product .product-inner{
        height:257px;
    }
+   img.small {
+    height: 482px;
+    }
+	#tab2 .products-wrapper.related .product .product-inner{
+		height:232px;
+	}
 }
 
 /* Iphone 5 landscape view */
@@ -6721,12 +6775,24 @@ and (min-device-width : 375px)
 and (max-device-width : 667px) 
 and (orientation : landscape) 
 and (device-aspect-ratio: 667/375){ 
+#tab2 .related{
+	width:100%;
+}
+ #tab2 .related .product{
+	 width:50%;
+  }
+ #tab2 .products-wrapper.related .product .product-inner{
+	 height:261px;
+ }
  .products-wrapper.grid-4 .product{
        width:50%;
    }
     .products-wrapper .product .product-inner{
        height:294.5px;
    }
+   img.small{
+        height:500px;
+    }	
 }
 /* Iphone 6 landscape view */
 
@@ -6740,12 +6806,22 @@ and (min-device-width : 414px)
 and (max-device-width : 736px) 
 and (orientation : landscape)
 and (device-aspect-ratio: 736/414){ 
+#tab2 .related{
+	width:100%;
+}
  .products-wrapper.grid-4 .product{
        width:33%;
    }
+    #tab2 .products-wrapper.related .product .product-inner{
+	 height:115px;
+ }
     .products-wrapper .product .product-inner{
        height:209px;
    }
+   
+   img.small{
+        height:500px;
+    }	
 }
 /* Iphone 6plus landscape view */
 
@@ -6783,12 +6859,76 @@ and (device-aspect-ratio: 732/412){
 }
 /* Nexus 6p landscape view */
 
+/*  iphone 6 portrait */
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) 
+and (orientation : portrait) { 
+
+#tab2 .products-wrapper.related .product .product-inner{
+	height:158px;
+}
+img.small{
+        height:337.5px;
+    }		    
+}
+/*  iphone 6 portrait */
 
 
 
+/*  iphone 6+ portrait */
+@media only screen 
+and (min-device-width : 414px) 
+and (max-device-width : 736px) 
+and (orientation : portrait) { 
+#tab2 .products-wrapper.related .product .product-inner{
+	height:177px;
+}
+img.small{
+        height:375.5px;
+    }	
+}
+/*  iphone 6+ portrait */
+
+
+/* Ipad mini portrait */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait)
+and (-webkit-min-device-pixel-ratio: 1)  { 
+#tab2 .products-wrapper.related .product .product-inner{
+	height:164px;
+}
+}
+/* Ipad mini portrait */
 
 
 
+/* Ipad mini landscape */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape)
+and (-webkit-min-device-pixel-ratio: 1)  { 
+#tab2 .products-wrapper.related .product .product-inner{
+	height:194px;
+}
+}
+/* Ipad mini landscape */
 
 
+/* ipad pro portrait*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) { 
+#tab2 .products-wrapper.related .product .product-inner{
+	height:194px;
+}
+ }
+ /* ipad pro portrait*/
+
+ 
+ 
 
