@@ -5428,10 +5428,10 @@ and (orientation : landscape) {
 }
 @media (min-width:1351px) and (max-width:1399px){
     .category-list li{
-                margin-right: 9px !important;
+                margin-right: 7px !important;
     }
     .tags-list li{
-        margin-left:59px;
+        margin-left:57px;
     }
 }
 
