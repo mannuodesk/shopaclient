@@ -14190,6 +14190,7 @@ var ProductService = (function () {
     function ProductService(http) {
         this.http = http;
         this.urlService = new UrlService_1.UrlService();
+        ProductService.searchString = "";
     }
     ProductService.prototype.getProducts = function () {
         return ProductService.products;
@@ -14198,15 +14199,19 @@ var ProductService = (function () {
         return this.http.get(this.urlService.baseUrl + 'api/default/GetAllCategoriesDisplayedOnHomePage')
             .map(function (res) { return res.json(); });
     };
-    ProductService.prototype.popalateProducts = function (Id, pageNumber, pageSize) {
+    ProductService.prototype.popalateProducts = function (Id, pageNumber, pageSize, searchString) {
         this.getAllProducts(Id, pageNumber, pageSize).subscribe(function (data) {
+            ProductService.PaginationFlag = data.data.length;
             for (var i = 0; i < data.data.length; i++) {
                 ProductService.products.push(data.data[i]);
             }
         });
+        return ProductService.PaginationFlag;
     };
-    ProductService.prototype.populatePrdouctsUsingSearchString = function (searchString) {
-        this.getAllProductsOnSearchString(searchString).subscribe(function (data) {
+    ProductService.prototype.populatePrdouctsUsingSearchString = function (Id, pageNumber, pageSize, searchString) {
+        ProductService.products.length = 0;
+        this.getAllProductsOnSearchString(Id, pageNumber, pageSize, searchString).subscribe(function (data) {
+            ProductService.PaginationFlag = data.data.length;
             for (var i = 0; i < data.data.length; i++) {
                 ProductService.products.push(data.data[i]);
             }
@@ -14215,16 +14220,18 @@ var ProductService = (function () {
         });
         console.log("SSSSSSS0");
         console.log(ProductService.products);
+        return ProductService.PaginationFlag;
     };
     ProductService.prototype.getAllProducts = function (Id, pageNumber, pageSize) {
-        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?categoryId=' + Id + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize)
+        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?categoryId=' + Id + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&searchString=' + ProductService.searchString)
             .map(function (res) { return res.json(); });
     };
-    ProductService.prototype.getAllProductsOnSearchString = function (searchString) {
-        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?searchString=' + searchString)
+    ProductService.prototype.getAllProductsOnSearchString = function (Id, pageNumber, pageSize, searchString) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?categoryId=' + Id + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&searchString=' + searchString)
             .map(function (res) { return res.json(); });
     };
     ProductService.products = [];
+    ProductService.PaginationFlag = 0;
     ProductService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
@@ -14508,7 +14515,9 @@ var Header = (function () {
     };
     Header.prototype.getProducts = function () {
         //alert(this.searchString);
-        this._productSerice.populatePrdouctsUsingSearchString(this.searchString);
+        ProductService_1.ProductService.products.length = 0;
+        ProductService_1.ProductService.searchString = this.searchString;
+        this._productSerice.popalateProducts(0, 0, 25, this.searchString);
     };
     /*public googleInit() {
       let that = this;
