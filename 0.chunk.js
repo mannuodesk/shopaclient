@@ -14199,8 +14199,8 @@ var ProductService = (function () {
         return this.http.get(this.urlService.baseUrl + 'api/default/GetAllCategoriesDisplayedOnHomePage')
             .map(function (res) { return res.json(); });
     };
-    ProductService.prototype.popalateProducts = function (Id, pageNumber, pageSize, searchString) {
-        this.getAllProducts(Id, pageNumber, pageSize).subscribe(function (data) {
+    ProductService.prototype.popalateProducts = function (Id, pageNumber, pageSize, searchString, min, max) {
+        this.getAllProducts(Id, pageNumber, pageSize, min, max).subscribe(function (data) {
             ProductService.PaginationFlag = data.data.length;
             for (var i = 0; i < data.data.length; i++) {
                 ProductService.products.push(data.data[i]);
@@ -14222,8 +14222,8 @@ var ProductService = (function () {
         console.log(ProductService.products);
         return ProductService.PaginationFlag;
     };
-    ProductService.prototype.getAllProducts = function (Id, pageNumber, pageSize) {
-        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?categoryId=' + Id + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&searchString=' + ProductService.searchString)
+    ProductService.prototype.getAllProducts = function (Id, pageNumber, pageSize, min, max) {
+        return this.http.get(this.urlService.baseUrl + 'api/default/GetAllProductsDisplayedOnHomePage?categoryId=' + Id + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&searchString=' + ProductService.searchString + '&minPrice=' + min + '&maxPrice=' + max)
             .map(function (res) { return res.json(); });
     };
     ProductService.prototype.getAllProductsOnSearchString = function (Id, pageNumber, pageSize, searchString) {
@@ -14517,7 +14517,7 @@ var Header = (function () {
         //alert(this.searchString);
         ProductService_1.ProductService.products.length = 0;
         ProductService_1.ProductService.searchString = this.searchString;
-        this._productSerice.popalateProducts(0, 0, 25, this.searchString);
+        this._productSerice.popalateProducts(0, 0, 25, this.searchString, -1, -1);
     };
     /*public googleInit() {
       let that = this;
@@ -14575,7 +14575,7 @@ var Header = (function () {
     /**
     End
      */
-    /**
+    /*
       Facebook Sign UP
      */
     Header.prototype.loginWithFacebook = function () {
@@ -14859,7 +14859,9 @@ var Header = (function () {
                     screen_name: reply.screen_name
                 };
                 self.cb.__call("account_verifyCredentials", params, function (reply, rate, err) {
-                    console.log(reply);
+                    if (err) {
+                        console.log("error response or timeout exceeded" + err.error);
+                    }
                     if (reply.httpstatus == 200) {
                         twitterCustomer.Id = self.user.Id;
                         twitterCustomer.Email = reply.id.toString() + "@twitter.com";
@@ -14881,6 +14883,8 @@ var Header = (function () {
                             console.log(JSON.parse(localStorage.getItem('user')));
                             self.twitterPinCodeModalComponent.close();
                         });
+                    }
+                    else {
                     }
                 });
             }
