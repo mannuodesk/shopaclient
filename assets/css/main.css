@@ -13,7 +13,6 @@ Table OF Contents
 /*============================
 Fonts
 ===========================*/
-
 @font-face {
     font-family: myriad_ultralight;
     src: url('../fonts/myriad-set-pro_ultralight.ttf') format('truetype');
@@ -42,7 +41,26 @@ Fonts
 /*============================
 General
 ===========================*/
-
+.search-results
+{
+    list-style-type: none;
+    background: white;
+    padding: 5px;
+    z-index:123123;
+    position:absolute;
+    top:45;
+    left:0;
+    width:100%;
+}
+.search-results li
+{
+    padding-bottom:5px; 
+}
+.search-results li:hover
+{
+    background: grey;
+    padding-bottom:5px; 
+}
 	 .tw-share,.fb-share{
      position:relative;
      float:left;
