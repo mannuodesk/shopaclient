@@ -14570,6 +14570,21 @@ var Header = (function () {
         this.filteredList = [];
         this.selectedIdx = -1;
     };
+    Header.prototype.handleClick = function (event) {
+        //alert(this.query+"b");
+        var clickedComponent = event.target;
+        var inside = false;
+        do {
+            if (clickedComponent === this.elementRef.nativeElement) {
+                inside = true;
+            }
+            clickedComponent = clickedComponent.parentNode;
+        } while (clickedComponent);
+        if (!inside) {
+            this.filteredList = [];
+        }
+        this.selectedIdx = -1;
+    };
     /*public googleInit() {
       let that = this;
       gapi.load('auth2', function () {
